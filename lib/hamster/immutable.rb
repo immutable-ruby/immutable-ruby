@@ -16,13 +16,6 @@ module Hamster
     end
 
     # @private
-    module MemoizeMethods
-      def immutable!
-        freeze
-      end
-    end
-
-    # @private
     module InstanceMethods
       def immutable!
         freeze
@@ -31,9 +24,6 @@ module Hamster
       def immutable?
         frozen?
       end
-
-      alias_method :__hamster_immutable_dup__, :dup
-      private :__hamster_immutable_dup__
 
       def dup
         self
