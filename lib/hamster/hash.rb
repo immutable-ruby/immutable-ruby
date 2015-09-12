@@ -1,4 +1,3 @@
-require "hamster/immutable"
 require "hamster/undefined"
 require "hamster/enumerable"
 require "hamster/trie"
@@ -58,7 +57,6 @@ module Hamster
   #     hash = Hamster::Hash.new { |missing_key| missing_key * 10 }
   #     hash[5] # => 50
   class Hash
-    include Immutable
     include Enumerable
 
     class << self

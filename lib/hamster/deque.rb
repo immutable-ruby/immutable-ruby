@@ -1,4 +1,3 @@
-require "hamster/immutable"
 require "hamster/list"
 
 module Hamster
@@ -37,8 +36,6 @@ module Hamster
   # @see http://en.wikipedia.org/wiki/Deque "Deque" on Wikipedia
   #
   class Deque
-    include Immutable
-
     class << self
       # Create a new `Deque` populated with the given items.
       # @return [Deque]

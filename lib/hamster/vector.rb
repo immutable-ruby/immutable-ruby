@@ -1,4 +1,3 @@
-require "hamster/immutable"
 require "hamster/enumerable"
 require "hamster/hash"
 
@@ -36,7 +35,6 @@ module Hamster
   #     vector + [6, 7]          # => Hamster::Vector[1, 2, 3, 4, 5, 6, 7]
   #
   class Vector
-    include Immutable
     include Enumerable
 
     # @private

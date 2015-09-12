@@ -1,5 +1,4 @@
 require "hamster/core_ext"
-require "hamster/immutable"
 require "hamster/list"
 require "hamster/deque"
 require "hamster/hash"

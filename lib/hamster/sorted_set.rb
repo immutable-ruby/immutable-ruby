@@ -1,4 +1,3 @@
-require "hamster/immutable"
 require "hamster/enumerable"
 
 module Hamster
@@ -50,7 +49,6 @@ module Hamster
   # is a constant time operation.
   #
   class SortedSet
-    include Immutable
     include Enumerable
 
     class << self

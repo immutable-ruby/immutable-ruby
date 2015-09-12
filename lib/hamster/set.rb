@@ -1,4 +1,3 @@
-require "hamster/immutable"
 require "hamster/undefined"
 require "hamster/enumerable"
 require "hamster/hash"
@@ -48,7 +47,6 @@ module Hamster
   #   set1.subset?(set3)        # => true
   #
   class Set
-    include Immutable
     include Enumerable
 
     class << self
