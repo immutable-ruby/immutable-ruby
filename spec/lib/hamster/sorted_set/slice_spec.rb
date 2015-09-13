@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/sorted_set"
 
-describe Hamster::SortedSet do
+describe Immutable::SortedSet do
   let(:sorted_set) { SS[1,2,3,4] }
   let(:big) { SS.new(1..10000) }
 
@@ -245,7 +245,7 @@ describe Hamster::SortedSet do
 
     context "on a subclass of SortedSet" do
       it "with index and count or a range, returns an instance of the subclass" do
-        subclass = Class.new(Hamster::SortedSet)
+        subclass = Class.new(Immutable::SortedSet)
         instance = subclass.new([1,2,3])
         instance.send(method, 0, 0).class.should be(subclass)
         instance.send(method, 0, 2).class.should be(subclass)

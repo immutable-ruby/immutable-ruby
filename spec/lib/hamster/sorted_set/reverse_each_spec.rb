@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/sorted_set"
 
-describe Hamster::SortedSet do
+describe Immutable::SortedSet do
   describe "#reverse_each" do
     context "with no block" do
       let(:sorted_set) { SS["A", "B", "C"] }

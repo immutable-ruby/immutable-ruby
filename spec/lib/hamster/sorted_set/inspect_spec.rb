@@ -1,12 +1,12 @@
 require "spec_helper"
 require "hamster/sorted_set"
 
-describe Hamster::SortedSet do
+describe Immutable::SortedSet do
   describe "#inspect" do
     [
-      [[], "Hamster::SortedSet[]"],
-      [["A"], 'Hamster::SortedSet["A"]'],
-      [["C", "B", "A"], 'Hamster::SortedSet["A", "B", "C"]']
+      [[], "Immutable::SortedSet[]"],
+      [["A"], 'Immutable::SortedSet["A"]'],
+      [["C", "B", "A"], 'Immutable::SortedSet["A", "B", "C"]']
     ].each do |values, expected|
       context "on #{values.inspect}" do
         let(:sorted_set) { SS[*values] }
@@ -21,7 +21,7 @@ describe Hamster::SortedSet do
       end
     end
 
-    MySortedSet = Class.new(Hamster::SortedSet)
+    MySortedSet = Class.new(Immutable::SortedSet)
 
     context "from a subclass" do
       let(:sorted_set) { MySortedSet[1, 2] }

@@ -30,7 +30,7 @@ describe :Hamster do
 
   describe :SortedSet do
     it "can be loaded separately" do
-      system(%{ruby -e "$:.unshift('#{hamster_lib_dir}'); require 'hamster/sorted_set'; Hamster::SortedSet.new"}).should be(true)
+      system(%{ruby -e "$:.unshift('#{hamster_lib_dir}'); require 'hamster/sorted_set'; Immutable::SortedSet.new"}).should be(true)
     end
   end
 

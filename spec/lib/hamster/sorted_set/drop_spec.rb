@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/sorted_set"
 
-describe Hamster::SortedSet do
+describe Immutable::SortedSet do
   describe "#drop" do
     [
       [[], 0, []],
@@ -48,7 +48,7 @@ describe Hamster::SortedSet do
 
     context "when called on a subclass" do
       it "should return an instance of the subclass" do
-        subclass = Class.new(Hamster::SortedSet)
+        subclass = Class.new(Immutable::SortedSet)
         subclass.new([1,2,3]).drop(1).class.should be(subclass)
       end
     end

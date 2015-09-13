@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/sorted_set"
 
-describe Hamster::SortedSet do
+describe Immutable::SortedSet do
   [:group_by, :group, :classify].each do |method|
     describe "##{method}" do
       context "with a block" do
@@ -48,7 +48,7 @@ describe Hamster::SortedSet do
 
       context "from a subclass" do
         it "returns an Hash whose values are instances of the subclass" do
-          subclass = Class.new(Hamster::SortedSet)
+          subclass = Class.new(Immutable::SortedSet)
           instance = subclass.new(['some', 'strings', 'here'])
           instance.group_by { |x| x }.values.each { |v| v.class.should be(subclass) }
         end

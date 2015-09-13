@@ -1,13 +1,13 @@
 require "spec_helper"
 require "hamster/sorted_set"
 
-describe Hamster::SortedSet do
+describe Immutable::SortedSet do
   describe "#marshal_dump/#marshal_load" do
     let(:ruby) do
       File.join(RbConfig::CONFIG["bindir"], RbConfig::CONFIG["ruby_install_name"])
     end
     let(:child_cmd) do
-      %Q|#{ruby} -I lib -r hamster -e 'set = Hamster::SortedSet[5, 10, 15]; $stdout.write(Marshal.dump(set))'|
+      %Q|#{ruby} -I lib -r hamster -e 'set = Immutable::SortedSet[5, 10, 15]; $stdout.write(Marshal.dump(set))'|
     end
 
     let(:reloaded_set) do

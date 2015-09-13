@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/sorted_set"
 
-describe Hamster::SortedSet do
+describe Immutable::SortedSet do
   [:include?, :member?].each do |method|
     describe "##{method}" do
       let(:sorted_set) { SS[1, 2, 3, 4.0] }

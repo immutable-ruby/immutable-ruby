@@ -1,6 +1,6 @@
 require "hamster/enumerable"
 
-module Hamster
+module Immutable
 
   # A `SortedSet` is a collection of ordered values with no duplicates. Unlike a
   # {Vector}, in which items can appear in any arbitrary order, a `SortedSet` always
@@ -18,21 +18,21 @@ module Hamster
   #
   # A `SortedSet` can be created in either of the following ways:
   #
-  #     Hamster::SortedSet.new([1, 2, 3]) # any Enumerable can be used to initialize
-  #     Hamster::SortedSet['A', 'B', 'C', 'D']
+  #     Immutable::SortedSet.new([1, 2, 3]) # any Enumerable can be used to initialize
+  #     Immutable::SortedSet['A', 'B', 'C', 'D']
   #
   # Or if you want to use a custom ordering:
   #
-  #     Hamster::SortedSet.new([1,2,3]) { |a, b| -a <=> -b }
-  #     Hamster::SortedSet.new([1, 2, 3]) { |num| -num }
+  #     Immutable::SortedSet.new([1,2,3]) { |a, b| -a <=> -b }
+  #     Immutable::SortedSet.new([1, 2, 3]) { |num| -num }
   #
   # `SortedSet` can use a 2-parameter block which returns 0, 1, or -1
   # as a comparator (like `Array#sort`), *or* use a 1-parameter block to derive sort
   # keys (like `Array#sort_by`) which will be compared using `#<=>`.
   #
-  # Like all Hamster collections, `SortedSet`s are immutable. Any operation which you
-  # might expect to "modify" a `SortedSet` will actually return a new collection and
-  # leave the existing one unchanged.
+  # Like all `immutable-ruby` collections, `SortedSet`s are immutable. Any operation
+  # which you might expect to "modify" a `SortedSet` will actually return a new
+  # collection and leave the existing one unchanged.
   #
   # `SortedSet` supports the same basic set-theoretic operations as {Set}, including
   # {#union}, {#intersection}, {#difference}, and {#exclusion}, as well as {#subset?},
@@ -49,7 +49,7 @@ module Hamster
   # is a constant time operation.
   #
   class SortedSet
-    include Enumerable
+    include Hamster::Enumerable
 
     class << self
       # Create a new `SortedSet` populated with the given items. This method does not
@@ -105,7 +105,7 @@ module Hamster
     # Return the number of items in this `SortedSet`.
     #
     # @example
-    #   Hamster::SortedSet["A", "B", "C"].size  # => 3
+    #   Immutable::SortedSet["A", "B", "C"].size # => 3
     #
     # @return [Integer]
     def size
@@ -117,8 +117,8 @@ module Hamster
     # return `self`.
     #
     # @example
-    #   Hamster::SortedSet["Dog", "Lion"].add("Elephant")
-    #   # => Hamster::SortedSet["Dog", "Elephant", "Lion"]
+    #   Immutable::SortedSet["Dog", "Lion"].add("Elephant")
+    #   # => Immutable::SortedSet["Dog", "Elephant", "Lion"]
     #
     # @param item [Object] The object to add
     # @return [SortedSet]
@@ -135,9 +135,9 @@ module Hamster
     # `item` added. Otherwise, return `false`.
     #
     # @example
-    #   Hamster::SortedSet["Dog", "Lion"].add?("Elephant")
-    #   # => Hamster::SortedSet["Dog", "Elephant", "Lion"]
-    #   Hamster::SortedSet["Dog", "Lion"].add?("Lion")
+    #   Immutable::SortedSet["Dog", "Lion"].add?("Elephant")
+    #   # => Immutable::SortedSet["Dog", "Elephant", "Lion"]
+    #   Immutable::SortedSet["Dog", "Lion"].add?("Lion")
     #   # => false
     #
     # @param item [Object] The object to add
@@ -150,8 +150,8 @@ module Hamster
     # return `self`.
     #
     # @example
-    #   Hamster::SortedSet["A", "B", "C"].delete("B")
-    #   # => Hamster::SortedSet["A", "C"]
+    #   Immutable::SortedSet["A", "B", "C"].delete("B")
+    #   # => Immutable::SortedSet["A", "C"]
     #
     # @param item [Object] The object to remove
     # @return [SortedSet]
@@ -171,9 +171,9 @@ module Hamster
     # `item` removed. Otherwise, return `false`.
     #
     # @example
-    #   Hamster::SortedSet["A", "B", "C"].delete?("B")
-    #   # => Hamster::SortedSet["A", "C"]
-    #   Hamster::SortedSet["A", "B", "C"].delete?("Z")
+    #   Immutable::SortedSet["A", "B", "C"].delete?("B")
+    #   # => Immutable::SortedSet["A", "C"]
+    #   Immutable::SortedSet["A", "B", "C"].delete?("Z")
     #   # => false
     #
     # @param item [Object] The object to remove
@@ -186,8 +186,8 @@ module Hamster
     # does not exist (if it is too high or too low), return `self`.
     #
     # @example
-    #   Hamster::SortedSet["A", "B", "C", "D"].delete_at(2)
-    #   # => Hamster::SortedSet["A", "B", "D"]
+    #   Immutable::SortedSet["A", "B", "C", "D"].delete_at(2)
+    #   # => Immutable::SortedSet["A", "B", "D"]
     #
     # @param index [Integer] The index to remove
     # @return [SortedSet]
@@ -199,7 +199,7 @@ module Hamster
     # is too high or too low), return `nil`.
     #
     # @example
-    #   s = Hamster::SortedSet["A", "B", "C", "D", "E", "F"]
+    #   s = Immutable::SortedSet["A", "B", "C", "D", "E", "F"]
     #   s.at(2)   # => "C"
     #   s.at(-2)  # => "E"
     #   s.at(6)   # => nil
@@ -221,10 +221,10 @@ module Hamster
     #   @param index [Integer] The index to look up
     #   @raise [IndexError] if index does not exist
     #   @example
-    #     v = Hamster::SortedSet["A", "B", "C", "D"]
-    #     v.fetch(2)       # => "C"
-    #     v.fetch(-1)      # => "D"
-    #     v.fetch(4)       # => IndexError: index 4 outside of vector bounds
+    #     s = Immutable::SortedSet["A", "B", "C", "D"]
+    #     s.fetch(2)       # => "C"
+    #     s.fetch(-1)      # => "D"
+    #     s.fetch(4)       # => IndexError: index 4 outside of vector bounds
     #
     # @overload fetch(index) { |index| ... }
     #   Retrieve the value at the given index, or return the result of yielding
@@ -235,9 +235,9 @@ module Hamster
     #   @yieldreturn [Object] Default value to return
     #   @param index [Integer] The index to look up
     #   @example
-    #     v = Hamster::SortedSet["A", "B", "C", "D"]
-    #     v.fetch(2) { |i| i * i }   # => "C"
-    #     v.fetch(4) { |i| i * i }   # => 16
+    #     s = Immutable::SortedSet["A", "B", "C", "D"]
+    #     s.fetch(2) { |i| i * i }   # => "C"
+    #     s.fetch(4) { |i| i * i }   # => 16
     #
     # @overload fetch(index, default)
     #   Retrieve the value at the given index, or return the provided `default`
@@ -246,9 +246,9 @@ module Hamster
     #   @param index [Integer] The index to look up
     #   @param default [Object] Object to return if the key is not found
     #   @example
-    #     v = Hamster::SortedSet["A", "B", "C", "D"]
-    #     v.fetch(2, "Z")  # => "C"
-    #     v.fetch(4, "Z")  # => "Z"
+    #     s = Immutable::SortedSet["A", "B", "C", "D"]
+    #     s.fetch(2, "Z")  # => "C"
+    #     s.fetch(4, "Z")  # => "Z"
     #
     # @return [Object]
     def fetch(index, default = (missing_default = true))
@@ -273,7 +273,7 @@ module Hamster
     #   @param index [Integer] The index to retrieve. May be negative.
     #   @return [Object]
     #   @example
-    #     s = Hamster::SortedSet["A", "B", "C", "D", "E", "F"]
+    #     s = Immutable::SortedSet["A", "B", "C", "D", "E", "F"]
     #     s[2]  # => "C"
     #     s[-1] # => "F"
     #     s[6]  # => nil
@@ -287,9 +287,9 @@ module Hamster
     #   @param length [Integer] The number of items to retrieve.
     #   @return [SortedSet]
     #   @example
-    #     s = Hamster::SortedSet["A", "B", "C", "D", "E", "F"]
-    #     s[2, 3]  # => Hamster::SortedSet["C", "D", "E"]
-    #     s[-2, 3] # => Hamster::SortedSet["E", "F"]
+    #     s = Immutable::SortedSet["A", "B", "C", "D", "E", "F"]
+    #     s[2, 3]  # => Immutable::SortedSet["C", "D", "E"]
+    #     s[-2, 3] # => Immutable::SortedSet["E", "F"]
     #     s[20, 1] # => nil
     #
     # @overload set.slice(index..end)
@@ -299,9 +299,9 @@ module Hamster
     #   @param range [Range] The range of indices to retrieve.
     #   @return [SortedSet]
     #   @example
-    #     s = Hamster::SortedSet["A", "B", "C", "D", "E", "F"]
-    #     s[2..3]    # => Hamster::SortedSet["C", "D"]
-    #     s[-2..100] # => Hamster::SortedSet["E", "F"]
+    #     s = Immutable::SortedSet["A", "B", "C", "D", "E", "F"]
+    #     s[2..3]    # => Immutable::SortedSet["C", "D"]
+    #     s[-2..100] # => Immutable::SortedSet["E", "F"]
     #     s[20..21]  # => nil
     def slice(arg, length = (missing_length = true))
       if missing_length
@@ -327,8 +327,8 @@ module Hamster
     # If any of the `indices` do not exist, they will be skipped.
     #
     # @example
-    #   s = Hamster::SortedSet["A", "B", "C", "D", "E", "F"]
-    #   s.values_at(2, 4, 5)   # => Hamster::SortedSet["C", "E", "F"]
+    #   s = Immutable::SortedSet["A", "B", "C", "D", "E", "F"]
+    #   s.values_at(2, 4, 5)   # => Immutable::SortedSet["C", "E", "F"]
     #
     # @param indices [Array] The indices to retrieve and gather into a new `SortedSet`
     # @return [SortedSet]
@@ -342,12 +342,12 @@ module Hamster
     # provided, returns an `Enumerator`.
     #
     # @example
-    #   Hamster::SortedSet["A", "B", "C"].each { |e| puts "Element: #{e}" }
+    #   Immutable::SortedSet["A", "B", "C"].each { |e| puts "Element: #{e}" }
     #
     #   Element: A
     #   Element: B
     #   Element: C
-    #   # => Hamster::SortedSet["A", "B", "C"]
+    #   # => Immutable::SortedSet["A", "B", "C"]
     #
     # @yield [item]
     # @return [self, Enumerator]
@@ -362,12 +362,12 @@ module Hamster
     # the block.
     #
     # @example
-    #   Hamster::SortedSet["A", "B", "C"].reverse_each { |e| puts "Element: #{e}" }
+    #   Immutable::SortedSet["A", "B", "C"].reverse_each { |e| puts "Element: #{e}" }
     #
     #   Element: C
     #   Element: B
     #   Element: A
-    #   # => Hamster::SortedSet["A", "B", "C"]
+    #   # => Immutable::SortedSet["A", "B", "C"]
     #
     # @return [self]
     def reverse_each(&block)
@@ -381,7 +381,7 @@ module Hamster
     # "lowest" element. (See `Enumerable#min`.)
     #
     # @example
-    #   Hamster::SortedSet["A", "B", "C"].min  # => "A"
+    #   Immutable::SortedSet["A", "B", "C"].min  # => "A"
     #
     # @return [Object]
     # @yield [a, b] Any number of times with different pairs of elements.
@@ -400,7 +400,7 @@ module Hamster
     # "highest" element. (See `Enumerable#max`.)
     #
     # @example
-    #   Hamster::SortedSet["A", "B", "C"].max  # => "C"
+    #   Immutable::SortedSet["A", "B", "C"].max  # => "C"
     #
     # @yield [a, b] Any number of times with different pairs of elements.
     # @return [Object]
@@ -418,8 +418,8 @@ module Hamster
     # true.
     #
     # @example
-    #   Hamster::SortedSet["Bird", "Cow", "Elephant"].select { |e| e.size >= 4 }
-    #   # => Hamster::SortedSet["Bird", "Elephant"]
+    #   Immutable::SortedSet["Bird", "Cow", "Elephant"].select { |e| e.size >= 4 }
+    #   # => Immutable::SortedSet["Bird", "Elephant"]
     #
     # @return [SortedSet]
     # @yield [item] Once for each item.
@@ -437,8 +437,8 @@ module Hamster
     # given, returns an `Enumerator`.
     #
     # @example
-    #   Hamster::SortedSet[1, 2, 3].map { |e| -(e * e) }
-    #   # => Hamster::SortedSet[-9, -4, -1]
+    #   Immutable::SortedSet[1, 2, 3].map { |e| -(e * e) }
+    #   # => Immutable::SortedSet[-9, -4, -1]
     #
     # @return [SortedSet, Enumerator]
     # @yield [item] Once for each item.
@@ -454,7 +454,7 @@ module Hamster
     # comparator is present.
     #
     # @example
-    #   Hamster::SortedSet["A", "B", "C"].include?("B")  # => true
+    #   Immutable::SortedSet["A", "B", "C"].include?("B")  # => true
     #
     # @param item [Object] The object to check for
     # @return [Boolean]
@@ -467,10 +467,10 @@ module Hamster
     # by the given block.
     #
     # @example
-    #   Hamster::SortedSet["Bird", "Cow", "Elephant"].sort { |a, b| a.size <=> b.size }
-    #   # => Hamster::SortedSet["Cow", "Bird", "Elephant"]
-    #   Hamster::SortedSet["Bird", "Cow", "Elephant"].sort_by { |e| e.size }
-    #   # => Hamster::SortedSet["Cow", "Bird", "Elephant"]
+    #   Immutable::SortedSet["Bird", "Cow", "Elephant"].sort { |a, b| a.size <=> b.size }
+    #   # => Immutable::SortedSet["Cow", "Bird", "Elephant"]
+    #   Immutable::SortedSet["Bird", "Cow", "Elephant"].sort_by { |e| e.size }
+    #   # => Immutable::SortedSet["Cow", "Bird", "Elephant"]
     #
     # @return [SortedSet]
     def sort(&block)
@@ -492,7 +492,7 @@ module Hamster
     #   rather than `O(N)`.
     #   @param obj [Object] The object to search for
     #   @example
-    #     s = Hamster::SortedSet[2, 4, 6, 8, 10]
+    #     s = Immutable::SortedSet[2, 4, 6, 8, 10]
     #     s.find_index(8)  # => 3
     # @overload find_index
     #   Return the index of the first object in this sorted set for which the
@@ -500,7 +500,7 @@ module Hamster
     #   @yield [element] An element in the sorted set
     #   @yieldreturn [Boolean] True if this is element matches
     #   @example
-    #     s = Hamster::SortedSet[2, 4, 6, 8, 10]
+    #     s = Immutable::SortedSet[2, 4, 6, 8, 10]
     #     s.find_index { |e| e > 7 }  # => 3
     #
     # @return [Integer] The index of the object, or `nil` if not found.
@@ -531,8 +531,8 @@ module Hamster
     # Drop the first `n` elements and return the rest in a new `SortedSet`.
     #
     # @example
-    #   Hamster::SortedSet["A", "B", "C", "D", "E", "F"].drop(2)
-    #   # => Hamster::SortedSet["C", "D", "E", "F"]
+    #   Immutable::SortedSet["A", "B", "C", "D", "E", "F"].drop(2)
+    #   # => Immutable::SortedSet["C", "D", "E", "F"]
     #
     # @param n [Integer] The number of elements to remove
     # @return [SortedSet]
@@ -543,8 +543,8 @@ module Hamster
     # Return only the first `n` elements in a new `SortedSet`.
     #
     # @example
-    #   Hamster::SortedSet["A", "B", "C", "D", "E", "F"].take(4)
-    #   # => Hamster::SortedSet["A", "B", "C", "D"]
+    #   Immutable::SortedSet["A", "B", "C", "D", "E", "F"].take(4)
+    #   # => Immutable::SortedSet["A", "B", "C", "D"]
     #
     # @param n [Integer] The number of elements to retain
     # @return [SortedSet]
@@ -557,8 +557,8 @@ module Hamster
     # `SortedSet`. If no block is given, an `Enumerator` is returned instead.
     #
     # @example
-    #   Hamster::SortedSet[2, 4, 6, 7, 8, 9].drop_while { |e| e.even? }
-    #   # => Hamster::SortedSet[7, 8, 9]
+    #   Immutable::SortedSet[2, 4, 6, 7, 8, 9].drop_while { |e| e.even? }
+    #   # => Immutable::SortedSet[7, 8, 9]
     #
     # @yield [item]
     # @return [SortedSet, Enumerator]
@@ -577,8 +577,8 @@ module Hamster
     # is given, an `Enumerator` is returned instead.
     #
     # @example
-    #   Hamster::SortedSet[2, 4, 6, 7, 8, 9].take_while { |e| e.even? }
-    #   # => Hamster::SortedSet[2, 4, 6]
+    #   Immutable::SortedSet[2, 4, 6, 7, 8, 9].take_while { |e| e.even? }
+    #   # => Immutable::SortedSet[2, 4, 6]
     #
     # @return [SortedSet, Enumerator]
     # @yield [item]
@@ -596,8 +596,8 @@ module Hamster
     # `other` can be any `Enumerable` object.
     #
     # @example
-    #   Hamster::SortedSet[1, 2] | Hamster::SortedSet[2, 3]
-    #   # => Hamster::SortedSet[1, 2, 3]
+    #   Immutable::SortedSet[1, 2] | Immutable::SortedSet[2, 3]
+    #   # => Immutable::SortedSet[1, 2, 3]
     #
     # @param other [Enumerable] The collection to merge with
     # @return [SortedSet]
@@ -612,8 +612,8 @@ module Hamster
     # this set and `other`. `other` can be any `Enumerable` object.
     #
     # @example
-    #   Hamster::SortedSet[1, 2] & Hamster::SortedSet[2, 3]
-    #   # => Hamster::SortedSet[2]
+    #   Immutable::SortedSet[1, 2] & Immutable::SortedSet[2, 3]
+    #   # => Immutable::SortedSet[2]
     #
     # @param other [Enumerable] The collection to intersect with
     # @return [SortedSet]
@@ -626,8 +626,8 @@ module Hamster
     # any `Enumerable` object.
     #
     # @example
-    #   Hamster::SortedSet[1, 2] - Hamster::SortedSet[2, 3]
-    #   # => Hamster::SortedSet[1]
+    #   Immutable::SortedSet[1, 2] - Immutable::SortedSet[2, 3]
+    #   # => Immutable::SortedSet[1]
     #
     # @param other [Enumerable] The collection to subtract from this set
     # @return [SortedSet]
@@ -641,8 +641,8 @@ module Hamster
     # set or of `other`, but not both. `other` can be any `Enumerable` object.
     #
     # @example
-    #   Hamster::SortedSet[1, 2] ^ Hamster::SortedSet[2, 3]
-    #   # => Hamster::SortedSet[1, 3]
+    #   Immutable::SortedSet[1, 2] ^ Immutable::SortedSet[2, 3]
+    #   # => Immutable::SortedSet[1, 3]
     #
     # @param other [Enumerable] The collection to take the exclusive disjunction of
     # @return [SortedSet]
@@ -654,7 +654,7 @@ module Hamster
     # Return `true` if all items in this set are also in `other`.
     #
     # @example
-    #   Hamster::SortedSet[2, 3].subset?(Hamster::SortedSet[1, 2, 3])  # => true
+    #   Immutable::SortedSet[2, 3].subset?(Immutable::SortedSet[1, 2, 3])  # => true
     #
     # @param other [Enumerable]
     # @return [Boolean]
@@ -666,7 +666,7 @@ module Hamster
     # Return `true` if all items in `other` are also in this set.
     #
     # @example
-    #   Hamster::SortedSet[1, 2, 3].superset?(Hamster::SortedSet[2, 3])  # => true
+    #   Immutable::SortedSet[1, 2, 3].superset?(Immutable::SortedSet[2, 3])  # => true
     #
     # @param other [Enumerable]
     # @return [Boolean]
@@ -678,8 +678,8 @@ module Hamster
     # one item which is not in this set.
     #
     # @example
-    #   Hamster::SortedSet[2, 3].proper_subset?(Hamster::SortedSet[1, 2, 3])     # => true
-    #   Hamster::SortedSet[1, 2, 3].proper_subset?(Hamster::SortedSet[1, 2, 3])  # => false
+    #   Immutable::SortedSet[2, 3].proper_subset?(Immutable::SortedSet[1, 2, 3])     # => true
+    #   Immutable::SortedSet[1, 2, 3].proper_subset?(Immutable::SortedSet[1, 2, 3])  # => false
     #
     # @param other [Enumerable]
     # @return [Boolean]
@@ -692,8 +692,8 @@ module Hamster
     # one item which is not in `other`.
     #
     # @example
-    #   Hamster::SortedSet[1, 2, 3].proper_superset?(Hamster::SortedSet[2, 3])     # => true
-    #   Hamster::SortedSet[1, 2, 3].proper_superset?(Hamster::SortedSet[1, 2, 3])  # => false
+    #   Immutable::SortedSet[1, 2, 3].proper_superset?(Immutable::SortedSet[2, 3])     # => true
+    #   Immutable::SortedSet[1, 2, 3].proper_superset?(Immutable::SortedSet[1, 2, 3])  # => false
     #
     # @param other [Enumerable]
     # @return [Boolean]
@@ -704,7 +704,7 @@ module Hamster
     # Return `true` if this set and `other` do not share any items.
     #
     # @example
-    #   Hamster::SortedSet[1, 2].disjoint?(Hamster::SortedSet[3, 4])  # => true
+    #   Immutable::SortedSet[1, 2].disjoint?(Immutable::SortedSet[3, 4])  # => true
     #
     # @param other [Enumerable]
     # @return [Boolean]
@@ -720,7 +720,7 @@ module Hamster
     # Return `true` if this set and `other` have at least one item in common.
     #
     # @example
-    #   Hamster::SortedSet[1, 2].intersect?(Hamster::SortedSet[2, 3])  # => true
+    #   Immutable::SortedSet[1, 2].intersect?(Immutable::SortedSet[2, 3])  # => true
     #
     # @param other [Enumerable]
     # @return [Boolean]
@@ -737,16 +737,16 @@ module Hamster
     #   Return a new `SortedSet` containing all items greater than `item`.
     #   @return [SortedSet]
     #   @example
-    #     s = Hamster::SortedSet[2, 4, 6, 8, 10]
+    #     s = Immutable::SortedSet[2, 4, 6, 8, 10]
     #     s.above(6)
-    #     # => Hamster::SortedSet[8, 10]
+    #     # => Immutable::SortedSet[8, 10]
     #  
     # @overload above(item)
     #   @yield [item] Once for each item greater than `item`, in order from
     #                 lowest to highest.
     #   @return [nil]
     #   @example
-    #     s = Hamster::SortedSet[2, 4, 6, 8, 10]
+    #     s = Immutable::SortedSet[2, 4, 6, 8, 10]
     #     s.above(6) { |e| puts "Element: #{e}" }
     #  
     #     Element: 8
@@ -768,16 +768,16 @@ module Hamster
     #   Return a new `SortedSet` containing all items less than `item`.
     #   @return [SortedSet]
     #   @example
-    #     s = Hamster::SortedSet[2, 4, 6, 8, 10]
+    #     s = Immutable::SortedSet[2, 4, 6, 8, 10]
     #     s.below(6)
-    #     # => Hamster::SortedSet[2, 4]
+    #     # => Immutable::SortedSet[2, 4]
     #  
     # @overload below(item)
     #   @yield [item] Once for each item less than `item`, in order from lowest
     #                 to highest.
     #   @return [nil]
     #   @example
-    #     s = Hamster::SortedSet[2, 4, 6, 8, 10]
+    #     s = Immutable::SortedSet[2, 4, 6, 8, 10]
     #     s.below(6) { |e| puts "Element: #{e}" }
     #  
     #     Element: 2
@@ -799,16 +799,16 @@ module Hamster
     #   Return a new `SortedSet` containing all items greater than or equal `item`.
     #   @return [SortedSet]
     #   @example
-    #     s = Hamster::SortedSet[2, 4, 6, 8, 10]
+    #     s = Immutable::SortedSet[2, 4, 6, 8, 10]
     #     s.from(6)
-    #     # => Hamster::SortedSet[6, 8, 10]
+    #     # => Immutable::SortedSet[6, 8, 10]
     #  
     # @overload from(item)
     #   @yield [item] Once for each item greater than or equal to `item`, in
     #                 order from lowest to highest.
     #   @return [nil]
     #   @example
-    #     s = Hamster::SortedSet[2, 4, 6, 8, 10]
+    #     s = Immutable::SortedSet[2, 4, 6, 8, 10]
     #     s.from(6) { |e| puts "Element: #{e}" }
     #  
     #     Element: 6
@@ -833,16 +833,16 @@ module Hamster
     #
     #   @return [SortedSet]
     #   @example
-    #     s = Hamster::SortedSet[2, 4, 6, 8, 10]
+    #     s = Immutable::SortedSet[2, 4, 6, 8, 10]
     #     s.upto(6)
-    #     # => Hamster::SortedSet[2, 4, 6]
+    #     # => Immutable::SortedSet[2, 4, 6]
     #  
     # @overload up_to(item)
     #   @yield [item] Once for each item less than or equal to `item`, in order
     #                 from lowest to highest.
     #   @return [nil]
     #   @example
-    #     s = Hamster::SortedSet[2, 4, 6, 8, 10]
+    #     s = Immutable::SortedSet[2, 4, 6, 8, 10]
     #     s.up_to(6) { |e| puts "Element: #{e}" }
     #  
     #     Element: 2
@@ -867,16 +867,16 @@ module Hamster
     #
     #   @return [SortedSet]
     #   @example
-    #     s = Hamster::SortedSet[2, 4, 6, 8, 10]
+    #     s = Immutable::SortedSet[2, 4, 6, 8, 10]
     #     s.between(5, 8)
-    #     # => Hamster::SortedSet[6, 8]
+    #     # => Immutable::SortedSet[6, 8]
     #  
     # @overload between(item)
     #   @yield [item] Once for each item less than or equal to `to` and greater
     #                 than or equal to `from`, in order from lowest to highest.
     #   @return [nil]
     #   @example
-    #     s = Hamster::SortedSet[2, 4, 6, 8, 10]
+    #     s = Immutable::SortedSet[2, 4, 6, 8, 10]
     #     s.between(5, 8) { |e| puts "Element: #{e}" }
     #  
     #     Element: 6
@@ -896,7 +896,7 @@ module Hamster
     # Return a randomly chosen item from this set. If the set is empty, return `nil`.
     #
     # @example
-    #   Hamster::SortedSet[1, 2, 3, 4, 5].sample  # => 2
+    #   Immutable::SortedSet[1, 2, 3, 4, 5].sample  # => 2
     #
     # @return [Object]
     def sample
@@ -1460,5 +1460,5 @@ module Hamster
   # this one rather than creating many empty sorted sets using `SortedSet.new`.
   #
   # @private
-  EmptySortedSet = Hamster::SortedSet.empty
+  EmptySortedSet = Immutable::SortedSet.empty
 end

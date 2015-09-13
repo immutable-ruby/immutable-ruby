@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/sorted_set"
 
-describe Hamster::SortedSet do
+describe Immutable::SortedSet do
   describe "#below" do
     context "when called without a block" do
       it "returns a sorted set of all items lower than the argument" do
@@ -11,7 +11,7 @@ describe Hamster::SortedSet do
           threshold = rand(1000)
           result    = set.below(threshold)
           array     = items.select { |x| x < threshold }.sort
-          result.class.should be(Hamster::SortedSet)
+          result.class.should be(Immutable::SortedSet)
           result.size.should == array.size
           result.to_a.should == array
         end
@@ -44,7 +44,7 @@ describe Hamster::SortedSet do
     context "with an argument lower than all the values in the set" do
       it "returns an empty set" do
         result = SS.new(1..100).below(1)
-        result.class.should be(Hamster::SortedSet)
+        result.class.should be(Immutable::SortedSet)
         result.should be_empty
       end
     end

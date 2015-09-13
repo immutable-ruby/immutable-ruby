@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/set"
 
-describe Hamster::SortedSet do
+describe Immutable::SortedSet do
   describe "#max" do
     context "with a block" do
       [

@@ -18,15 +18,15 @@ describe Hamster do
         "d" => Immutable::Set[5, 6, 7],
         "e" => Immutable::Hash["f" => 8, "g" => 9],
         "h" => Regexp.new("ijk"),
-        "l" => Hamster::SortedSet.new([1, 2, 3])] ],
+        "l" => Immutable::SortedSet.new([1, 2, 3])] ],
     [ {}, Immutable::Hash[] ],
     [ {"a" => 1, "b" => 2, "c" => 3}, Immutable::Hash["a" => 1, "b" => 2, "c" => 3] ],
     [ [], Immutable::Vector[] ],
     [ [1, 2, 3], Immutable::Vector[1, 2, 3] ],
     [ ::Set.new, Immutable::Set[] ],
     [ ::Set.new([1, 2, 3]), Immutable::Set[1, 2, 3] ],
-    [ ::SortedSet.new, Hamster::SortedSet[] ],
-    [ ::SortedSet.new([1, 2, 3]), Hamster::SortedSet[1, 2, 3] ],
+    [ ::SortedSet.new, Immutable::SortedSet[] ],
+    [ ::SortedSet.new([1, 2, 3]), Immutable::SortedSet[1, 2, 3] ],
     [ 42, 42 ],
     [ STDOUT, STDOUT ]
   ]

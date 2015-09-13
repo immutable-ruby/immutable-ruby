@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/sorted_set"
 
-describe Hamster::SortedSet do
+describe Immutable::SortedSet do
   [:map, :collect].each do |method|
     describe "##{method}" do
       context "when empty" do

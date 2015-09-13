@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/sorted_set"
 
-describe Hamster::SortedSet do
+describe Immutable::SortedSet do
   let(:sorted_set) { SS["A", "B", "C"] }
 
   describe "#delete" do
@@ -43,7 +43,7 @@ describe Hamster::SortedSet do
 
       context "when the set is in natural order" do
         it "returns the canonical empty set" do
-          sorted_set.delete("B").delete("C").delete("A").should be(Hamster::EmptySortedSet)
+          sorted_set.delete("B").delete("C").delete("A").should be(Immutable::EmptySortedSet)
         end
       end
     end

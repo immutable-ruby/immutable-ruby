@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/sorted_set"
 
-describe Hamster::SortedSet do
+describe Immutable::SortedSet do
   describe "#between" do
     context "when called without a block" do
       it "returns a sorted set of all items from the first argument to the second" do
@@ -11,7 +11,7 @@ describe Hamster::SortedSet do
           from,to = [rand(1000),rand(1000)].sort
           result  = set.between(from, to)
           array   = items.select { |x| x >= from && x <= to }.sort
-          result.class.should be(Hamster::SortedSet)
+          result.class.should be(Immutable::SortedSet)
           result.size.should == array.size
           result.to_a.should == array
         end
@@ -44,7 +44,7 @@ describe Hamster::SortedSet do
     context "with a 'to' argument lower than the 'from' argument" do
       it "returns an empty set" do
         result = SS.new(1..100).between(6, 5)
-        result.class.should be(Hamster::SortedSet)
+        result.class.should be(Immutable::SortedSet)
         result.should be_empty
       end
     end

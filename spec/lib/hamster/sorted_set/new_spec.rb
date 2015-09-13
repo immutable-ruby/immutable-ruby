@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/sorted_set"
 
-describe Hamster::SortedSet do
+describe Immutable::SortedSet do
   describe ".new" do
     it "accepts a single enumerable argument and creates a new sorted set" do
       sorted_set = SS.new([1,2,3])
@@ -20,7 +20,7 @@ describe Hamster::SortedSet do
     end
 
     it "is amenable to overriding of #initialize" do
-      class SnazzySortedSet < Hamster::SortedSet
+      class SnazzySortedSet < Immutable::SortedSet
         def initialize
           super(['SNAZZY!!!'])
         end
@@ -53,7 +53,7 @@ describe Hamster::SortedSet do
 
     context "from a subclass" do
       it "returns a frozen instance of the subclass" do
-        subclass = Class.new(Hamster::SortedSet)
+        subclass = Class.new(Immutable::SortedSet)
         instance = subclass.new(["some", "values"])
         instance.class.should be subclass
         instance.frozen?.should be true

@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/sorted_set"
 
-describe Hamster::SortedSet do
+describe Immutable::SortedSet do
   describe "#empty?" do
     [
       [[], true],
@@ -26,7 +26,7 @@ describe Hamster::SortedSet do
 
     context "from a subclass" do
       it "returns an empty instance of the subclass" do
-        subclass = Class.new(Hamster::SortedSet)
+        subclass = Class.new(Immutable::SortedSet)
         subclass.empty.class.should be(subclass)
         subclass.empty.should be_empty
       end

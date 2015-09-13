@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/sorted_set"
 
-describe Hamster::SortedSet do
+describe Immutable::SortedSet do
   [
     [:sort, ->(left, right) { left.length <=> right.length }],
     [:sort_by, ->(item) { item.length }],
@@ -22,7 +22,7 @@ describe Hamster::SortedSet do
             end
 
             it "returns #{expected.inspect}" do
-              sorted_set.send(method, &comparator).class.should be(Hamster::SortedSet)
+              sorted_set.send(method, &comparator).class.should be(Immutable::SortedSet)
               sorted_set.send(method, &comparator).to_a.should == expected
             end
           end
@@ -34,7 +34,7 @@ describe Hamster::SortedSet do
             end
 
             it "returns #{expected.sort.inspect}" do
-              sorted_set.send(method).class.should be(Hamster::SortedSet)
+              sorted_set.send(method).class.should be(Immutable::SortedSet)
               sorted_set.send(method).to_a.should == expected.sort
             end
           end

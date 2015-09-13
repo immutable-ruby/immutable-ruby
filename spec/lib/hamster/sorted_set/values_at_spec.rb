@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/sorted_set"
 
-describe Hamster::SortedSet do
+describe Immutable::SortedSet do
   describe "#values_at" do
     let(:sorted_set) { SS['a', 'b', 'c'] }
 
@@ -25,7 +25,7 @@ describe Hamster::SortedSet do
 
     context "from a subclass" do
       it "returns an instance of the subclass" do
-        subclass = Class.new(Hamster::SortedSet)
+        subclass = Class.new(Immutable::SortedSet)
         instance = subclass.new([1,2,3])
         instance.values_at(1,2).class.should be(subclass)
       end

@@ -1,9 +1,9 @@
 require "spec_helper"
 require "hamster/sorted_set"
 
-describe Hamster::SortedSet do
+describe Immutable::SortedSet do
   describe "#sample" do
-    let(:sorted_set) { Hamster::SortedSet.new(1..10) }
+    let(:sorted_set) { Immutable::SortedSet.new(1..10) }
 
     it "returns a randomly chosen item" do
       chosen = 100.times.map { sorted_set.sample }

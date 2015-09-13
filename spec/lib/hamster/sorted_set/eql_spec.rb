@@ -2,7 +2,7 @@ require "spec_helper"
 require "set"
 require "hamster/set"
 
-describe Hamster::SortedSet do
+describe Immutable::SortedSet do
   let(:set) { SS[*values] }
   let(:comparison) { SS[*comparison_values] }
 
@@ -32,8 +32,8 @@ describe Hamster::SortedSet do
       include_examples "comparing something which is not a sorted set"
     end
 
-    context "when comparing with a subclass of Hamster::SortedSet" do
-      let(:comparison) { Class.new(Hamster::SortedSet).new(%w[A B C]) }
+    context "when comparing with a subclass of Immutable::SortedSet" do
+      let(:comparison) { Class.new(Immutable::SortedSet).new(%w[A B C]) }
       include_examples "comparing something which is not a sorted set"
     end
 

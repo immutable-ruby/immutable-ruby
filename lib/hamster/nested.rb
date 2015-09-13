@@ -13,7 +13,7 @@ module Hamster
     # structure from a nested Ruby object `obj`.  This method recursively
     # "walks" the Ruby object, converting Ruby `Hash` to {Immutable::Hash}, Ruby
     # `Array` to {Immutable::Vector}, Ruby `Set` to {Immutable::Set}, and Ruby
-    # `SortedSet` to {Hamster::SortedSet}.  Other objects are left as-is.
+    # `SortedSet` to {Immutable::SortedSet}.  Other objects are left as-is.
     #
     # @example
     #   h = Hamster.from({ "a" => [1, 2], "b" => "c" })
@@ -33,11 +33,11 @@ module Hamster
       when ::SortedSet
         # This clause must go before ::Set clause, since ::SortedSet is a ::Set.
         res = obj.map { |element| from(element) }
-        Hamster::SortedSet.new(res)
+        Immutable::SortedSet.new(res)
       when ::Set
         res = obj.map { |element| from(element) }
         Immutable::Set.new(res)
-      when Immutable::Vector, Immutable::Set, Hamster::SortedSet
+      when Immutable::Vector, Immutable::Set, Immutable::SortedSet
         obj.map { |element| from(element) }
       else
         obj
@@ -47,7 +47,7 @@ module Hamster
     # Create a Ruby object from Hamster data. This method recursively "walks"
     # the Hamster object, converting {Immutable::Hash} to Ruby `Hash`,
     # {Immutable::Vector} and {Hamster::Deque} to Ruby `Array`, {Immutable::Set}
-    # to Ruby `Set`, and {Hamster::SortedSet} to Ruby `SortedSet`.  Other
+    # to Ruby `Set`, and {Immutable::SortedSet} to Ruby `SortedSet`.  Other
     # objects are left as-is.
     #
     # @example
@@ -63,7 +63,7 @@ module Hamster
         obj.each_with_object([]) { |element, arr| arr << to_ruby(element) }
       when Immutable::Set, ::Set
         obj.each_with_object(::Set.new) { |element, set| set << to_ruby(element) }
-      when Hamster::SortedSet, ::SortedSet
+      when Immutable::SortedSet, ::SortedSet
         obj.each_with_object(::SortedSet.new) { |element, set| set << to_ruby(element) }
       when Hamster::Deque
         obj.to_a.tap { |arr| arr.map! { |element| to_ruby(element) }}

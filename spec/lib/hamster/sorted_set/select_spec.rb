@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/sorted_set"
 
-describe Hamster::SortedSet do
+describe Immutable::SortedSet do
   [:select, :find_all].each do |method|
     describe "##{method}" do
       let(:sorted_set) { SS["A", "B", "C"] }
@@ -44,13 +44,13 @@ describe Hamster::SortedSet do
         end
 
         it "returns the canonical empty set" do
-          sorted_set.send(method) { |item| false }.should equal(Hamster::EmptySortedSet)
+          sorted_set.send(method) { |item| false }.should equal(Immutable::EmptySortedSet)
         end
       end
 
       context "from a subclass" do
         it "returns an instance of the same class" do
-          subclass = Class.new(Hamster::SortedSet)
+          subclass = Class.new(Immutable::SortedSet)
           instance = subclass.new(['A', 'B', 'C'])
           instance.send(method) { true }.class.should be(subclass)
           instance.send(method) { false }.class.should be(subclass)
