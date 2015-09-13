@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/set"
 
-describe Hamster::Set do
+describe Immutable::Set do
   describe ".new" do
     it "initializes a new set" do
       set = S.new([1,2,3])
@@ -24,7 +24,7 @@ describe Hamster::Set do
 
     context "from a subclass" do
       it "returns a frozen instance of the subclass" do
-        subclass = Class.new(Hamster::Set)
+        subclass = Class.new(Immutable::Set)
         instance = subclass.new(["some", "values"])
         instance.class.should be subclass
         instance.should be_frozen
@@ -32,7 +32,7 @@ describe Hamster::Set do
     end
 
     it "is amenable to overriding of #initialize" do
-      class SnazzySet < Hamster::Set
+      class SnazzySet < Immutable::Set
         def initialize
           super(['SNAZZY!!!'])
         end

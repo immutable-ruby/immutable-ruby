@@ -2,7 +2,7 @@ require "spec_helper"
 require "hamster/set"
 require "hamster/list"
 
-describe Hamster::Set do
+describe Immutable::Set do
   describe "#to_list" do
     [
       [],

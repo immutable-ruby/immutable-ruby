@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/set"
 
-describe Hamster::Set do
+describe Immutable::Set do
   [:union, :|, :+, :merge].each do |method|
     describe "##{method}" do
       [
@@ -44,7 +44,7 @@ describe Hamster::Set do
 
         context "from a subclass" do
           it "returns an instance of the subclass" do
-            subclass = Class.new(Hamster::Set)
+            subclass = Class.new(Immutable::Set)
             subclass.new(a).send(method, S.new(b)).class.should be(subclass)
             subclass.new(b).send(method, S.new(a)).class.should be(subclass)
           end

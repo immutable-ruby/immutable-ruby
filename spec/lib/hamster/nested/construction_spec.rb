@@ -15,7 +15,7 @@ describe Hamster do
       Immutable::Hash[
         "a" => 1,
         "b" => Immutable::Vector[2, Immutable::Hash["c" => 3], 4],
-        "d" => Hamster::Set[5, 6, 7],
+        "d" => Immutable::Set[5, 6, 7],
         "e" => Immutable::Hash["f" => 8, "g" => 9],
         "h" => Regexp.new("ijk"),
         "l" => Hamster::SortedSet.new([1, 2, 3])] ],
@@ -23,8 +23,8 @@ describe Hamster do
     [ {"a" => 1, "b" => 2, "c" => 3}, Immutable::Hash["a" => 1, "b" => 2, "c" => 3] ],
     [ [], Immutable::Vector[] ],
     [ [1, 2, 3], Immutable::Vector[1, 2, 3] ],
-    [ ::Set.new, Hamster::Set[] ],
-    [ ::Set.new([1, 2, 3]), Hamster::Set[1, 2, 3] ],
+    [ ::Set.new, Immutable::Set[] ],
+    [ ::Set.new([1, 2, 3]), Immutable::Set[1, 2, 3] ],
     [ ::SortedSet.new, Hamster::SortedSet[] ],
     [ ::SortedSet.new([1, 2, 3]), Hamster::SortedSet[1, 2, 3] ],
     [ 42, 42 ],
@@ -46,12 +46,12 @@ describe Hamster do
           "a" => "b",
           "c" => {"d" => "e"},
           "f" => Immutable::Vector["g", "h", []],
-          "i" => Immutable::Hash["j" => {}, "k" => Hamster::Set[[], {}]] }
+          "i" => Immutable::Hash["j" => {}, "k" => Immutable::Set[[], {}]] }
         expected_result = Immutable::Hash[
           "a" => "b",
           "c" => Immutable::Hash["d" => "e"],
           "f" => Immutable::Vector["g", "h", Immutable::EmptyVector],
-          "i" => Immutable::Hash["j" => Immutable::EmptyHash, "k" => Hamster::Set[Immutable::EmptyVector, Immutable::EmptyHash]] ]
+          "i" => Immutable::Hash["j" => Immutable::EmptyHash, "k" => Immutable::Set[Immutable::EmptyVector, Immutable::EmptyHash]] ]
         Hamster.from(input).should eql(expected_result)
       end
     end

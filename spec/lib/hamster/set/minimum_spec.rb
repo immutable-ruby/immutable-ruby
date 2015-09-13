@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/set"
 
-describe Hamster::Set do
+describe Immutable::Set do
   describe "#min" do
     context "with a block" do
       [

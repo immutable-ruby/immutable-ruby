@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/set"
 
-describe Hamster::Set do
+describe Immutable::Set do
   [:reject, :delete_if].each do |method|
     describe "##{method}" do
       let(:set) { S["A", "B", "C"] }

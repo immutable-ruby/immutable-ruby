@@ -592,7 +592,7 @@ module Immutable
     #
     # @return [Set]
     def keys
-      Hamster::Set.alloc(@trie)
+      Set.alloc(@trie)
     end
 
     # Return a new {Vector} populated with the values from this `Hash`.

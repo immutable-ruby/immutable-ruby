@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/set"
 
-describe Hamster::Set do
+describe Immutable::Set do
   let(:set) { S["A", "B", "C"] }
 
   describe "#delete" do
@@ -29,7 +29,7 @@ describe Hamster::Set do
 
     context "when removing the last value in a set" do
       it "returns the canonical empty set" do
-        set.delete("B").delete("C").delete("A").should be(Hamster::EmptySet)
+        set.delete("B").delete("C").delete("A").should be(Immutable::EmptySet)
       end
     end
 

@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/set"
 
-describe Hamster::Set do
+describe Immutable::Set do
   describe "#sample" do
     let(:set) { S.new(1..10) }
 

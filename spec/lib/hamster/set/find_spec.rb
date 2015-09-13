@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/set"
 
-describe Hamster::Set do
+describe Immutable::Set do
   [:find, :detect].each do |method|
     describe "##{method}" do
       [

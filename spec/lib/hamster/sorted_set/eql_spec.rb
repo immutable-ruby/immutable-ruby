@@ -27,8 +27,8 @@ describe Hamster::SortedSet do
       include_examples "comparing something which is not a sorted set"
     end
 
-    context "when comparing to a Hamster::Set" do
-      let(:comparison) { Hamster::Set.new(%w[A B C]) }
+    context "when comparing to an Immutable::Set" do
+      let(:comparison) { Immutable::Set.new(%w[A B C]) }
       include_examples "comparing something which is not a sorted set"
     end
 

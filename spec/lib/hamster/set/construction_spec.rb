@@ -1,12 +1,12 @@
 require "spec_helper"
 require "hamster/set"
 
-describe Hamster::Set do
+describe Immutable::Set do
   describe ".set" do
     context "with no values" do
       it "returns the empty set" do
         S.empty.should be_empty
-        S.empty.should equal(Hamster::EmptySet)
+        S.empty.should equal(Immutable::EmptySet)
       end
     end
 

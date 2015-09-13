@@ -2,7 +2,7 @@ require "spec_helper"
 require "hamster/set"
 require 'set'
 
-describe Hamster::Set do
+describe Immutable::Set do
   [:include?, :member?].each do |method|
     describe "##{method}" do
       let(:set) { S["A", "B", "C", 2.0, nil] }

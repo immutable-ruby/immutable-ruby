@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/set"
 
-describe Hamster::Set do
+describe Immutable::Set do
   describe "#count" do
     [
       [[], 0],
@@ -29,7 +29,7 @@ describe Hamster::Set do
     end
 
     it "works on large sets" do
-      set = Hamster::Set.new(1..2000)
+      set = Immutable::Set.new(1..2000)
       set.count.should == 2000
       set.count(&:odd?).should == 1000
     end

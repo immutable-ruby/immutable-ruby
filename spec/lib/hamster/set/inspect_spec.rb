@@ -1,11 +1,11 @@
 require "spec_helper"
 require "hamster/set"
 
-describe Hamster::Set do
+describe Immutable::Set do
   describe "#inspect" do
     [
-      [[], "Hamster::Set[]"],
-      [["A"], 'Hamster::Set["A"]'],
+      [[], "Immutable::Set[]"],
+      [["A"], 'Immutable::Set["A"]'],
     ].each do |values, expected|
       describe "on #{values.inspect}" do
         let(:set) { S[*values] }
@@ -24,7 +24,7 @@ describe Hamster::Set do
       let(:set) { S["A", "B", "C"] }
 
       it "returns a programmer-readable representation of the set contents" do
-        set.inspect.should match(/^Hamster::Set\["[A-C]", "[A-C]", "[A-C]"\]$/)
+        set.inspect.should match(/^Immutable::Set\["[A-C]", "[A-C]", "[A-C]"\]$/)
       end
 
       it "returns a string which can be eval'd to get an equivalent set" do
@@ -33,7 +33,7 @@ describe Hamster::Set do
     end
 
     context "from a subclass" do
-      MySet = Class.new(Hamster::Set)
+      MySet = Class.new(Immutable::Set)
       let(:set) { MySet[1, 2] }
 
       it "returns a programmer-readable representation of the set contents" do

@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/set"
 
-describe Hamster::Set do
+describe Immutable::Set do
   describe "#clear" do
     [
       [],
@@ -24,7 +24,7 @@ describe Hamster::Set do
 
     context "from a subclass" do
       it "returns an empty instance of the subclass" do
-        subclass = Class.new(Hamster::Set)
+        subclass = Class.new(Immutable::Set)
         instance = subclass.new([:a, :b, :c, :d])
         instance.clear.class.should be(subclass)
         instance.clear.should be_empty

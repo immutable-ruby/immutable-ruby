@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/set"
 
-describe Hamster::Set do
+describe Immutable::Set do
   [:select, :find_all].each do |method|
     describe "##{method}" do
       let(:set) { S["A", "B", "C"] }
@@ -43,13 +43,13 @@ describe Hamster::Set do
         end
 
         it "returns the canonical empty set" do
-          result.should equal(Hamster::EmptySet)
+          result.should equal(Immutable::EmptySet)
         end
       end
 
       context "from a subclass" do
         it "returns an instance of the same class" do
-          subclass = Class.new(Hamster::Set)
+          subclass = Class.new(Immutable::Set)
           instance = subclass.new(['A', 'B', 'C'])
           instance.send(method) { true }.class.should be(subclass)
           instance.send(method) { false }.class.should be(subclass)

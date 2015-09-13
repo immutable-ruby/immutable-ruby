@@ -12,7 +12,7 @@ describe :Hamster do
 
   describe :Set do
     it "can be loaded separately" do
-      system(%{ruby -e "$:.unshift('#{hamster_lib_dir}'); require 'hamster/set'; Hamster::Set.new"}).should be(true)
+      system(%{ruby -e "$:.unshift('#{hamster_lib_dir}'); require 'hamster/set'; Immutable::Set.new"}).should be(true)
     end
   end
 

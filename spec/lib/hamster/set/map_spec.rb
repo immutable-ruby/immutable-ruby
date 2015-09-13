@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/set"
 
-describe Hamster::Set do
+describe Immutable::Set do
   [:map, :collect].each do |method|
     describe "##{method}" do
       context "when empty" do
@@ -34,7 +34,7 @@ describe Hamster::Set do
 
       context "from a subclass" do
         it "returns an instance of the subclass" do
-          subclass = Class.new(Hamster::Set)
+          subclass = Class.new(Immutable::Set)
           instance = subclass['a', 'b']
           instance.map { |item| item.upcase }.class.should be(subclass)
         end
@@ -44,7 +44,7 @@ describe Hamster::Set do
         it "filters out the duplicates" do
           set = S.new('aa'..'zz')
           result = set.map { |s| s[0] }
-          result.should eql(Hamster::Set.new('a'..'z'))
+          result.should eql(Immutable::Set.new('a'..'z'))
           result.size.should == 26
         end
       end

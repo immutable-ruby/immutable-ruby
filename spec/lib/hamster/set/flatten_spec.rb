@@ -38,7 +38,7 @@ describe Hamster do
 
     context "from a subclass" do
       it "returns an instance of the subclass" do
-        subclass = Class.new(Hamster::Set)
+        subclass = Class.new(Immutable::Set)
         subclass.new.flatten.class.should be(subclass)
         subclass.new([S[1], S[2]]).flatten.class.should be(subclass)
       end

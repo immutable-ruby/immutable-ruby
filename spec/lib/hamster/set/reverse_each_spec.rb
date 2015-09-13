@@ -2,7 +2,7 @@ require "spec_helper"
 require "set"
 require "hamster/set"
 
-describe Hamster::Set do
+describe Immutable::Set do
   let(:set) { S["A", "B", "C"] }
 
   describe "#reverse_each" do

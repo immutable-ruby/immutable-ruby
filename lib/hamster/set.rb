@@ -5,16 +5,16 @@ require "hamster/trie"
 require "hamster/sorted_set"
 require "set"
 
-module Hamster
+module Immutable
 
-  # `Hamster::Set` is a collection of unordered values with no duplicates. Testing whether
+  # `Immutable::Set` is a collection of unordered values with no duplicates. Testing whether
   # an object is present in the `Set` can be done in constant time. `Set` is also `Enumerable`, so you can
   # iterate over the members of the set with {#each}, transform them with {#map}, filter
   # them with {#select}, and so on. Some of the `Enumerable` methods are overridden to
-  # return Hamster collections.
+  # return `immutable-ruby` collections.
   #
   # Like the `Set` class in Ruby's standard library, which we will call RubySet,
-  # `Hamster::Set` defines equivalency of objects using `#hash` and `#eql?`. No two
+  # `Immutable::Set` defines equivalency of objects using `#hash` and `#eql?`. No two
   # objects with the same `#hash` code, and which are also `#eql?`, can coexist in the
   # same `Set`. If one is already in the `Set`, attempts to add another one will have
   # no effect.
@@ -28,26 +28,26 @@ module Hamster
   #
   # A `Set` can be created in either of the following ways:
   #
-  #     Hamster::Set.new([1, 2, 3]) # any Enumerable can be used to initialize
-  #     Hamster::Set['A', 'B', 'C', 'D']
+  #     Immutable::Set.new([1, 2, 3]) # any Enumerable can be used to initialize
+  #     Immutable::Set['A', 'B', 'C', 'D']
   #
   # The latter 2 forms of initialization can be used with your own, custom subclasses
-  # of `Hamster::Set`.
+  # of `Immutable::Set`.
   #
-  # Unlike RubySet, all methods which you might expect to "modify" a `Hamster::Set`
+  # Unlike RubySet, all methods which you might expect to "modify" an `Immutable::Set`
   # actually return a new set and leave the existing one unchanged.
   #
   # @example
-  #   set1 = Hamster::Set[1, 2] # => Hamster::Set[1, 2]
-  #   set2 = Hamster::Set[1, 2] # => Hamster::Set[1, 2]
+  #   set1 = Immutable::Set[1, 2] # => Immutable::Set[1, 2]
+  #   set2 = Immutable::Set[1, 2] # => Immutable::Set[1, 2]
   #   set1 == set2              # => true
-  #   set3 = set1.add("foo")    # => Hamster::Set[1, 2, "foo"]
-  #   set3 - set2               # => Hamster::Set["foo"]
+  #   set3 = set1.add("foo")    # => Immutable::Set[1, 2, "foo"]
+  #   set3 - set2               # => Immutable::Set["foo"]
   #   set3.subset?(set1)        # => false
   #   set1.subset?(set3)        # => true
   #
   class Set
-    include Enumerable
+    include Hamster::Enumerable
 
     class << self
       # Create a new `Set` populated with the given items.
@@ -69,13 +69,13 @@ module Hamster
       #
       # @return [Set]
       # @private
-      def alloc(trie = EmptyTrie)
+      def alloc(trie = Hamster::EmptyTrie)
         allocate.tap { |s| s.instance_variable_set(:@trie, trie) }.freeze
       end
     end
 
     def initialize(items=[])
-      @trie = Trie.new(0)
+      @trie = Hamster::Trie.new(0)
       items.each { |item| @trie.put!(item, nil) }
       freeze
     end
@@ -97,8 +97,8 @@ module Hamster
     # return `self`.
     #
     # @example
-    #   Hamster::Set[1, 2, 3].add(4) # => Hamster::Set[1, 2, 4, 3]
-    #   Hamster::Set[1, 2, 3].add(2) # => Hamster::Set[1, 2, 3]
+    #   Immutable::Set[1, 2, 3].add(4) # => Immutable::Set[1, 2, 4, 3]
+    #   Immutable::Set[1, 2, 3].add(2) # => Immutable::Set[1, 2, 3]
     #
     # @param item [Object] The object to add
     # @return [Set]
@@ -111,8 +111,8 @@ module Hamster
     # Otherwise, return `false`.
     #
     # @example
-    #   Hamster::Set[1, 2, 3].add?(4) # => Hamster::Set[1, 2, 4, 3]
-    #   Hamster::Set[1, 2, 3].add?(2) # => false
+    #   Immutable::Set[1, 2, 3].add?(4) # => Immutable::Set[1, 2, 4, 3]
+    #   Immutable::Set[1, 2, 3].add?(2) # => false
     #
     # @param item [Object] The object to add
     # @return [Set, false]
@@ -124,8 +124,8 @@ module Hamster
     # return `self`.
     #
     # @example
-    #   Hamster::Set[1, 2, 3].delete(1)  # => Hamster::Set[2, 3]
-    #   Hamster::Set[1, 2, 3].delete(99) # => Hamster::Set[1, 2, 3]
+    #   Immutable::Set[1, 2, 3].delete(1)  # => Immutable::Set[2, 3]
+    #   Immutable::Set[1, 2, 3].delete(99) # => Immutable::Set[1, 2, 3]
     #
     # @param item [Object] The object to remove
     # @return [Set]
@@ -138,8 +138,8 @@ module Hamster
     # Otherwise, return `false`.
     #
     # @example
-    #   Hamster::Set[1, 2, 3].delete?(1)  # => Hamster::Set[2, 3]
-    #   Hamster::Set[1, 2, 3].delete?(99) # => false
+    #   Immutable::Set[1, 2, 3].delete?(1)  # => Immutable::Set[2, 3]
+    #   Immutable::Set[1, 2, 3].delete?(99) # => false
     #
     # @param item [Object] The object to remove
     # @return [Set, false]
@@ -152,11 +152,11 @@ module Hamster
     # no block is given, an `Enumerator` is returned instead.
     #
     # @example
-    #   Hamster::Set["Dog", "Elephant", "Lion"].each { |e| puts e }
+    #   Immutable::Set["Dog", "Elephant", "Lion"].each { |e| puts e }
     #   Elephant
     #   Dog
     #   Lion
-    #   # => Hamster::Set["Dog", "Elephant", "Lion"]
+    #   # => Immutable::Set["Dog", "Elephant", "Lion"]
     #
     # @yield [item] Once for each item.
     # @return [self, Enumerator]
@@ -171,11 +171,11 @@ module Hamster
     # returned instead.
     #
     # @example
-    #   Hamster::Set["Dog", "Elephant", "Lion"].reverse_each { |e| puts e }
+    #   Immutable::Set["Dog", "Elephant", "Lion"].reverse_each { |e| puts e }
     #   Lion
     #   Dog
     #   Elephant
-    #   # => Hamster::Set["Dog", "Elephant", "Lion"]
+    #   # => Immutable::Set["Dog", "Elephant", "Lion"]
     #
     # @yield [item] Once for each item.
     # @return [self]
@@ -188,8 +188,8 @@ module Hamster
     # Return a new `Set` with all the items for which the block returns true.
     #
     # @example
-    #   Hamster::Set["Elephant", "Dog", "Lion"].select { |e| e.size >= 4 }
-    #   # => Hamster::Set["Elephant", "Lion"]
+    #   Immutable::Set["Elephant", "Dog", "Lion"].select { |e| e.size >= 4 }
+    #   # => Immutable::Set["Elephant", "Lion"]
     # @yield [item] Once for each item.
     # @return [Set]
     def select
@@ -205,8 +205,8 @@ module Hamster
     # an `Enumerator` is returned instead.
     #
     # @example
-    #   Hamster::Set["Cat", "Elephant", "Dog", "Lion"].map { |e| e.size }
-    #   # => Hamster::Set[8, 4, 3]
+    #   Immutable::Set["Cat", "Elephant", "Dog", "Lion"].map { |e| e.size }
+    #   # => Immutable::Set[8, 4, 3]
     #
     # @yield [item] Once for each item.
     # @return [Set]
@@ -222,8 +222,8 @@ module Hamster
     # to the given object is present.
     #
     # @example
-    #   Hamster::Set["A", "B", "C"].include?("B") # => true
-    #   Hamster::Set["A", "B", "C"].include?("Z") # => false
+    #   Immutable::Set["A", "B", "C"].include?("B") # => true
+    #   Immutable::Set["A", "B", "C"].include?("Z") # => false
     #
     # @param object [Object] The object to check for
     # @return [Boolean]
@@ -236,7 +236,7 @@ module Hamster
     # would be yielded by {#each}. If the set is empty, return `nil`.
     #
     # @example
-    #   Hamster::Set["A", "B", "C"].first # => "C"
+    #   Immutable::Set["A", "B", "C"].first # => "C"
     #
     # @return [Object]
     def first
@@ -247,10 +247,10 @@ module Hamster
     # the given comparator block.
     #
     # @example
-    #   Hamster::Set["Elephant", "Dog", "Lion"].sort
-    #   # => Hamster::SortedSet["Dog", "Elephant", "Lion"]
-    #   Hamster::Set["Elephant", "Dog", "Lion"].sort { |a,b| a.size <=> b.size }
-    #   # => Hamster::SortedSet["Dog", "Lion", "Elephant"]
+    #   Immutable::Set["Elephant", "Dog", "Lion"].sort
+    #   # => Immutable::SortedSet["Dog", "Elephant", "Lion"]
+    #   Immutable::Set["Elephant", "Dog", "Lion"].sort { |a,b| a.size <=> b.size }
+    #   # => Immutable::SortedSet["Dog", "Lion", "Elephant"]
     #
     # @yield [a, b] Any number of times with different pairs of elements.
     # @yieldreturn [Integer] Negative if the first element should be sorted
@@ -266,8 +266,8 @@ module Hamster
     # then sorting the keys.
     #
     # @example
-    #   Hamster::Set["Elephant", "Dog", "Lion"].sort_by { |e| e.size }
-    #   # => Hamster::SortedSet["Dog", "Lion", "Elephant"]
+    #   Immutable::Set["Elephant", "Dog", "Lion"].sort_by { |e| e.size }
+    #   # => Immutable::SortedSet["Dog", "Lion", "Elephant"]
     #
     # @yield [item] Once for each item to create the set, and then potentially
     #               again depending on what operations are performed on the
@@ -283,12 +283,12 @@ module Hamster
     # `other` can be any `Enumerable` object.
     #
     # @example
-    #   Hamster::Set[1, 2] | Hamster::Set[2, 3] # => Hamster::Set[1, 2, 3]
+    #   Immutable::Set[1, 2] | Immutable::Set[2, 3] # => Immutable::Set[1, 2, 3]
     #
     # @param other [Enumerable] The collection to merge with
     # @return [Set]
     def union(other)
-      if other.is_a?(Hamster::Set)
+      if other.is_a?(Immutable::Set)
         if other.size > size
           small_set_pairs = @trie
           large_set_trie = other.instance_variable_get(:@trie)
@@ -316,16 +316,16 @@ module Hamster
     # this `Set` and `other`. `other` can be any `Enumerable` object.
     #
     # @example
-    #   Hamster::Set[1, 2] & Hamster::Set[2, 3] # => Hamster::Set[2]
+    #   Immutable::Set[1, 2] & Immutable::Set[2, 3] # => Immutable::Set[2]
     #
     # @param other [Enumerable] The collection to intersect with
     # @return [Set]
     def intersection(other)
       if other.size < @trie.size
-        if other.is_a?(Hamster::Set)
+        if other.is_a?(Immutable::Set)
           trie = other.instance_variable_get(:@trie).select { |key, _| include?(key) }
         else
-          trie = Trie.new(0)
+          trie = Hamster::Trie.new(0)
           other.each { |obj| trie.put!(obj, nil) if include?(obj) }
         end
       else
@@ -339,12 +339,12 @@ module Hamster
     # any `Enumerable` object.
     #
     # @example
-    #   Hamster::Set[1, 2] - Hamster::Set[2, 3] # => Hamster::Set[1]
+    #   Immutable::Set[1, 2] - Immutable::Set[2, 3] # => Immutable::Set[1]
     #
     # @param other [Enumerable] The collection to subtract from this set
     # @return [Set]
     def difference(other)
-      trie = if (@trie.size <= other.size) && (other.is_a?(Hamster::Set) || (defined?(::Set) && other.is_a?(::Set)))
+      trie = if (@trie.size <= other.size) && (other.is_a?(Immutable::Set) || (defined?(::Set) && other.is_a?(::Set)))
         @trie.select { |key, _| !other.include?(key) }
       else
         @trie.bulk_delete(other)
@@ -358,7 +358,7 @@ module Hamster
     # `Set` or of `other`, but not both. `other` can be any `Enumerable` object.
     #
     # @example
-    #   Hamster::Set[1, 2] ^ Hamster::Set[2, 3] # => Hamster::Set[1, 3]
+    #   Immutable::Set[1, 2] ^ Immutable::Set[2, 3] # => Immutable::Set[1, 3]
     #
     # @param other [Enumerable] The collection to take the exclusive disjunction of
     # @return [Set]
@@ -370,7 +370,7 @@ module Hamster
     # Return `true` if all items in this `Set` are also in `other`.
     #
     # @example
-    #   Hamster::Set[2, 3].subset?(Hamster::Set[1, 2, 3]) # => true
+    #   Immutable::Set[2, 3].subset?(Immutable::Set[1, 2, 3]) # => true
     #
     # @param other [Set]
     # @return [Boolean]
@@ -386,7 +386,7 @@ module Hamster
       # After doing some benchmarking to estimate the constants, it appears break-even is at ~190 items
       # We also check other.size, to avoid the more expensive #is_a? checks in cases where it doesn't matter
       #
-      if other.size >= 150 && @trie.size >= 190 && !(other.is_a?(Hamster::Set) || other.is_a?(::Set))
+      if other.size >= 150 && @trie.size >= 190 && !(other.is_a?(Immutable::Set) || other.is_a?(::Set))
         other = ::Set.new(other)
       end
       all? { |item| other.include?(item) }
@@ -396,7 +396,7 @@ module Hamster
     # Return `true` if all items in `other` are also in this `Set`.
     #
     # @example
-    #   Hamster::Set[1, 2, 3].superset?(Hamster::Set[2, 3]) # => true
+    #   Immutable::Set[1, 2, 3].superset?(Immutable::Set[2, 3]) # => true
     #
     # @param other [Set]
     # @return [Boolean]
@@ -409,15 +409,15 @@ module Hamster
     # one item which is not in this set.
     #
     # @example
-    #   Hamster::Set[2, 3].proper_subset?(Hamster::Set[1, 2, 3])    # => true
-    #   Hamster::Set[1, 2, 3].proper_subset?(Hamster::Set[1, 2, 3]) # => false
+    #   Immutable::Set[2, 3].proper_subset?(Immutable::Set[1, 2, 3])    # => true
+    #   Immutable::Set[1, 2, 3].proper_subset?(Immutable::Set[1, 2, 3]) # => false
     #
     # @param other [Set]
     # @return [Boolean]
     def proper_subset?(other)
       return false if other.size <= size
       # See comments above
-      if other.size >= 150 && @trie.size >= 190 && !(other.is_a?(Hamster::Set) || other.is_a?(::Set))
+      if other.size >= 150 && @trie.size >= 190 && !(other.is_a?(Immutable::Set) || other.is_a?(::Set))
         other = ::Set.new(other)
       end
       all? { |item| other.include?(item) }
@@ -428,8 +428,8 @@ module Hamster
     # one item which is not in `other`.
     #
     # @example
-    #   Hamster::Set[1, 2, 3].proper_superset?(Hamster::Set[2, 3])    # => true
-    #   Hamster::Set[1, 2, 3].proper_superset?(Hamster::Set[1, 2, 3]) # => false
+    #   Immutable::Set[1, 2, 3].proper_superset?(Immutable::Set[2, 3])    # => true
+    #   Immutable::Set[1, 2, 3].proper_superset?(Immutable::Set[1, 2, 3]) # => false
     #
     # @param other [Set]
     # @return [Boolean]
@@ -441,7 +441,7 @@ module Hamster
     # Return `true` if this `Set` and `other` do not share any items.
     #
     # @example
-    #   Hamster::Set[1, 2].disjoint?(Hamster::Set[8, 9]) # => true
+    #   Immutable::Set[1, 2].disjoint?(Immutable::Set[8, 9]) # => true
     #
     # @param other [Set]
     # @return [Boolean]
@@ -450,7 +450,7 @@ module Hamster
         other.each { |item| return false if include?(item) }
       else
         # See comment on #subset?
-        if other.size >= 150 && @trie.size >= 190 && !(other.is_a?(Hamster::Set) || other.is_a?(::Set))
+        if other.size >= 150 && @trie.size >= 190 && !(other.is_a?(Immutable::Set) || other.is_a?(::Set))
           other = ::Set.new(other)
         end
         each { |item| return false if other.include?(item) }
@@ -461,7 +461,7 @@ module Hamster
     # Return `true` if this `Set` and `other` have at least one item in common.
     #
     # @example
-    #   Hamster::Set[1, 2].intersect?(Hamster::Set[2, 3]) # => true
+    #   Immutable::Set[1, 2].intersect?(Immutable::Set[2, 3]) # => true
     #
     # @param other [Set]
     # @return [Boolean]
@@ -473,8 +473,8 @@ module Hamster
     # remove them.
     #
     # @example
-    #   Hamster::Set[Hamster::Set[1, 2], Hamster::Set[3, 4]].flatten
-    #   # => Hamster::Set[1, 2, 3, 4]
+    #   Immutable::Set[Immutable::Set[1, 2], Immutable::Set[3, 4]].flatten
+    #   # => Immutable::Set[1, 2, 3, 4]
     #
     # @return [Set]
     def flatten
@@ -490,7 +490,7 @@ module Hamster
     # Return a randomly chosen item from this `Set`. If the set is empty, return `nil`.
     #
     # @example
-    #   Hamster::Set[1, 2, 3, 4, 5].sample # => 3
+    #   Immutable::Set[1, 2, 3, 4, 5].sample # => 3
     #
     # @return [Object]
     def sample
@@ -556,7 +556,7 @@ module Hamster
 
     # @private
     def marshal_load(dictionary)
-      @trie = dictionary.reduce(EmptyTrie) do |trie, key_value|
+      @trie = dictionary.reduce(Hamster::EmptyTrie) do |trie, key_value|
         trie.put(key_value.first, nil)
       end
     end
@@ -579,5 +579,5 @@ module Hamster
   # one rather than creating many empty sets using `Set.new`.
   #
   # @private
-  EmptySet = Hamster::Set.empty
+  EmptySet = Immutable::Set.empty
 end

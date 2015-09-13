@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/set"
 
-describe Hamster::Set do
+describe Immutable::Set do
   [
     [:sort, ->(left, right) { left.length <=> right.length }],
     [:sort_by, ->(item) { item.length }],

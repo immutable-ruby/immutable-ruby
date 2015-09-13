@@ -115,7 +115,7 @@ module Hamster
 
     # Convert this collection to a {Set}.
     def to_set
-      Set.new(self)
+      Immutable::Set.new(self)
     end
 
     # Convert this collection to a programmer-readable `String` representation.
