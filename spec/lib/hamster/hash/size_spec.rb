@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/hash"
 
-describe Hamster::Hash do
+describe Immutable::Hash do
   [:size, :length].each do |method|
     describe "##{method}" do
       [

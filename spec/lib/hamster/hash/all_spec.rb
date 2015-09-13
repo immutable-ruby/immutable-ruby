@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/hash"
 
-describe Hamster::Hash do
+describe Immutable::Hash do
   let(:hash) { H[values] }
 
   describe "#all?" do

@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/hash"
 
-describe Hamster::Hash do
+describe Immutable::Hash do
   [:map, :collect].each do |method|
     describe "##{method}" do
       context "when empty" do
@@ -36,7 +36,7 @@ describe Hamster::Hash do
 
       context "from a subclass" do
         it "returns an instance of the subclass" do
-          subclass = Class.new(Hamster::Hash)
+          subclass = Class.new(Immutable::Hash)
           instance = subclass.new('a' => 'aye', 'b' => 'bee')
           instance.map { |k,v| [k, v.upcase] }.class.should be(subclass)
         end

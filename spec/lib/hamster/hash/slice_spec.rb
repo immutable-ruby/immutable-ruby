@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/hash"
 
-describe Hamster::Hash do
+describe Immutable::Hash do
   let(:hash) { H.new("A" => "aye", "B" => "bee", "C" => "see", nil => "NIL") }
 
   describe "#slice" do

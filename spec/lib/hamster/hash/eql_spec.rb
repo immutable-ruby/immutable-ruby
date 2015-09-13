@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/hash"
 
-describe Hamster::Hash do
+describe Immutable::Hash do
   let(:hash) { H["A" => "aye", "B" => "bee", "C" => "see"] }
 
   describe "#eql?" do
@@ -13,8 +13,8 @@ describe Hamster::Hash do
       hash.eql?(Object.new).should == false
     end
 
-    it "returns false when comparing with a subclass of Hamster::Hash" do
-      subclass = Class.new(Hamster::Hash)
+    it "returns false when comparing with a subclass of Immutable::Hash" do
+      subclass = Class.new(Immutable::Hash)
       instance = subclass.new("A" => "aye", "B" => "bee", "C" => "see")
       hash.eql?(instance).should == false
     end
@@ -29,8 +29,8 @@ describe Hamster::Hash do
       (hash == Object.new).should == false
     end
 
-    it "returns true when comparing with a subclass of Hamster::Hash" do
-      subclass = Class.new(Hamster::Hash)
+    it "returns true when comparing with a subclass of Immutable::Hash" do
+      subclass = Class.new(Immutable::Hash)
       instance = subclass.new("A" => "aye", "B" => "bee", "C" => "see")
       (hash == instance).should == true
     end

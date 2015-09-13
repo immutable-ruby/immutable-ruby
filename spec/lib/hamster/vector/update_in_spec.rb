@@ -9,7 +9,7 @@ describe Hamster::Vector do
         101,
         102,
         Hamster::Vector[200, 201, Hamster::Vector[300, 301, 302]],
-        Hamster::Hash["A" => "alpha", "B" => "bravo"],
+        Immutable::Hash["A" => "alpha", "B" => "bravo"],
         [400, 401, 402]
       ]
     }

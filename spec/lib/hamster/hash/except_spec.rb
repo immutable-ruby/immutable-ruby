@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/hash"
 
-describe Hamster::Hash do
+describe Immutable::Hash do
   describe "#except" do
     let(:hash) { H["A" => "aye", "B" => "bee", "C" => "see", nil => "NIL"] }
 

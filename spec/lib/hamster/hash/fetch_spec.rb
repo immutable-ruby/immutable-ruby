@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/hash"
 
-describe Hamster::Hash do
+describe Immutable::Hash do
   describe "#fetch" do
     context "with no default provided" do
       context "when the key exists" do

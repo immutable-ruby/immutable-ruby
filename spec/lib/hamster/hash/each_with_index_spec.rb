@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/hash"
 
-describe Hamster::Hash do
+describe Immutable::Hash do
   describe "#each_with_index" do
     let(:hash) { H["A" => "aye", "B" => "bee", "C" => "see"] }
 

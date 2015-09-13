@@ -1,13 +1,13 @@
 require "spec_helper"
 require "hamster/hash"
 
-describe Hamster::Hash do
+describe Immutable::Hash do
   describe "#marshal_dump/#marshal_load" do
     let(:ruby) do
       File.join(RbConfig::CONFIG["bindir"], RbConfig::CONFIG["ruby_install_name"])
     end
     let(:child_cmd) do
-      %Q|#{ruby} -I lib -r hamster -e 'dict = Hamster::Hash[existing_key: 42, other_thing: "data"]; $stdout.write(Marshal.dump(dict))'|
+      %Q|#{ruby} -I lib -r hamster -e 'dict = Immutable::Hash[existing_key: 42, other_thing: "data"]; $stdout.write(Marshal.dump(dict))'|
     end
 
     let(:reloaded_hash) do

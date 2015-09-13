@@ -6,7 +6,7 @@ hamster_lib_dir = File.join(File.dirname(__FILE__), "..", "..", 'lib')
 describe :Hamster do
   describe :Hash do
     it "can be loaded separately" do
-      system(%{ruby -e "$:.unshift('#{hamster_lib_dir}'); require 'hamster/hash'; Hamster::Hash.new"}).should be(true)
+      system(%{ruby -e "$:.unshift('#{hamster_lib_dir}'); require 'hamster/hash'; Immutable::Hash.new"}).should be(true)
     end
   end
 

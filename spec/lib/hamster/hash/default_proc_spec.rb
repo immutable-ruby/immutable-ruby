@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/hash"
 
-describe Hamster::Hash do
+describe Immutable::Hash do
   describe "#default_proc" do
     let(:hash) { H.new(1 => 2, 2 => 4) { |k| k * 2 } }
 

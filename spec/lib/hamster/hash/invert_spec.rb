@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/hash"
 
-describe Hamster::Hash do
+describe Immutable::Hash do
   describe "#invert" do
     let(:hash) { H[a: 3, b: 2, c: 1] }
 
@@ -22,7 +22,7 @@ describe Hamster::Hash do
 
     context "from a subclass of Hash" do
       it "returns an instance of the subclass" do
-        subclass = Class.new(Hamster::Hash)
+        subclass = Class.new(Immutable::Hash)
         instance = subclass.new(a: 1, b: 2)
         instance.invert.class.should be(subclass)
       end

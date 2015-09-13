@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/hash"
 
-describe Hamster::Hash do
+describe Immutable::Hash do
   describe "#merge" do
     [
       [{}, {}, {}],
@@ -15,7 +15,7 @@ describe Hamster::Hash do
         let(:hash_b) { H[b] }
         let(:result) { hash_a.merge(hash_b) }
 
-        it "returns #{expected.inspect} when passed a Hamster::Hash"  do
+        it "returns #{expected.inspect} when passed an Immutable::Hash"  do
           result.should eql(H[expected])
         end
 
@@ -48,7 +48,7 @@ describe Hamster::Hash do
 
     context "when called on a subclass" do
       it "returns an instance of the subclass" do
-        subclass = Class.new(Hamster::Hash)
+        subclass = Class.new(Immutable::Hash)
         instance = subclass.new(a: 1, b: 2)
         instance.merge(c: 3, d: 4).class.should be(subclass)
       end

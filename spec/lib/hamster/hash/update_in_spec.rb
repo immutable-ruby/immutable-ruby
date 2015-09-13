@@ -1,13 +1,13 @@
 require "spec_helper"
 require "hamster/hash"
 
-describe Hamster::Hash do
+describe Immutable::Hash do
   describe "#update_in" do
     let(:hash) {
-      Hamster::Hash[
+      Immutable::Hash[
         "A" => "aye",
-        "B" => Hamster::Hash["C" => "see", "D" => Hamster::Hash["E" => "eee"]],
-        "F" => Hamster::Vector["G", Hamster::Hash["H" => "eitch"], "I"]
+        "B" => Immutable::Hash["C" => "see", "D" => Immutable::Hash["E" => "eee"]],
+        "F" => Hamster::Vector["G", Immutable::Hash["H" => "eitch"], "I"]
       ]
     }
 

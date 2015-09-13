@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/hash"
 
-describe Hamster::Hash do
+describe Immutable::Hash do
   describe "#hash" do
     it "values are sufficiently distributed" do
       (1..4000).each_slice(4).map { |ka, va, kb, vb| H[ka => va, kb => vb].hash }.uniq.size.should == 1000

@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/hash"
 
-describe Hamster::Hash do
+describe Immutable::Hash do
   let(:hash) { H["a" => 3, "b" => 2, "c" => 1] }
 
   describe "#min" do

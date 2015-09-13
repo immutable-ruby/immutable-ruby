@@ -4,67 +4,68 @@ require "hamster/trie"
 require "hamster/set"
 require "hamster/vector"
 
-module Hamster
-  # A `Hamster::Hash` maps a set of unique keys to corresponding values, much
+module Immutable
+
+  # An `Immutable::Hash` maps a set of unique keys to corresponding values, much
   # like a dictionary maps from words to definitions. Given a key, it can store
   # and retrieve an associated value in constant time. If an existing key is
   # stored again, the new value will replace the old. It behaves much like
   # Ruby's built-in Hash, which we will call RubyHash for clarity. Like
   # RubyHash, two keys that are `#eql?` to each other and have the same
-  # `#hash` are considered identical in a `Hamster::Hash`.
+  # `#hash` are considered identical in an `Immutable::Hash`.
   #
-  # A `Hamster::Hash` can be created in a couple of ways:
+  # An `Immutable::Hash` can be created in a couple of ways:
   #
-  #     Hamster::Hash.new(font_size: 10, font_family: 'Arial')
-  #     Hamster::Hash[first_name: 'John', last_name: 'Smith']
+  #     Immutable::Hash.new(font_size: 10, font_family: 'Arial')
+  #     Immutable::Hash[first_name: 'John', last_name: 'Smith']
   #
   # Any `Enumerable` object which yields two-element `[key, value]` arrays
-  # can be used to initialize a `Hamster::Hash`:
+  # can be used to initialize an `Immutable::Hash`:
   #
-  #     Hamster::Hash.new([[:first_name, 'John'], [:last_name, 'Smith']])
+  #     Immutable::Hash.new([[:first_name, 'John'], [:last_name, 'Smith']])
   #
   # Key/value pairs can be added using {#put}. A new hash is returned and the
   # existing one is left unchanged:
   #
-  #     hash = Hamster::Hash[a: 100, b: 200]
-  #     hash.put(:c, 500) # => Hamster::Hash[:a => 100, :b => 200, :c => 500]
-  #     hash              # => Hamster::Hash[:a => 100, :b => 200]
+  #     hash = Immutable::Hash[a: 100, b: 200]
+  #     hash.put(:c, 500) # => Immutable::Hash[:a => 100, :b => 200, :c => 500]
+  #     hash              # => Immutable::Hash[:a => 100, :b => 200]
   #
   # {#put} can also take a block, which is used to calculate the value to be
   # stored.
   #
-  #     hash.put(:a) { |current| current + 200 } # => Hamster::Hash[:a => 300, :b => 200]
+  #     hash.put(:a) { |current| current + 200 } # => Immutable::Hash[:a => 300, :b => 200]
   #
   # Since it is immutable, all methods which you might expect to "modify" a
-  # `Hamster::Hash` actually return a new hash and leave the existing one
+  # `Immutable::Hash` actually return a new hash and leave the existing one
   # unchanged. This means that the `hash[key] = value` syntax from RubyHash
-  # *cannot* be used with `Hamster::Hash`.
+  # *cannot* be used with `Immutable::Hash`.
   #
   # Nested data structures can easily be updated using {#update_in}:
   #
-  #     hash = Hamster::Hash["a" => Hamster::Vector[Hamster::Hash["c" => 42]]]
+  #     hash = Immutable::Hash["a" => Immutable::Vector[Immutable::Hash["c" => 42]]]
   #     hash.update_in("a", 0, "c") { |value| value + 5 }
-  #     # => Hamster::Hash["a" => Hamster::Hash["b" => Hamster::Hash["c" => 47]]]
+  #     # => Immutable::Hash["a" => Immutable::Hash["b" => Immutable::Hash["c" => 47]]]
   #
-  # While a `Hamster::Hash` can iterate over its keys or values, it does not
+  # While an `Immutable::Hash` can iterate over its keys or values, it does not
   # guarantee any specific iteration order (unlike RubyHash). Methods like
   # {#flatten} do not guarantee the order of returned key/value pairs.
   #
-  # Like RubyHash, a `Hamster::Hash` can have a default block which is used
+  # Like RubyHash, an `Immutable::Hash` can have a default block which is used
   # when looking up a key that does not exist. Unlike RubyHash, the default
   # block will only be passed the missing key, without the hash itself:
   #
-  #     hash = Hamster::Hash.new { |missing_key| missing_key * 10 }
+  #     hash = Immutable::Hash.new { |missing_key| missing_key * 10 }
   #     hash[5] # => 50
   class Hash
-    include Enumerable
+    include Hamster::Enumerable
 
     class << self
       # Create a new `Hash` populated with the given key/value pairs.
       #
       # @example
-      #   Hamster::Hash["A" => 1, "B" => 2] # => Hamster::Hash["A" => 1, "B" => 2]
-      #   Hamster::Hash[["A", 1], ["B", 2]] # => Hamster::Hash["A" => 1, "B" => 2]
+      #   Immutable::Hash["A" => 1, "B" => 2] # => Immutable::Hash["A" => 1, "B" => 2]
+      #   Immutable::Hash[["A", 1], ["B", 2]] # => Immutable::Hash["A" => 1, "B" => 2]
       #
       # @param pairs [::Enumerable] initial content of hash. An empty hash is returned if not provided.
       # @return [Hash]
@@ -85,7 +86,7 @@ module Hamster
       #
       # @return [Hash]
       # @private
-      def alloc(trie = EmptyTrie, block = nil)
+      def alloc(trie = Hamster::EmptyTrie, block = nil)
         obj = allocate
         obj.instance_variable_set(:@trie, trie)
         obj.instance_variable_set(:@default, block)
@@ -97,7 +98,7 @@ module Hamster
     # @yield [key] Optional _default block_ to be stored and used to calculate the default value of a missing key. It will not be yielded during this method. It will not be preserved when marshalling.
     # @yieldparam key Key that was not present in the hash.
     def initialize(pairs = nil, &block)
-      @trie    = pairs ? Trie[pairs] : EmptyTrie
+      @trie    = pairs ? Hamster::Trie[pairs] : Hamster::EmptyTrie
       @default = block
       freeze
     end
@@ -112,7 +113,7 @@ module Hamster
     # Return the number of key/value pairs in this `Hash`.
     #
     # @example
-    #   Hamster::Hash["A" => 1, "B" => 2, "C" => 3].size  # => 3
+    #   Immutable::Hash["A" => 1, "B" => 2, "C" => 3].size  # => 3
     #
     # @return [Integer]
     def size
@@ -132,7 +133,7 @@ module Hamster
     # to the given key object is present.
     #
     # @example
-    #   Hamster::Hash["A" => 1, "B" => 2, "C" => 3].key?("B")  # => true
+    #   Immutable::Hash["A" => 1, "B" => 2, "C" => 3].key?("B")  # => true
     #
     # @param key [Object] The key to check for
     # @return [Boolean]
@@ -146,7 +147,7 @@ module Hamster
     # Return `true` if this `Hash` has one or more keys which map to the provided value.
     #
     # @example
-    #   Hamster::Hash["A" => 1, "B" => 2, "C" => 3].value?(2)  # => true
+    #   Immutable::Hash["A" => 1, "B" => 2, "C" => 3].value?(2)  # => true
     #
     # @param value [Object] The value to check for
     # @return [Boolean]
@@ -161,13 +162,13 @@ module Hamster
     # value. Otherwise, return `nil`.
     #
     # @example
-    #   h = Hamster::Hash["A" => 1, "B" => 2, "C" => 3]
+    #   h = Immutable::Hash["A" => 1, "B" => 2, "C" => 3]
     #   h["B"]             # => 2
     #   h.get("B")         # => 2
     #   h.get("Elephant")  # => nil
     #
-    #   # Hamster Hash with a default proc:
-    #   h = Hamster::Hash.new("A" => 1, "B" => 2, "C" => 3) { |key| key.size }
+    #   # Immutable Hash with a default proc:
+    #   h = Immutable::Hash.new("A" => 1, "B" => 2, "C" => 3) { |key| key.size }
     #   h.get("B")         # => 2
     #   h.get("Elephant")  # => 8
     #
@@ -203,7 +204,7 @@ module Hamster
     #   @param default [Object] Object to return if the key is not found
     #
     # @example
-    #   h = Hamster::Hash["A" => 1, "B" => 2, "C" => 3]
+    #   h = Immutable::Hash["A" => 1, "B" => 2, "C" => 3]
     #   h.fetch("B")         # => 2
     #   h.fetch("Elephant")  # => KeyError: key not found: "Elephant"
     #
@@ -216,13 +217,13 @@ module Hamster
     #   h.fetch("Elephant") { |key| key.size }  # => 8
     #
     # @return [Object]
-    def fetch(key, default = Undefined)
+    def fetch(key, default = Hamster::Undefined)
       entry = @trie.get(key)
       if entry
         entry[1]
       elsif block_given?
         yield(key)
-      elsif default != Undefined
+      elsif default != Hamster::Undefined
         default
       else
         raise KeyError, "key not found: #{key.inspect}"
@@ -243,11 +244,11 @@ module Hamster
     # frozen. This matches RubyHash's behaviour.
     #
     # @example
-    #   h = Hamster::Hash["A" => 1, "B" => 2]
+    #   h = Immutable::Hash["A" => 1, "B" => 2]
     #   h.put("C", 3)
-    #   # => Hamster::Hash["A" => 1, "B" => 2, "C" => 3]
+    #   # => Immutable::Hash["A" => 1, "B" => 2, "C" => 3]
     #   h.put("B") { |value| value * 10 }
-    #   # => Hamster::Hash["A" => 1, "B" => 20]
+    #   # => Immutable::Hash["A" => 1, "B" => 20]
     #
     # @param key [Object] The key to store
     # @param value [Object] The value to associate it with
@@ -276,9 +277,9 @@ module Hamster
     # needed.
     #
     # @example
-    #   hash = Hamster::Hash["a" => Hamster::Hash["b" => Hamster::Hash["c" => 42]]]
+    #   hash = Immutable::Hash["a" => Immutable::Hash["b" => Immutable::Hash["c" => 42]]]
     #   hash.update_in("a", "b", "c") { |value| value + 5 }
-    #   # => Hamster::Hash["a" => Hamster::Hash["b" => Hamster::Hash["c" => 47]]]
+    #   # => Immutable::Hash["a" => Immutable::Hash["b" => Immutable::Hash["c" => 47]]]
     #
     # @param key_path [::Array<Object>] List of keys which form the path to the key to be modified
     # @yield [value] The previously stored value
@@ -313,8 +314,8 @@ module Hamster
     # `self`.
     #
     # @example
-    #   Hamster::Hash["A" => 1, "B" => 2, "C" => 3].delete("B")
-    #   # => Hamster::Hash["A" => 1, "C" => 3]
+    #   Immutable::Hash["A" => 1, "B" => 2, "C" => 3].delete("B")
+    #   # => Immutable::Hash["A" => 1, "C" => 3]
     #
     # @param key [Object] The key to remove
     # @return [Hash]
@@ -327,12 +328,12 @@ module Hamster
     # be stable for any particular `Hash`.
     #
     # @example
-    #   Hamster::Hash["A" => 1, "B" => 2, "C" => 3].each { |k, v| puts "k=#{k} v=#{v}" }
+    #   Immutable::Hash["A" => 1, "B" => 2, "C" => 3].each { |k, v| puts "k=#{k} v=#{v}" }
     #
     #   k=A v=1
     #   k=C v=3
     #   k=B v=2
-    #   # => Hamster::Hash["A" => 1, "B" => 2, "C" => 3]
+    #   # => Immutable::Hash["A" => 1, "B" => 2, "C" => 3]
     #
     # @yield [key, value] Once for each key/value pair.
     # @return [self]
@@ -347,12 +348,12 @@ module Hamster
     # pair as parameters. Iteration order will be the opposite of {#each}.
     #
     # @example
-    #   Hamster::Hash["A" => 1, "B" => 2, "C" => 3].reverse_each { |k, v| puts "k=#{k} v=#{v}" }
+    #   Immutable::Hash["A" => 1, "B" => 2, "C" => 3].reverse_each { |k, v| puts "k=#{k} v=#{v}" }
     #
     #   k=B v=2
     #   k=C v=3
     #   k=A v=1
-    #   # => Hamster::Hash["A" => 1, "B" => 2, "C" => 3]
+    #   # => Immutable::Hash["A" => 1, "B" => 2, "C" => 3]
     #
     # @yield [key, value] Once for each key/value pair.
     # @return [self]
@@ -366,12 +367,12 @@ module Hamster
     # parameter. Ordering guarantees are the same as {#each}.
     #
     # @example
-    #   Hamster::Hash["A" => 1, "B" => 2, "C" => 3].each_key { |k| puts "k=#{k}" }
+    #   Immutable::Hash["A" => 1, "B" => 2, "C" => 3].each_key { |k| puts "k=#{k}" }
     #
     #   k=A
     #   k=C
     #   k=B
-    #   # => Hamster::Hash["A" => 1, "B" => 2, "C" => 3]
+    #   # => Immutable::Hash["A" => 1, "B" => 2, "C" => 3]
     #
     # @yield [key] Once for each key/value pair.
     # @return [self]
@@ -385,12 +386,12 @@ module Hamster
     # parameter. Ordering guarantees are the same as {#each}.
     #
     # @example
-    #   Hamster::Hash["A" => 1, "B" => 2, "C" => 3].each_value { |v| puts "v=#{v}" }
+    #   Immutable::Hash["A" => 1, "B" => 2, "C" => 3].each_value { |v| puts "v=#{v}" }
     #
     #   v=1
     #   v=3
     #   v=2
-    #   # => Hamster::Hash["A" => 1, "B" => 2, "C" => 3]
+    #   # => Immutable::Hash["A" => 1, "B" => 2, "C" => 3]
     #
     # @yield [value] Once for each key/value pair.
     # @return [self]
@@ -405,7 +406,7 @@ module Hamster
     # All the returned `[key, value]` arrays will be gathered into a new `Hash`.
     #
     # @example
-    #   h = Hamster::Hash["A" => 1, "B" => 2, "C" => 3]
+    #   h = Immutable::Hash["A" => 1, "B" => 2, "C" => 3]
     #   h.map { |k, v| ["new-#{k}", v * v] }
     #   # => Hash["new-C" => 9, "new-B" => 4, "new-A" => 1]
     #
@@ -421,9 +422,9 @@ module Hamster
     # Return a new `Hash` with all the key/value pairs for which the block returns true.
     #
     # @example
-    #   h = Hamster::Hash["A" => 1, "B" => 2, "C" => 3]
+    #   h = Immutable::Hash["A" => 1, "B" => 2, "C" => 3]
     #   h.select { |k, v| v >= 2 }
-    #   # => Hamster::Hash["B" => 2, "C" => 3]
+    #   # => Immutable::Hash["B" => 2, "C" => 3]
     #
     # @yield [key, value] Once for each key/value pair.
     # @yieldreturn Truthy if this pair should be present in the new `Hash`.
@@ -439,7 +440,7 @@ module Hamster
     # Return that `[key, value]` pair. If the block never returns true, return `nil`.
     #
     # @example
-    #   h = Hamster::Hash["A" => 1, "B" => 2, "C" => 3]
+    #   h = Immutable::Hash["A" => 1, "B" => 2, "C" => 3]
     #   h.find { |k, v| v.even? }
     #   # => ["B", 2]
     #
@@ -458,16 +459,16 @@ module Hamster
     # will be that from `other`. Otherwise, the value for each duplicate key is
     # determined by calling the block.
     #
-    # `other` can be a `Hamster::Hash`, a built-in Ruby `Hash`, or any `Enumerable`
+    # `other` can be an `Immutable::Hash`, a built-in Ruby `Hash`, or any `Enumerable`
     # object which yields `[key, value]` pairs.
     #
     # @example
-    #   h1 = Hamster::Hash["A" => 1, "B" => 2, "C" => 3]
-    #   h2 = Hamster::Hash["C" => 70, "D" => 80]
+    #   h1 = Immutable::Hash["A" => 1, "B" => 2, "C" => 3]
+    #   h2 = Immutable::Hash["C" => 70, "D" => 80]
     #   h1.merge(h2)
-    #   # => Hamster::Hash["C" => 70, "A" => 1, "D" => 80, "B" => 2]
+    #   # => Immutable::Hash["C" => 70, "A" => 1, "D" => 80, "B" => 2]
     #   h1.merge(h2) { |key, v1, v2| v1 + v2 }
-    #   # => Hamster::Hash["C" => 73, "A" => 1, "D" => 80, "B" => 2]
+    #   # => Immutable::Hash["C" => 73, "A" => 1, "D" => 80, "B" => 2]
     #
     # @param other [::Enumerable] The collection to merge with
     # @yieldparam key [Object] The key which was present in both collections
@@ -509,9 +510,9 @@ module Hamster
     #   Uses the block as a comparator to determine sorted order.
     #
     #   @example
-    #     h = Hamster::Hash["Dog" => 1, "Elephant" => 2, "Lion" => 3]
+    #     h = Immutable::Hash["Dog" => 1, "Elephant" => 2, "Lion" => 3]
     #     h.sort { |(k1, v1), (k2, v2)| k1.size  <=> k2.size }
-    #     # => Hamster::Vector[["Dog", 1], ["Lion", 3], ["Elephant", 2]]
+    #     # => Immutable::Vector[["Dog", 1], ["Lion", 3], ["Elephant", 2]]
     #   @yield [(k1, v1), (k2, v2)] Any number of times with different pairs of key/value associations.
     #   @yieldreturn [Integer] Negative if the first pair should be sorted
     #                          lower, positive if the latter pair, or 0 if equal.
@@ -520,7 +521,7 @@ module Hamster
     #
     # @return [Vector]
     def sort
-      Vector.new(super)
+      Hamster::Vector.new(super)
     end
 
     # Return a {Vector} which contains all the `[key, value]` pairs in this `Hash`
@@ -531,22 +532,22 @@ module Hamster
     # @see ::Enumerable#sort_by
     #
     # @example
-    #   h = Hamster::Hash["Dog" => 1, "Elephant" => 2, "Lion" => 3]
+    #   h = Immutable::Hash["Dog" => 1, "Elephant" => 2, "Lion" => 3]
     #   h.sort_by { |key, value| key.size }
-    #   # => Hamster::Vector[["Dog", 1], ["Lion", 3], ["Elephant", 2]]
+    #   # => Immutable::Vector[["Dog", 1], ["Lion", 3], ["Elephant", 2]]
     #
     # @yield [key, value] Once for each key/value pair.
     # @yieldreturn a sort key object for the yielded pair.
     # @return [Vector]
     def sort_by
-      Vector.new(super)
+      Hamster::Vector.new(super)
     end
 
     # Return a new `Hash` with the associations for all of the given `keys` removed.
     #
     # @example
-    #   h = Hamster::Hash["A" => 1, "B" => 2, "C" => 3]
-    #   h.except("A", "C")  # => Hamster::Hash["B" => 2]
+    #   h = Immutable::Hash["A" => 1, "B" => 2, "C" => 3]
+    #   h.except("A", "C")  # => Immutable::Hash["B" => 2]
     #
     # @param keys [Array] The keys to remove
     # @return [Hash]
@@ -557,13 +558,13 @@ module Hamster
     # Return a new `Hash` with only the associations for the `wanted` keys retained.
     #
     # @example
-    #   h = Hamster::Hash["A" => 1, "B" => 2, "C" => 3]
-    #   h.slice("B", "C")  # => Hamster::Hash["B" => 2, "C" => 3]
+    #   h = Immutable::Hash["A" => 1, "B" => 2, "C" => 3]
+    #   h.slice("B", "C")  # => Immutable::Hash["B" => 2, "C" => 3]
     #
     # @param wanted [::Enumerable] The keys to retain
     # @return [Hash]
     def slice(*wanted)
-      trie = Trie.new(0)
+      trie = Hamster::Trie.new(0)
       wanted.each { |key| trie.put!(key, get(key)) if key?(key) }
       self.class.alloc(trie, @default)
     end
@@ -572,37 +573,37 @@ module Hamster
     # If any of the `wanted` keys are not present in this `Hash`, they will be skipped.
     #
     # @example
-    #   h = Hamster::Hash["A" => 1, "B" => 2, "C" => 3]
-    #   h.values_at("B", "A", "D")  # => Hamster::Vector[2, 1]
+    #   h = Immutable::Hash["A" => 1, "B" => 2, "C" => 3]
+    #   h.values_at("B", "A", "D")  # => Immutable::Vector[2, 1]
     #
     # @param wanted [Array] The keys to retrieve
     # @return [Vector]
     def values_at(*wanted)
       array = []
       wanted.each { |key| array << get(key) if key?(key) }
-      Vector.new(array.freeze)
+      Hamster::Vector.new(array.freeze)
     end
 
     # Return a new {Set} containing the keys from this `Hash`.
     #
     # @example
-    #   Hamster::Hash["A" => 1, "B" => 2, "C" => 3, "D" => 2].keys
-    #   # => Hamster::Set["D", "C", "B", "A"]
+    #   Immutable::Hash["A" => 1, "B" => 2, "C" => 3, "D" => 2].keys
+    #   # => Immutable::Set["D", "C", "B", "A"]
     #
     # @return [Set]
     def keys
-      Set.alloc(@trie)
+      Hamster::Set.alloc(@trie)
     end
 
     # Return a new {Vector} populated with the values from this `Hash`.
     #
     # @example
-    #   Hamster::Hash["A" => 1, "B" => 2, "C" => 3, "D" => 2].values
-    #   # => Hamster::Vector[2, 3, 2, 1]
+    #   Immutable::Hash["A" => 1, "B" => 2, "C" => 3, "D" => 2].values
+    #   # => Immutable::Vector[2, 3, 2, 1]
     #
     # @return [Vector]
     def values
-      Vector.new(each_value.to_a.freeze)
+      Hamster::Vector.new(each_value.to_a.freeze)
     end
 
     # Return a new `Hash` created by using keys as values and values as keys.
@@ -611,8 +612,8 @@ module Hamster
     # retained. Which one specifically is undefined.
     #
     # @example
-    #   Hamster::Hash["A" => 1, "B" => 2, "C" => 3, "D" => 2].invert
-    #   # => Hamster::Hash[1 => "A", 3 => "C", 2 => "B"]
+    #   Immutable::Hash["A" => 1, "B" => 2, "C" => 3, "D" => 2].invert
+    #   # => Immutable::Hash[1 => "A", 3 => "C", 2 => "B"]
     #
     # @return [Hash]
     def invert
@@ -632,20 +633,20 @@ module Hamster
     # separate element in the returned {Vector}.
     #
     # @example
-    #   h = Hamster::Hash["A" => 1, "B" => [2, 3, 4]]
+    #   h = Immutable::Hash["A" => 1, "B" => [2, 3, 4]]
     #   h.flatten
-    #   # => Hamster::Vector["A", 1, "B", [2, 3, 4]]
+    #   # => Immutable::Vector["A", 1, "B", [2, 3, 4]]
     #   h.flatten(2)
-    #   # => Hamster::Vector["A", 1, "B", 2, 3, 4]
+    #   # => Immutable::Vector["A", 1, "B", 2, 3, 4]
     #
     # @param level [Integer] The number of times to recursively flatten the `[key, value]` pairs in this `Hash`.
     # @return [Vector]
     def flatten(level = 1)
-      return Vector.new(self) if level == 0
+      return Hamster::Vector.new(self) if level == 0
       array = []
       each { |k,v| array << k; array << v }
       array.flatten!(level-1) if level > 1
-      Vector.new(array.freeze)
+      Hamster::Vector.new(array.freeze)
     end
 
     # Searches through the `Hash`, comparing `obj` with each key (using `#==`).
@@ -653,7 +654,7 @@ module Hamster
     # Return `nil` if no match is found.
     #
     # @example
-    #   Hamster::Hash["A" => 1, "B" => 2, "C" => 3].assoc("B")  # => ["B", 2]
+    #   Immutable::Hash["A" => 1, "B" => 2, "C" => 3].assoc("B")  # => ["B", 2]
     #
     # @param obj [Object] The key to search for (using #==)
     # @return [Array]
@@ -667,7 +668,7 @@ module Hamster
     # Return `nil` if no match is found.
     #
     # @example
-    #   Hamster::Hash["A" => 1, "B" => 2, "C" => 3].rassoc(2)  # => ["B", 2]
+    #   Immutable::Hash["A" => 1, "B" => 2, "C" => 3].rassoc(2)  # => ["B", 2]
     #
     # @param obj [Object] The value to search for (using #==)
     # @return [Array]
@@ -681,7 +682,7 @@ module Hamster
     # Return `nil` if no match is found.
     #
     # @example
-    #   Hamster::Hash["A" => 1, "B" => 2, "C" => 3].key(2)  # => "B"
+    #   Immutable::Hash["A" => 1, "B" => 2, "C" => 3].key(2)  # => "B"
     #
     # @param value [Object] The value to search for (using #==)
     # @return [Object]
@@ -694,7 +695,7 @@ module Hamster
     # return `nil`.
     #
     # @example
-    #   Hamster::Hash["A" => 1, "B" => 2, "C" => 3].sample
+    #   Immutable::Hash["A" => 1, "B" => 2, "C" => 3].sample
     #   # => ["C", 3]
     #
     # @return [Array]
@@ -709,7 +710,7 @@ module Hamster
     # @return [Hash]
     def clear
       if @default
-        self.class.alloc(EmptyTrie, @default)
+        self.class.alloc(Hamster::EmptyTrie, @default)
       else
         self.class.empty
       end
@@ -788,7 +789,7 @@ module Hamster
       end
     end
 
-    # Convert this `Hamster::Hash` to an instance of Ruby's built-in `Hash`.
+    # Convert this `Immutable::Hash` to an instance of Ruby's built-in `Hash`.
     #
     # @return [::Hash]
     def to_hash
@@ -808,7 +809,7 @@ module Hamster
 
     # @private
     def marshal_load(dictionary)
-      @trie = Trie[dictionary]
+      @trie = Hamster::Trie[dictionary]
     end
 
     private
@@ -821,7 +822,7 @@ module Hamster
         self
       elsif trie.empty?
         if @default
-          self.class.alloc(EmptyTrie, @default)
+          self.class.alloc(Hamster::EmptyTrie, @default)
         else
           self.class.empty
         end
@@ -836,5 +837,5 @@ module Hamster
   # one rather than creating many empty hashes using `Hash.new`.
   #
   # @private
-  EmptyHash = Hamster::Hash.empty
+  EmptyHash = Immutable::Hash.empty
 end

@@ -2,10 +2,10 @@ require "benchmark/ips"
 require "hamster/hash"
 
 Benchmark.ips do |b|
-  sml_hash = Hamster::Hash[1 => 1]
-  med_hash = Hamster::Hash.empty
+  sml_hash = Immutable::Hash[1 => 1]
+  med_hash = Immutable::Hash.empty
   1_000.times { |i| med_hash = med_hash.put(i, i) }
-  lrg_hash = Hamster::Hash.empty
+  lrg_hash = Immutable::Hash.empty
   1_000_000.times { |i| lrg_hash = lrg_hash.put(i, i) }
 
   b.report "each small" do |n|

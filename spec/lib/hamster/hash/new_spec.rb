@@ -1,10 +1,10 @@
 require "spec_helper"
 require "hamster/hash"
 
-describe Hamster::Hash do
+describe Immutable::Hash do
   describe ".new" do
     it "is amenable to overriding of #initialize" do
-      class SnazzyHash < Hamster::Hash
+      class SnazzyHash < Immutable::Hash
         def initialize
           super({'snazzy?' => 'oh yeah'})
         end
@@ -15,7 +15,7 @@ describe Hamster::Hash do
 
     context "from a subclass" do
       it "returns a frozen instance of the subclass" do
-        subclass = Class.new(Hamster::Hash)
+        subclass = Class.new(Immutable::Hash)
         instance = subclass.new("some" => "values")
         instance.class.should be(subclass)
         instance.frozen?.should be true
@@ -37,15 +37,15 @@ describe Hamster::Hash do
   describe ".[]" do
     it "accepts a Ruby Hash as initializer" do
       hash = H[a: 1, b: 2]
-      hash.class.should be(Hamster::Hash)
+      hash.class.should be(Immutable::Hash)
       hash.size.should == 2
       hash.key?(:a).should == true
       hash.key?(:b).should == true
     end
 
-    it "accepts a Hamster::Hash as initializer" do
+    it "accepts a Immutable::Hash as initializer" do
       hash = H[H.new(a: 1, b: 2)]
-      hash.class.should be(Hamster::Hash)
+      hash.class.should be(Immutable::Hash)
       hash.size.should == 2
       hash.key?(:a).should == true
       hash.key?(:b).should == true
@@ -53,14 +53,14 @@ describe Hamster::Hash do
 
     it "accepts an array as initializer" do
       hash = H[[[:a, 1], [:b, 2]]]
-      hash.class.should be(Hamster::Hash)
+      hash.class.should be(Immutable::Hash)
       hash.size.should == 2
       hash.key?(:a).should == true
       hash.key?(:b).should == true
     end
 
-    it "can be used with a subclass of Hamster::Hash" do
-      subclass = Class.new(Hamster::Hash)
+    it "can be used with a subclass of Immutable::Hash" do
+      subclass = Class.new(Immutable::Hash)
       instance = subclass[a: 1, b: 2]
       instance.class.should be(subclass)
       instance.size.should == 2

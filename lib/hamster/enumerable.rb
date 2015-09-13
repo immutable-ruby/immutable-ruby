@@ -63,7 +63,7 @@ module Hamster
     # with an added element.
     def group_by_with(empty_group, &block)
       block ||= lambda { |item| item }
-      reduce(EmptyHash) do |hash, item|
+      reduce(Immutable::EmptyHash) do |hash, item|
         key = block.call(item)
         group = hash.get(key) || empty_group
         hash.put(key, group.add(item))

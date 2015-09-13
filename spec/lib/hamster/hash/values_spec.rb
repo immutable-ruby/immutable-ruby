@@ -2,7 +2,7 @@ require "spec_helper"
 require "hamster/hash"
 require "hamster/set"
 
-describe Hamster::Hash do
+describe Immutable::Hash do
   describe "#values" do
     let(:hash) { H["A" => "aye", "B" => "bee", "C" => "see"] }
     let(:result) { hash.values }

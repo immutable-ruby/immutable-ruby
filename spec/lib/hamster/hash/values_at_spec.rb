@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/hash"
 
-describe Hamster::Hash do
+describe Immutable::Hash do
   describe "#values_at" do
     it "returns a vector of values for the given keys" do
       h = H[:a => 9, :b => 'a', :c => -10, :d => nil]

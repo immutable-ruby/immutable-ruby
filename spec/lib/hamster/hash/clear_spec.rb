@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/hash"
 
-describe Hamster::Hash do
+describe Immutable::Hash do
   describe "#clear" do
     [
       [],
@@ -33,7 +33,7 @@ describe Hamster::Hash do
 
     context "on a subclass" do
       it "returns an empty instance of the subclass" do
-        subclass = Class.new(Hamster::Hash)
+        subclass = Class.new(Immutable::Hash)
         instance = subclass.new(a: 1, b: 2)
         instance.clear.class.should be(subclass)
         instance.clear.should be_empty

@@ -11,21 +11,21 @@ module Hamster
 
     # Create a Hamster immutable data structure with nested Hamster data
     # structure from a nested Ruby object `obj`.  This method recursively
-    # "walks" the Ruby object, converting Ruby `Hash` to {Hamster::Hash}, Ruby
+    # "walks" the Ruby object, converting Ruby `Hash` to {Immutable::Hash}, Ruby
     # `Array` to {Hamster::Vector}, Ruby `Set` to {Hamster::Set}, and Ruby
     # `SortedSet` to {Hamster::SortedSet}.  Other objects are left as-is.
     #
     # @example
     #   h = Hamster.from({ "a" => [1, 2], "b" => "c" })
-    #   # => Hamster::Hash["a" => Hamster::Vector[1, 2], "b" => "c"]
+    #   # => Immutable::Hash["a" => Hamster::Vector[1, 2], "b" => "c"]
     #
     # @return [Hash, Vector, Set, SortedSet, Object]
     def from(obj)
       case obj
       when ::Hash
         res = obj.map { |key, value| [from(key), from(value)] }
-        Hamster::Hash.new(res)
-      when Hamster::Hash
+        Immutable::Hash.new(res)
+      when Immutable::Hash
         obj.map { |key, value| [from(key), from(value)] }
       when ::Array
         res = obj.map { |element| from(element) }
@@ -45,7 +45,7 @@ module Hamster
     end
 
     # Create a Ruby object from Hamster data. This method recursively "walks"
-    # the Hamster object, converting {Hamster::Hash} to Ruby `Hash`,
+    # the Hamster object, converting {Immutable::Hash} to Ruby `Hash`,
     # {Hamster::Vector} and {Hamster::Deque} to Ruby `Array`, {Hamster::Set}
     # to Ruby `Set`, and {Hamster::SortedSet} to Ruby `SortedSet`.  Other
     # objects are left as-is.
@@ -57,7 +57,7 @@ module Hamster
     # @return [::Hash, ::Array, ::Set, ::SortedSet, Object]
     def to_ruby(obj)
       case obj
-      when Hamster::Hash, ::Hash
+      when Immutable::Hash, ::Hash
         obj.each_with_object({}) { |keyval, hash| hash[to_ruby(keyval[0])] = to_ruby(keyval[1]) }
       when Hamster::Vector, ::Array
         obj.each_with_object([]) { |element, arr| arr << to_ruby(element) }

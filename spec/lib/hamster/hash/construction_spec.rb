@@ -1,12 +1,12 @@
 require "spec_helper"
 require "hamster/hash"
 
-describe Hamster::Hash do
+describe Immutable::Hash do
   describe ".hash" do
     context "with nothing" do
       it "returns the canonical empty hash" do
         H.empty.should be_empty
-        H.empty.should equal(Hamster::EmptyHash)
+        H.empty.should equal(Immutable::EmptyHash)
       end
     end
 
@@ -27,7 +27,7 @@ describe Hamster::Hash do
       end
     end
 
-    context "with a Hamster::Hash" do
+    context "with an Immutable::Hash" do
       let(:hash) { H[a: 1, b: 2] }
       let(:other) { H[hash] }
 

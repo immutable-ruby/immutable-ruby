@@ -1,13 +1,13 @@
 require "spec_helper"
 require "hamster/hash"
 
-describe Hamster::Hash do
+describe Immutable::Hash do
   let(:hash) { H["a" => 1, "b" => 2, "c" => 3, "d" => 4] }
   let(:partition) { hash.partition { |k,v| v % 2 == 0 }}
 
   describe "#partition" do
-    it "returns a pair of Hamster::Hashes" do
-      partition.each { |h| h.class.should be(Hamster::Hash) }
+    it "returns a pair of Immutable::Hashes" do
+      partition.each { |h| h.class.should be(Immutable::Hash) }
       partition.should be_frozen
     end
 
@@ -26,7 +26,7 @@ describe Hamster::Hash do
 
     context "from a subclass" do
       it "should return instances of the subclass" do
-        subclass  = Class.new(Hamster::Hash)
+        subclass  = Class.new(Immutable::Hash)
         instance  = subclass.new("a" => 1, "b" => 2, "c" => 3, "d" => 4)
         partition = instance.partition { |k,v| v % 2 == 0 }
         partition.each { |h| h.class.should be(subclass) }

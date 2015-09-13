@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/hash"
 
-describe Hamster::Hash do
+describe Immutable::Hash do
   describe "#empty?" do
     [
       [[], true],
@@ -21,18 +21,18 @@ describe Hamster::Hash do
   describe ".empty" do
     it "returns the canonical empty Hash" do
       H.empty.should be_empty
-      H.empty.should be(Hamster::EmptyHash)
+      H.empty.should be(Immutable::EmptyHash)
     end
 
     context "from a subclass" do
       it "returns an empty instance of the subclass" do
-        subclass = Class.new(Hamster::Hash)
+        subclass = Class.new(Immutable::Hash)
         subclass.empty.class.should be subclass
         subclass.empty.should be_empty
       end
 
       it "calls overridden #initialize when creating empty Hash" do
-        subclass = Class.new(Hamster::Hash) do
+        subclass = Class.new(Immutable::Hash) do
           def initialize
             @variable = 'value'
           end

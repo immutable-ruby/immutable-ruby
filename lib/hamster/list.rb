@@ -769,7 +769,7 @@ module Hamster
     # @yield [item]
     # @example
     #    Hamster::List["a", "b", "ab"].group_by { |e| e.size }
-    #    # Hamster::Hash[
+    #    # Immutable::Hash[
     #    #   1 => Hamster::List["b", "a"],
     #    #   2 => Hamster::List["ab"]
     #    # ]

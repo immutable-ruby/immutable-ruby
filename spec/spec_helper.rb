@@ -24,7 +24,7 @@ end
 
 V = Hamster::Vector
 L = Hamster::List
-H = Hamster::Hash
+H = Immutable::Hash
 S = Hamster::Set
 SS = Hamster::SortedSet
 D = Hamster::Deque

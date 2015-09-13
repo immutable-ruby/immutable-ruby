@@ -186,9 +186,9 @@ module Hamster
     # wherever needed.
     #
     # @example
-    #   v = Hamster::Vector[123, 456, 789, Hamster::Hash["a" => Hamster::Vector[5, 6, 7]]]
+    #   v = Hamster::Vector[123, 456, 789, Immutable::Hash["a" => Hamster::Vector[5, 6, 7]]]
     #   v.update_in(3, "a", 1) { |value| value + 9 }
-    #   # => Hamster::Vector[123, 456, 789, Hamster::Hash["a" => Hamster::Vector[5, 15, 7]]]
+    #   # => Hamster::Vector[123, 456, 789, Immutable::Hash["a" => Hamster::Vector[5, 15, 7]]]
     #
     # @param key_path [Object(s)] List of keys which form the path to the key to be modified
     # @yield [value] The previously stored value
@@ -202,7 +202,7 @@ module Hamster
       if key_path.size == 1
         new_value = block.call(get(key))
       else
-        value = fetch(key, EmptyHash)
+        value = fetch(key, Immutable::EmptyHash)
         new_value = value.update_in(*key_path[1..-1], &block)
       end
       set(key, new_value)

@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/hash"
 
-describe Hamster::Hash do
+describe Immutable::Hash do
   describe "#delete" do
     let(:hash) { H["A" => "aye", "B" => "bee", "C" => "see"] }
 
@@ -32,7 +32,7 @@ describe Hamster::Hash do
     context "when removing the last key" do
       context "from a Hash with no default block" do
         it "returns the canonical empty Hash" do
-          hash.delete('A').delete('B').delete('C').should be(Hamster::EmptyHash)
+          hash.delete('A').delete('B').delete('C').should be(Immutable::EmptyHash)
         end
       end
     end

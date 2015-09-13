@@ -12,15 +12,15 @@ describe Hamster do
         "e" => {"f" => 8, "g" => 9},
         "h" => Regexp.new("ijk"),
         "l" => ::SortedSet.new([1, 2, 3]) },
-      Hamster::Hash[
+      Immutable::Hash[
         "a" => 1,
-        "b" => Hamster::Vector[2, Hamster::Hash["c" => 3], 4],
+        "b" => Hamster::Vector[2, Immutable::Hash["c" => 3], 4],
         "d" => Hamster::Set[5, 6, 7],
-        "e" => Hamster::Hash["f" => 8, "g" => 9],
+        "e" => Immutable::Hash["f" => 8, "g" => 9],
         "h" => Regexp.new("ijk"),
         "l" => Hamster::SortedSet.new([1, 2, 3])] ],
-    [ {}, Hamster::Hash[] ],
-    [ {"a" => 1, "b" => 2, "c" => 3}, Hamster::Hash["a" => 1, "b" => 2, "c" => 3] ],
+    [ {}, Immutable::Hash[] ],
+    [ {"a" => 1, "b" => 2, "c" => 3}, Immutable::Hash["a" => 1, "b" => 2, "c" => 3] ],
     [ [], Hamster::Vector[] ],
     [ [1, 2, 3], Hamster::Vector[1, 2, 3] ],
     [ ::Set.new, Hamster::Set[] ],
@@ -46,12 +46,12 @@ describe Hamster do
           "a" => "b",
           "c" => {"d" => "e"},
           "f" => Hamster::Vector["g", "h", []],
-          "i" => Hamster::Hash["j" => {}, "k" => Hamster::Set[[], {}]] }
-        expected_result = Hamster::Hash[
+          "i" => Immutable::Hash["j" => {}, "k" => Hamster::Set[[], {}]] }
+        expected_result = Immutable::Hash[
           "a" => "b",
-          "c" => Hamster::Hash["d" => "e"],
+          "c" => Immutable::Hash["d" => "e"],
           "f" => Hamster::Vector["g", "h", Hamster::EmptyVector],
-          "i" => Hamster::Hash["j" => Hamster::EmptyHash, "k" => Hamster::Set[Hamster::EmptyVector, Hamster::EmptyHash]] ]
+          "i" => Immutable::Hash["j" => Immutable::EmptyHash, "k" => Hamster::Set[Hamster::EmptyVector, Immutable::EmptyHash]] ]
         Hamster.from(input).should eql(expected_result)
       end
     end
@@ -72,19 +72,19 @@ describe Hamster do
       end
     end
 
-    context "with Hamster::Deque[Hamster::Hash[\"a\" => 1]] as input" do
+    context "with Hamster::Deque[Immutable::Hash[\"a\" => 1]] as input" do
       it "should return [{\"a\" => 1}]" do
-        Hamster.to_ruby(Hamster::Deque[Hamster::Hash["a" => 1]]).should eql([{"a" => 1}])
+        Hamster.to_ruby(Hamster::Deque[Immutable::Hash["a" => 1]]).should eql([{"a" => 1}])
       end
     end
 
     context "with mixed object" do
       it "should return Ruby data structures" do
-        input = Hamster::Hash[
+        input = Immutable::Hash[
           "a" => "b",
           "c" => {"d" => "e"},
           "f" => Hamster::Vector["g", "h"],
-          "i" => {"j" => Hamster::EmptyHash, "k" => Set.new([Hamster::EmptyVector, Hamster::EmptyHash])}]
+          "i" => {"j" => Immutable::EmptyHash, "k" => Set.new([Hamster::EmptyVector, Immutable::EmptyHash])}]
         expected_result = {
           "a" => "b",
           "c" => {"d" => "e"},
