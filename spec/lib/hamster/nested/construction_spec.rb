@@ -5,7 +5,7 @@ require "set"
 
 describe Hamster do
   expectations = [
-    # [Ruby, Hamster]
+    # [Ruby, Immutable]
     [ { "a" => 1,
         "b" => [2, {"c" => 3}, 4],
         "d" => ::Set.new([5, 6, 7]),
@@ -35,13 +35,13 @@ describe Hamster do
     expectations.each do |input, expected_result|
       context "with #{input.inspect} as input" do
         it "should return #{expected_result.inspect}" do
-          Hamster.from(input).should eql(expected_result)
+          Immutable.from(input).should eql(expected_result)
         end
       end
     end
 
     context "with mixed object" do
-      it "should return Hamster data" do
+      it "should return Immutable data" do
         input = {
           "a" => "b",
           "c" => {"d" => "e"},
@@ -52,7 +52,7 @@ describe Hamster do
           "c" => Immutable::Hash["d" => "e"],
           "f" => Immutable::Vector["g", "h", Immutable::EmptyVector],
           "i" => Immutable::Hash["j" => Immutable::EmptyHash, "k" => Immutable::Set[Immutable::EmptyVector, Immutable::EmptyHash]] ]
-        Hamster.from(input).should eql(expected_result)
+        Immutable.from(input).should eql(expected_result)
       end
     end
   end
@@ -61,20 +61,20 @@ describe Hamster do
     expectations.each do |expected_result, input|
       context "with #{input.inspect} as input" do
         it "should return #{expected_result.inspect}" do
-          Hamster.to_ruby(input).should eql(expected_result)
+          Immutable.to_ruby(input).should eql(expected_result)
         end
       end
     end
 
     context "with Immutable::Deque[] as input" do
       it "should return []" do
-        Hamster.to_ruby(Immutable::Deque[]).should eql([])
+        Immutable.to_ruby(Immutable::Deque[]).should eql([])
       end
     end
 
     context "with Immutable::Deque[Immutable::Hash[\"a\" => 1]] as input" do
       it "should return [{\"a\" => 1}]" do
-        Hamster.to_ruby(Immutable::Deque[Immutable::Hash["a" => 1]]).should eql([{"a" => 1}])
+        Immutable.to_ruby(Immutable::Deque[Immutable::Hash["a" => 1]]).should eql([{"a" => 1}])
       end
     end
 
@@ -90,7 +90,7 @@ describe Hamster do
           "c" => {"d" => "e"},
           "f" => ["g", "h"],
           "i" => {"j" => {}, "k" => Set.new([[], {}])} }
-        Hamster.to_ruby(input).should eql(expected_result)
+        Immutable.to_ruby(input).should eql(expected_result)
       end
     end
   end
