@@ -1,4 +1,4 @@
-module Hamster
+module Immutable
   # @private
   class Trie
     def self.[](pairs)
@@ -334,5 +334,5 @@ module Hamster
   end
 
   # @private
-  EmptyTrie = Hamster::Trie.new(0)
+  EmptyTrie = Trie.new(0)
 end

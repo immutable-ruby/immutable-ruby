@@ -86,7 +86,7 @@ module Immutable
       #
       # @return [Hash]
       # @private
-      def alloc(trie = Hamster::EmptyTrie, block = nil)
+      def alloc(trie = EmptyTrie, block = nil)
         obj = allocate
         obj.instance_variable_set(:@trie, trie)
         obj.instance_variable_set(:@default, block)
@@ -98,7 +98,7 @@ module Immutable
     # @yield [key] Optional _default block_ to be stored and used to calculate the default value of a missing key. It will not be yielded during this method. It will not be preserved when marshalling.
     # @yieldparam key Key that was not present in the hash.
     def initialize(pairs = nil, &block)
-      @trie    = pairs ? Hamster::Trie[pairs] : Hamster::EmptyTrie
+      @trie    = pairs ? Trie[pairs] : EmptyTrie
       @default = block
       freeze
     end
@@ -564,7 +564,7 @@ module Immutable
     # @param wanted [::Enumerable] The keys to retain
     # @return [Hash]
     def slice(*wanted)
-      trie = Hamster::Trie.new(0)
+      trie = Trie.new(0)
       wanted.each { |key| trie.put!(key, get(key)) if key?(key) }
       self.class.alloc(trie, @default)
     end
@@ -710,7 +710,7 @@ module Immutable
     # @return [Hash]
     def clear
       if @default
-        self.class.alloc(Hamster::EmptyTrie, @default)
+        self.class.alloc(EmptyTrie, @default)
       else
         self.class.empty
       end
@@ -809,7 +809,7 @@ module Immutable
 
     # @private
     def marshal_load(dictionary)
-      @trie = Hamster::Trie[dictionary]
+      @trie = Trie[dictionary]
     end
 
     private
@@ -822,7 +822,7 @@ module Immutable
         self
       elsif trie.empty?
         if @default
-          self.class.alloc(Hamster::EmptyTrie, @default)
+          self.class.alloc(EmptyTrie, @default)
         else
           self.class.empty
         end

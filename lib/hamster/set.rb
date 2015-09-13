@@ -69,13 +69,13 @@ module Immutable
       #
       # @return [Set]
       # @private
-      def alloc(trie = Hamster::EmptyTrie)
+      def alloc(trie = EmptyTrie)
         allocate.tap { |s| s.instance_variable_set(:@trie, trie) }.freeze
       end
     end
 
     def initialize(items=[])
-      @trie = Hamster::Trie.new(0)
+      @trie = Trie.new(0)
       items.each { |item| @trie.put!(item, nil) }
       freeze
     end
@@ -325,7 +325,7 @@ module Immutable
         if other.is_a?(Immutable::Set)
           trie = other.instance_variable_get(:@trie).select { |key, _| include?(key) }
         else
-          trie = Hamster::Trie.new(0)
+          trie = Trie.new(0)
           other.each { |obj| trie.put!(obj, nil) if include?(obj) }
         end
       else
@@ -556,7 +556,7 @@ module Immutable
 
     # @private
     def marshal_load(dictionary)
-      @trie = dictionary.reduce(Hamster::EmptyTrie) do |trie, key_value|
+      @trie = dictionary.reduce(EmptyTrie) do |trie, key_value|
         trie.put(key_value.first, nil)
       end
     end
