@@ -217,13 +217,13 @@ module Immutable
     #   h.fetch("Elephant") { |key| key.size }  # => 8
     #
     # @return [Object]
-    def fetch(key, default = Hamster::Undefined)
+    def fetch(key, default = Undefined)
       entry = @trie.get(key)
       if entry
         entry[1]
       elsif block_given?
         yield(key)
-      elsif default != Hamster::Undefined
+      elsif default != Undefined
         default
       else
         raise KeyError, "key not found: #{key.inspect}"

@@ -890,13 +890,13 @@ module Immutable
     #     # => Immutable::List[1, 3]
     #
     # @return [List]
-    def indices(object = Hamster::Undefined, i = 0, &block)
+    def indices(object = Undefined, i = 0, &block)
       return indices { |item| item == object } if not block_given?
       return EmptyList if empty?
       LazyList.new do
         node = self
         while true
-          break Cons.new(i, node.tail.indices(Hamster::Undefined, i + 1, &block)) if yield(node.head)
+          break Cons.new(i, node.tail.indices(Undefined, i + 1, &block)) if yield(node.head)
           node = node.tail
           break EmptyList if node.empty?
           i += 1
@@ -1385,22 +1385,22 @@ module Immutable
     include List
 
     def initialize
-      @head, @tail, @size = Hamster::Undefined, Hamster::Undefined, nil
+      @head, @tail, @size = Undefined, Undefined, nil
     end
 
     def head
-      realize if @head == Hamster::Undefined
+      realize if @head == Undefined
       @head
     end
     alias :first :head
 
     def tail
-      realize if @tail == Hamster::Undefined
+      realize if @tail == Undefined
       @tail
     end
 
     def empty?
-      realize if @head == Hamster::Undefined
+      realize if @head == Undefined
       @size == 0
     end
 
@@ -1414,7 +1414,7 @@ module Immutable
     end
 
     def realized?
-      @head != Hamster::Undefined
+      @head != Undefined
     end
   end
 
@@ -1454,7 +1454,7 @@ module Immutable
       # another thread may get ahead of us and null out @mutex
       mutex = @mutex
       mutex && mutex.synchronize do
-        return if @head != Hamster::Undefined # another thread got ahead of us
+        return if @head != Undefined # another thread got ahead of us
         while true
           if !@buffer.empty?
             @head = @buffer.shift
@@ -1515,7 +1515,7 @@ module Immutable
         # another thread may get ahead of us and null out @mutex
         mutex = @mutex
         mutex && mutex.synchronize do
-          return if @head != Hamster::Undefined # another thread got ahead of us
+          return if @head != Undefined # another thread got ahead of us
           while true
             if !@buffer.empty?
               @head = @buffer.shift
@@ -1544,7 +1544,7 @@ module Immutable
       def realize
         mutex = @mutex
         mutex && mutex.synchronize do
-          return if @head != Hamster::Undefined
+          return if @head != Undefined
           @splitter.next_item until @splitter.done?
           if @splitter.right.empty?
             @head, @size, @tail = nil, 0, self

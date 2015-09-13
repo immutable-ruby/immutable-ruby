@@ -1,4 +1,4 @@
-module Hamster
+module Immutable
   # @private
   module Undefined
   end
