@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/vector"
 
-describe Hamster::Vector do
+describe Immutable::Vector do
   [:map, :collect].each do |method|
     describe "##{method}" do
       context "when empty" do
@@ -36,7 +36,7 @@ describe Hamster::Vector do
 
       context "from a subclass" do
         it "returns an instance of the subclass" do
-          subclass = Class.new(Hamster::Vector)
+          subclass = Class.new(Immutable::Vector)
           instance = subclass[1,2,3]
           instance.map { |x| x + 1 }.class.should be(subclass)
         end

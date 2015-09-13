@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/vector"
 
-describe Hamster::Vector do
+describe Immutable::Vector do
   describe "#max" do
     context "with a block" do
       [

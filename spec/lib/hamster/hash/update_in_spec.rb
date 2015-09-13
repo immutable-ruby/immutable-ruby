@@ -7,7 +7,7 @@ describe Immutable::Hash do
       Immutable::Hash[
         "A" => "aye",
         "B" => Immutable::Hash["C" => "see", "D" => Immutable::Hash["E" => "eee"]],
-        "F" => Hamster::Vector["G", Immutable::Hash["H" => "eitch"], "I"]
+        "F" => Immutable::Vector["G", Immutable::Hash["H" => "eitch"], "I"]
       ]
     }
 

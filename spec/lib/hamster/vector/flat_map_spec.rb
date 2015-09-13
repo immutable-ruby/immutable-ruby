@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/vector"
 
-describe Hamster::Vector do
+describe Immutable::Vector do
   let(:vector) { V[*values] }
 
   describe "#flat_map" do
@@ -10,12 +10,12 @@ describe Hamster::Vector do
     let(:flattened_vector) { V[*flattened_values] }
 
     shared_examples "checking flattened result" do
-      it "returns the flattened values as a Hamster::Vector" do
+      it "returns the flattened values as an Immutable::Vector" do
         expect(flat_map).to eq(flattened_vector)
       end
 
-      it "returns a Hamster::Vector" do
-        expect(flat_map).to be_a(Hamster::Vector)
+      it "returns an Immutable::Vector" do
+        expect(flat_map).to be_a(Immutable::Vector)
       end
     end
 

@@ -22,7 +22,7 @@ describe Immutable::Hash do
         possibilities.include?(hash.flatten).should == true
         possibilities.include?(hash.flatten(1)).should == true
         possibilities.include?(hash.flatten(2)).should == true
-        hash.flatten(2).class.should be(Hamster::Vector)
+        hash.flatten(2).class.should be(Immutable::Vector)
         possibilities.include?(hash.flatten(10)).should == true
       end
 
@@ -45,7 +45,7 @@ describe Immutable::Hash do
         hash = H[[1, 2] => 3, [4, 5] => 6]
         [[[1, 2], 3, [4, 5], 6], [[4, 5], 6, [1, 2], 3]].include?(hash.flatten(1)).should == true
         [[[1, 2], 3, [4, 5], 6], [[4, 5], 6, [1, 2], 3]].include?(hash.flatten).should == true
-        hash.flatten(1).class.should be(Hamster::Vector)
+        hash.flatten(1).class.should be(Immutable::Vector)
         [[1, 2, 3, 4, 5, 6], [4, 5, 6, 1, 2, 3]].include?(hash.flatten(2)).should == true
         [[1, 2, 3, 4, 5, 6], [4, 5, 6, 1, 2, 3]].include?(hash.flatten(3)).should == true
       end
@@ -65,7 +65,7 @@ describe Immutable::Hash do
         [[1, [2, 3], 4, [5, 6]], [4, [5, 6], 1, [2, 3]]].include?(hash.flatten).should == true
         [[1, 2, 3, 4, 5, 6], [4, 5, 6, 1, 2, 3]].include?(hash.flatten(2)).should == true
         [[1, 2, 3, 4, 5, 6], [4, 5, 6, 1, 2, 3]].include?(hash.flatten(3)).should == true
-        hash.flatten(3).class.should be(Hamster::Vector)
+        hash.flatten(3).class.should be(Immutable::Vector)
       end
 
       it "doesn't modify the receiver (or its contents)" do

@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/vector"
 
-describe Hamster::Vector do
+describe Immutable::Vector do
   let(:vector) { V[1,2,3,4] }
   let(:big) { V.new(1..10000) }
 
@@ -229,7 +229,7 @@ describe Hamster::Vector do
 
     context "on a subclass of Vector" do
       it "with index and count or a range, returns an instance of the subclass" do
-        subclass = Class.new(Hamster::Vector)
+        subclass = Class.new(Immutable::Vector)
         instance = subclass.new([1,2,3])
         instance.send(method, 0, 0).class.should be(subclass)
         instance.send(method, 0, 2).class.should be(subclass)

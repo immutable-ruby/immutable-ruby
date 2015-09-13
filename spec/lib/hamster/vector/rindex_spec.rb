@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/vector"
 
-describe Hamster::Vector do
+describe Immutable::Vector do
   describe "#rindex" do
     let(:vector) { V[1,2,3,3,2,1] }
 

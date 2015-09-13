@@ -8,7 +8,7 @@ describe Immutable::Hash do
     let(:result) { hash.values }
 
     it "returns the keys as a Vector" do
-      result.should be_a Hamster::Vector
+      result.should be_a Immutable::Vector
       result.to_a.sort.should == %w(aye bee see)
     end
 
@@ -17,7 +17,7 @@ describe Immutable::Hash do
       let(:result) { hash.values }
 
       it "returns the keys as a Vector" do
-        result.class.should be(Hamster::Vector)
+        result.class.should be(Immutable::Vector)
         result.to_a.sort.should == [15, 15, 19]
       end
     end

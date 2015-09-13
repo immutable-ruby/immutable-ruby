@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/vector"
 
-describe Hamster::Vector do
+describe Immutable::Vector do
   [:include?, :member?].each do |method|
     describe "##{method}" do
       [

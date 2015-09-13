@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/vector"
 
-describe Hamster::Vector do
+describe Immutable::Vector do
   [:+, :concat].each do |method|
     describe "##{method}" do
       let(:vector) { V.new(1..100) }

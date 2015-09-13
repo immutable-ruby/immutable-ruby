@@ -1,13 +1,13 @@
 require "spec_helper"
 require "hamster/vector"
 
-describe Hamster::Vector do
+describe Immutable::Vector do
   describe "#marshal_dump/#marshal_load" do
     let(:ruby) do
       File.join(RbConfig::CONFIG["bindir"], RbConfig::CONFIG["ruby_install_name"])
     end
     let(:child_cmd) do
-      %Q|#{ruby} -I lib -r hamster -e 'vector = Hamster::Vector[5, 10, 15]; $stdout.write(Marshal.dump(vector))'|
+      %Q|#{ruby} -I lib -r hamster -e 'vector = Immutable::Vector[5, 10, 15]; $stdout.write(Marshal.dump(vector))'|
     end
 
     let(:reloaded_vector) do

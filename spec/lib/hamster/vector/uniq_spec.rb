@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/vector"
 
-describe Hamster::Vector do
+describe Immutable::Vector do
   describe "#uniq" do
     let(:vector) { V['a', 'b', 'a', 'a', 'c', 'b'] }
 
@@ -61,14 +61,14 @@ describe Hamster::Vector do
           vector = V.new(array)
           result = vector.uniq
           result.should == array.uniq
-          result.class.should be(Hamster::Vector)
+          result.class.should be(Immutable::Vector)
         end
       end
     end
 
     context "from a subclass" do
       it "returns an instance of the subclass" do
-        subclass = Class.new(Hamster::Vector)
+        subclass = Class.new(Immutable::Vector)
         instance = subclass.new([1,2,3])
         instance.uniq.class.should be(subclass)
       end

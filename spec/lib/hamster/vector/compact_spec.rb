@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/vector"
 
-describe Hamster::Vector do
+describe Immutable::Vector do
   describe "#compact" do
     it "returns a new Vector with all nils removed" do
       V[1, nil, 2, nil].compact.should eql(V[1, 2])

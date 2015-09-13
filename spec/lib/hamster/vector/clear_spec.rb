@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/vector"
 
-describe Hamster::Vector do
+describe Immutable::Vector do
   describe "#clear" do
     [
       [],
@@ -23,7 +23,7 @@ describe Hamster::Vector do
 
       context "from a subclass" do
         it "returns an instance of the subclass" do
-          subclass = Class.new(Hamster::Vector)
+          subclass = Class.new(Immutable::Vector)
           instance = subclass.new(%w{a b c})
           instance.clear.class.should be(subclass)
           instance.clear.should be_empty

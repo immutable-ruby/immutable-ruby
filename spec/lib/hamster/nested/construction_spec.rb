@@ -14,15 +14,15 @@ describe Hamster do
         "l" => ::SortedSet.new([1, 2, 3]) },
       Immutable::Hash[
         "a" => 1,
-        "b" => Hamster::Vector[2, Immutable::Hash["c" => 3], 4],
+        "b" => Immutable::Vector[2, Immutable::Hash["c" => 3], 4],
         "d" => Hamster::Set[5, 6, 7],
         "e" => Immutable::Hash["f" => 8, "g" => 9],
         "h" => Regexp.new("ijk"),
         "l" => Hamster::SortedSet.new([1, 2, 3])] ],
     [ {}, Immutable::Hash[] ],
     [ {"a" => 1, "b" => 2, "c" => 3}, Immutable::Hash["a" => 1, "b" => 2, "c" => 3] ],
-    [ [], Hamster::Vector[] ],
-    [ [1, 2, 3], Hamster::Vector[1, 2, 3] ],
+    [ [], Immutable::Vector[] ],
+    [ [1, 2, 3], Immutable::Vector[1, 2, 3] ],
     [ ::Set.new, Hamster::Set[] ],
     [ ::Set.new([1, 2, 3]), Hamster::Set[1, 2, 3] ],
     [ ::SortedSet.new, Hamster::SortedSet[] ],
@@ -45,13 +45,13 @@ describe Hamster do
         input = {
           "a" => "b",
           "c" => {"d" => "e"},
-          "f" => Hamster::Vector["g", "h", []],
+          "f" => Immutable::Vector["g", "h", []],
           "i" => Immutable::Hash["j" => {}, "k" => Hamster::Set[[], {}]] }
         expected_result = Immutable::Hash[
           "a" => "b",
           "c" => Immutable::Hash["d" => "e"],
-          "f" => Hamster::Vector["g", "h", Hamster::EmptyVector],
-          "i" => Immutable::Hash["j" => Immutable::EmptyHash, "k" => Hamster::Set[Hamster::EmptyVector, Immutable::EmptyHash]] ]
+          "f" => Immutable::Vector["g", "h", Immutable::EmptyVector],
+          "i" => Immutable::Hash["j" => Immutable::EmptyHash, "k" => Hamster::Set[Immutable::EmptyVector, Immutable::EmptyHash]] ]
         Hamster.from(input).should eql(expected_result)
       end
     end
@@ -83,8 +83,8 @@ describe Hamster do
         input = Immutable::Hash[
           "a" => "b",
           "c" => {"d" => "e"},
-          "f" => Hamster::Vector["g", "h"],
-          "i" => {"j" => Immutable::EmptyHash, "k" => Set.new([Hamster::EmptyVector, Immutable::EmptyHash])}]
+          "f" => Immutable::Vector["g", "h"],
+          "i" => {"j" => Immutable::EmptyHash, "k" => Set.new([Immutable::EmptyVector, Immutable::EmptyHash])}]
         expected_result = {
           "a" => "b",
           "c" => {"d" => "e"},

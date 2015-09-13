@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/vector"
 
-describe Hamster::Vector do
+describe Immutable::Vector do
   describe "#product" do
     context "when passed no arguments" do
       it "multiplies all items in vector" do

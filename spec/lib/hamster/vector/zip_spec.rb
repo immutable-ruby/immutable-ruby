@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/vector"
 
-describe Hamster::Vector do
+describe Immutable::Vector do
   describe "#zip" do
     let(:vector) { V[1,2,3,4] }
 
@@ -41,7 +41,7 @@ describe Hamster::Vector do
           array   = (rand(9)+1).times.map { size.times.map { rand(10000) }}
           vectors = array.map { |a| V.new(a) }
           result  = vectors.first.zip(*vectors.drop(1))
-          result.class.should be(Hamster::Vector)
+          result.class.should be(Immutable::Vector)
           result.should == array[0].zip(*array.drop(1))
         end
       end
@@ -49,7 +49,7 @@ describe Hamster::Vector do
 
     context "from a subclass" do
       it "returns an instance of the subclass" do
-        subclass = Class.new(Hamster::Vector)
+        subclass = Class.new(Immutable::Vector)
         instance = subclass.new([1,2,3])
         instance.zip([4,5,6]).class.should be(subclass)
       end

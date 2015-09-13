@@ -12,12 +12,12 @@ module Hamster
     # Create a Hamster immutable data structure with nested Hamster data
     # structure from a nested Ruby object `obj`.  This method recursively
     # "walks" the Ruby object, converting Ruby `Hash` to {Immutable::Hash}, Ruby
-    # `Array` to {Hamster::Vector}, Ruby `Set` to {Hamster::Set}, and Ruby
+    # `Array` to {Immutable::Vector}, Ruby `Set` to {Hamster::Set}, and Ruby
     # `SortedSet` to {Hamster::SortedSet}.  Other objects are left as-is.
     #
     # @example
     #   h = Hamster.from({ "a" => [1, 2], "b" => "c" })
-    #   # => Immutable::Hash["a" => Hamster::Vector[1, 2], "b" => "c"]
+    #   # => Immutable::Hash["a" => Immutable::Vector[1, 2], "b" => "c"]
     #
     # @return [Hash, Vector, Set, SortedSet, Object]
     def from(obj)
@@ -29,7 +29,7 @@ module Hamster
         obj.map { |key, value| [from(key), from(value)] }
       when ::Array
         res = obj.map { |element| from(element) }
-        Hamster::Vector.new(res)
+        Immutable::Vector.new(res)
       when ::SortedSet
         # This clause must go before ::Set clause, since ::SortedSet is a ::Set.
         res = obj.map { |element| from(element) }
@@ -37,7 +37,7 @@ module Hamster
       when ::Set
         res = obj.map { |element| from(element) }
         Hamster::Set.new(res)
-      when Hamster::Vector, Hamster::Set, Hamster::SortedSet
+      when Immutable::Vector, Hamster::Set, Hamster::SortedSet
         obj.map { |element| from(element) }
       else
         obj
@@ -46,7 +46,7 @@ module Hamster
 
     # Create a Ruby object from Hamster data. This method recursively "walks"
     # the Hamster object, converting {Immutable::Hash} to Ruby `Hash`,
-    # {Hamster::Vector} and {Hamster::Deque} to Ruby `Array`, {Hamster::Set}
+    # {Immutable::Vector} and {Hamster::Deque} to Ruby `Array`, {Hamster::Set}
     # to Ruby `Set`, and {Hamster::SortedSet} to Ruby `SortedSet`.  Other
     # objects are left as-is.
     #
@@ -59,7 +59,7 @@ module Hamster
       case obj
       when Immutable::Hash, ::Hash
         obj.each_with_object({}) { |keyval, hash| hash[to_ruby(keyval[0])] = to_ruby(keyval[1]) }
-      when Hamster::Vector, ::Array
+      when Immutable::Vector, ::Array
         obj.each_with_object([]) { |element, arr| arr << to_ruby(element) }
       when Hamster::Set, ::Set
         obj.each_with_object(::Set.new) { |element, set| set << to_ruby(element) }

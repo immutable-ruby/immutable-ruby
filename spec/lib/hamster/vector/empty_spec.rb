@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/vector"
 
-describe Hamster::Vector do
+describe Immutable::Vector do
   describe "#empty?" do
     [
       [[], true],
@@ -24,13 +24,13 @@ describe Hamster::Vector do
 
     context "from a subclass" do
       it "returns an empty instance of the subclass" do
-        subclass = Class.new(Hamster::Vector)
+        subclass = Class.new(Immutable::Vector)
         subclass.empty.class.should be(subclass)
         subclass.empty.should be_empty
       end
 
       it "calls overridden #initialize when creating empty Hash" do
-        subclass = Class.new(Hamster::Vector) do
+        subclass = Class.new(Immutable::Vector) do
           def initialize
             @variable = 'value'
           end

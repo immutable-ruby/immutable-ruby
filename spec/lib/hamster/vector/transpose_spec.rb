@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/vector"
 
-describe Hamster::Vector do
+describe Immutable::Vector do
   describe "#transpose" do
     it "takes a vector of vectors and transposes rows and columns" do
       V[V[1, 'a'], V[2, 'b'], V[3, 'c']].transpose.should eql(V[V[1, 2, 3], V["a", "b", "c"]])
@@ -32,7 +32,7 @@ describe Hamster::Vector do
           #   nested Arrays and corresponding nested Vectors to be equal
           # That is why the following ".map { |a| V.new(a) }" is needed
           result.should == array.transpose.map { |a| V.new(a) }
-          result.each { |v| v.class.should be(Hamster::Vector) }
+          result.each { |v| v.class.should be(Immutable::Vector) }
         end
       end
     end

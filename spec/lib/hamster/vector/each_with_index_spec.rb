@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/vector"
 
-describe Hamster::Vector do
+describe Immutable::Vector do
   describe "#each_with_index" do
     describe "with no block" do
       let(:vector) { V["A", "B", "C"] }

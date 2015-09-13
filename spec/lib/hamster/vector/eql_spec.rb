@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/vector"
 
-describe Hamster::Vector do
+describe Immutable::Vector do
   describe "#eql" do
     let(:vector) { V["A", "B", "C"] }
 
@@ -17,8 +17,8 @@ describe Hamster::Vector do
       V.empty.eql?([]).should == false
     end
 
-    it "returns false when comparing with a subclass of Hamster::Vector" do
-      vector.eql?(Class.new(Hamster::Vector).new(%w[A B C])).should == false
+    it "returns false when comparing with a subclass of Immutable::Vector" do
+      vector.eql?(Class.new(Immutable::Vector).new(%w[A B C])).should == false
     end
   end
 
@@ -37,8 +37,8 @@ describe Hamster::Vector do
       (V.empty == []).should == true
     end
 
-    it "returns true when comparing with a subclass of Hamster::Vector" do
-      (vector == Class.new(Hamster::Vector).new(%w[A B C])).should == true
+    it "returns true when comparing with a subclass of Immutable::Vector" do
+      (vector == Class.new(Immutable::Vector).new(%w[A B C])).should == true
     end
 
     it "works on larger vectors" do

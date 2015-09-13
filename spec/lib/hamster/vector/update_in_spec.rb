@@ -1,14 +1,14 @@
 require "spec_helper"
 require "hamster/vector"
 
-describe Hamster::Vector do
+describe Immutable::Vector do
   describe "#update_in" do
     let(:vector) {
-      Hamster::Vector[
+      Immutable::Vector[
         100,
         101,
         102,
-        Hamster::Vector[200, 201, Hamster::Vector[300, 301, 302]],
+        Immutable::Vector[200, 201, Immutable::Vector[300, 301, 302]],
         Immutable::Hash["A" => "alpha", "B" => "bravo"],
         [400, 401, 402]
       ]

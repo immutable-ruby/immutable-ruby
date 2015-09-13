@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/vector"
 
-describe Hamster::Vector do
+describe Immutable::Vector do
   describe "#flatten" do
     it "recursively flattens nested vectors into containing vector" do
       V[V[1], V[2]].flatten.should eql(V[1,2])
@@ -29,7 +29,7 @@ describe Hamster::Vector do
 
     context "on a subclass" do
       it "returns an instance of the subclass" do
-        subclass = Class.new(Hamster::Vector)
+        subclass = Class.new(Immutable::Vector)
         instance = subclass.new([1,2])
         instance.flatten.class.should be(subclass)
       end

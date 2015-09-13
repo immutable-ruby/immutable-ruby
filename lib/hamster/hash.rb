@@ -521,7 +521,7 @@ module Immutable
     #
     # @return [Vector]
     def sort
-      Hamster::Vector.new(super)
+      Vector.new(super)
     end
 
     # Return a {Vector} which contains all the `[key, value]` pairs in this `Hash`
@@ -540,7 +540,7 @@ module Immutable
     # @yieldreturn a sort key object for the yielded pair.
     # @return [Vector]
     def sort_by
-      Hamster::Vector.new(super)
+      Vector.new(super)
     end
 
     # Return a new `Hash` with the associations for all of the given `keys` removed.
@@ -581,7 +581,7 @@ module Immutable
     def values_at(*wanted)
       array = []
       wanted.each { |key| array << get(key) if key?(key) }
-      Hamster::Vector.new(array.freeze)
+      Vector.new(array.freeze)
     end
 
     # Return a new {Set} containing the keys from this `Hash`.
@@ -603,7 +603,7 @@ module Immutable
     #
     # @return [Vector]
     def values
-      Hamster::Vector.new(each_value.to_a.freeze)
+      Vector.new(each_value.to_a.freeze)
     end
 
     # Return a new `Hash` created by using keys as values and values as keys.
@@ -642,11 +642,11 @@ module Immutable
     # @param level [Integer] The number of times to recursively flatten the `[key, value]` pairs in this `Hash`.
     # @return [Vector]
     def flatten(level = 1)
-      return Hamster::Vector.new(self) if level == 0
+      return Vector.new(self) if level == 0
       array = []
       each { |k,v| array << k; array << v }
       array.flatten!(level-1) if level > 1
-      Hamster::Vector.new(array.freeze)
+      Vector.new(array.freeze)
     end
 
     # Searches through the `Hash`, comparing `obj` with each key (using `#==`).

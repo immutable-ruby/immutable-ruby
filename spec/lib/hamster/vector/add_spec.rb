@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/vector"
 
-describe Hamster::Vector do
+describe Immutable::Vector do
   let(:vector) { V[*values] }
 
   [:add, :<<, :push].each do |method|
@@ -58,7 +58,7 @@ describe Hamster::Vector do
 
       context "from a subclass" do
         it "returns an instance of the subclass" do
-          subclass = Class.new(Hamster::Vector)
+          subclass = Class.new(Immutable::Vector)
           instance = subclass[1,2,3]
           instance.add(4).class.should be(subclass)
         end

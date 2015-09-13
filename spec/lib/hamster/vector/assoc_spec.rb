@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/vector"
 
-describe Hamster::Vector do
+describe Immutable::Vector do
   let(:vector) { V[[:a, 3], [:b, 2], [:c, 1]] }
 
   describe "#assoc" do

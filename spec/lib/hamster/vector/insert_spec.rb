@@ -2,7 +2,7 @@ require "spec_helper"
 require "hamster/vector"
 require 'pry'
 
-describe Hamster::Vector do
+describe Immutable::Vector do
   describe "#insert" do
     let(:original) { V[1, 2, 3] }
 
@@ -53,7 +53,7 @@ describe Hamster::Vector do
 
     it "has the right size and contents after many insertions" do
       array  = (1..4000).to_a # we use an Array as standard of correctness
-      vector = Hamster::Vector.new(array)
+      vector = Immutable::Vector.new(array)
       100.times do
         items = rand(10).times.map { rand(10000) }
         index = rand(vector.size)

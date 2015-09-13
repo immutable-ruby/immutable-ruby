@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/vector"
 
-describe Hamster::Vector do
+describe Immutable::Vector do
   describe "#count" do
     it "returns the number of elements" do
       V[:a, :b, :c].count.should == 3

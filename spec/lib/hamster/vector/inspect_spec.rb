@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/vector"
 
-describe Hamster::Vector do
+describe Immutable::Vector do
   let(:vector) { V[*values] }
 
   describe "#inspect" do
@@ -18,28 +18,28 @@ describe Hamster::Vector do
     end
 
     context "with an empty array" do
-      let(:output) { "Hamster::Vector[]" }
+      let(:output) { "Immutable::Vector[]" }
       let(:values) { [] }
 
       include_examples "checking output"
     end
 
     context "with a single item array" do
-      let(:output) { "Hamster::Vector[\"A\"]" }
+      let(:output) { "Immutable::Vector[\"A\"]" }
       let(:values) { %w[A] }
 
       include_examples "checking output"
     end
 
     context "with a multi-item array" do
-      let(:output) { "Hamster::Vector[\"A\", \"B\"]" }
+      let(:output) { "Immutable::Vector[\"A\", \"B\"]" }
       let(:values) { %w[A B] }
 
       include_examples "checking output"
     end
 
     context "from a subclass" do
-      MyVector = Class.new(Hamster::Vector)
+      MyVector = Class.new(Immutable::Vector)
       let(:vector) { MyVector.new(values) }
       let(:output) { "MyVector[1, 2]" }
       let(:values) { [1, 2] }

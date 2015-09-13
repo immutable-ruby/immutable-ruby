@@ -18,7 +18,7 @@ describe :Hamster do
 
   describe :Vector do
     it "can be loaded separately" do
-      system(%{ruby -e "$:.unshift('#{hamster_lib_dir}'); require 'hamster/vector'; Hamster::Vector.new"}).should be(true)
+      system(%{ruby -e "$:.unshift('#{hamster_lib_dir}'); require 'hamster/vector'; Immutable::Vector.new"}).should be(true)
     end
   end
 

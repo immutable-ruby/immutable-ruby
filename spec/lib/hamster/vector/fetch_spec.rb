@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/vector"
 
-describe Hamster::Vector do
+describe Immutable::Vector do
   describe "#fetch" do
     let(:vector) { V['a', 'b', 'c'] }
 

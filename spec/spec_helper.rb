@@ -22,7 +22,7 @@ RSpec.configure do |config|
   end
 end
 
-V = Hamster::Vector
+V = Immutable::Vector
 L = Hamster::List
 H = Immutable::Hash
 S = Hamster::Set

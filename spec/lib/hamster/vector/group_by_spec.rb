@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/vector"
 
-describe Hamster::Vector do
+describe Immutable::Vector do
   describe "#group_by" do
     context "with a block" do
       [
@@ -49,7 +49,7 @@ describe Hamster::Vector do
 
     context "from a subclass" do
       it "returns an Hash whose values are instances of the subclass" do
-        subclass = Class.new(Hamster::Vector)
+        subclass = Class.new(Immutable::Vector)
         instance = subclass.new([1, 'string', :symbol])
         instance.group_by { |x| x.class }.values.each { |v| v.class.should be(subclass) }
       end
