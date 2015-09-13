@@ -5,7 +5,7 @@ require "hamster/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "hamster"
-  spec.version       = Hamster::VERSION
+  spec.version       = Immutable::VERSION
   spec.authors       = ["Simon Harris"]
   spec.email         = ["haruki_zaemon@mac.com"]
   spec.summary       = %q{Efficient, immutable, thread-safe collection classes for Ruby}
