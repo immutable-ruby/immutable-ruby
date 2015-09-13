@@ -58,7 +58,7 @@ module Immutable
   #     hash = Immutable::Hash.new { |missing_key| missing_key * 10 }
   #     hash[5] # => 50
   class Hash
-    include Hamster::Enumerable
+    include Immutable::Enumerable
 
     class << self
       # Create a new `Hash` populated with the given key/value pairs.

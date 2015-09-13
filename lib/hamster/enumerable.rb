@@ -1,7 +1,8 @@
-module Hamster
-  # Helper module for Hamster's sequential collections
+module Immutable
+
+  # Helper module for immutable-ruby's sequential collections
   #
-  # Classes including `Hamster::Enumerable` must implement:
+  # Classes including `Immutable::Enumerable` must implement:
   #
   # - `#each` (just like `::Enumerable`).
   # - `#select`, which takes a block, and returns an instance of the same class

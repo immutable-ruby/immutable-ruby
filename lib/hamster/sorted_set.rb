@@ -49,7 +49,7 @@ module Immutable
   # is a constant time operation.
   #
   class SortedSet
-    include Hamster::Enumerable
+    include Immutable::Enumerable
 
     class << self
       # Create a new `SortedSet` populated with the given items. This method does not

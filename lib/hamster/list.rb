@@ -117,7 +117,7 @@ module Immutable
   # traversed to find the element.
   #
   module List
-    include Hamster::Enumerable
+    include Immutable::Enumerable
 
     # @private
     CADR = /^c([ad]+)r$/

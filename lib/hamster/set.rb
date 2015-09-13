@@ -47,7 +47,7 @@ module Immutable
   #   set1.subset?(set3)        # => true
   #
   class Set
-    include Hamster::Enumerable
+    include Immutable::Enumerable
 
     class << self
       # Create a new `Set` populated with the given items.
