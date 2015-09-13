@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster::List do
+describe Immutable::List do
   describe "#rotate" do
     let(:list) { L[1,2,3,4,5] }
 

@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster::List do
+describe Immutable::List do
   [
     [[], :car, nil],
     [["A"], :car, "A"],

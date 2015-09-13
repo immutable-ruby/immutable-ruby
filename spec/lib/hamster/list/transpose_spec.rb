@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster::List do
+describe Immutable::List do
   describe "#transpose" do
     it "takes a list of lists and returns a list of all the first elements, all the 2nd elements, and so on" do
       L[L[1, 'a'], L[2, 'b'], L[3, 'c']].transpose.should eql(L[L[1, 2, 3], L["a", "b", "c"]])

@@ -1,10 +1,10 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster::List do
+describe Immutable::List do
   describe "#drop_while" do
     it "is lazy" do
-      -> { Hamster.stream { fail }.drop_while { false } }.should_not raise_error
+      -> { Immutable.stream { fail }.drop_while { false } }.should_not raise_error
     end
 
     [

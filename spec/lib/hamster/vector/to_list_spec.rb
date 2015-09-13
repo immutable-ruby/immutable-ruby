@@ -15,7 +15,7 @@ describe Immutable::Vector do
         let(:list) { vector.to_list }
 
         it "returns a list" do
-          list.is_a?(Hamster::List).should == true
+          list.is_a?(Immutable::List).should == true
         end
 
         describe "the returned list" do

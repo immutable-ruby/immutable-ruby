@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster::List do
+describe Immutable::List do
   describe "#delete" do
     it "removes elements that are #== to the argument" do
       L[1,2,3].delete(1).should eql(L[2,3])

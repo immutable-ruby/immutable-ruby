@@ -1,12 +1,12 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster::List do
+describe Immutable::List do
   [:size, :length].each do |method|
     describe "##{method}" do
       context "on a really big list" do
         it "doesn't run out of stack" do
-          -> { Hamster.interval(0, STACK_OVERFLOW_DEPTH).size }.should_not raise_error
+          -> { Immutable.interval(0, STACK_OVERFLOW_DEPTH).size }.should_not raise_error
         end
       end
 

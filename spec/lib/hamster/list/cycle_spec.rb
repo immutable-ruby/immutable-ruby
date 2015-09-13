@@ -4,7 +4,7 @@ require "hamster/list"
 describe Hamster do
   describe "#cycle" do
     it "is lazy" do
-      -> { Hamster.stream { fail }.cycle }.should_not raise_error
+      -> { Immutable.stream { fail }.cycle }.should_not raise_error
     end
 
     context "with an empty list" do

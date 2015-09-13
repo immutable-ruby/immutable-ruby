@@ -1,10 +1,10 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster::List do
+describe Immutable::List do
   describe "#grep" do
     it "is lazy" do
-      -> { Hamster.stream { fail }.grep(Object) { |item| item } }.should_not raise_error
+      -> { Immutable.stream { fail }.grep(Object) { |item| item } }.should_not raise_error
     end
 
     context "without a block" do

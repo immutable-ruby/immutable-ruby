@@ -9,10 +9,10 @@ class IO
   #
   # @return [List]
   def to_list(sep = $/) # global input record separator
-    Hamster::LazyList.new do
+    Immutable::LazyList.new do
       line = gets(sep)
       if line
-        Hamster::Cons.new(line, to_list)
+        Immutable::Cons.new(line, to_list)
       else
         EmptyList
       end

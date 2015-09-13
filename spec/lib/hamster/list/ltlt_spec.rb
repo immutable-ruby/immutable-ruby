@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster::List do
+describe Immutable::List do
   describe "#<<" do
     it "adds an item onto the end of a list" do
       list = L["a", "b"]

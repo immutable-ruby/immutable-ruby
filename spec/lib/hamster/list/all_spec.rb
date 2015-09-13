@@ -1,10 +1,10 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster::List do
+describe Immutable::List do
   describe "#all?" do
     context "on a really big list" do
-      let(:list) { Hamster.interval(0, STACK_OVERFLOW_DEPTH) }
+      let(:list) { Immutable.interval(0, STACK_OVERFLOW_DEPTH) }
 
       it "doesn't run out of stack" do
         -> { list.all? }.should_not raise_error

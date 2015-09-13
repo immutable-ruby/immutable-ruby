@@ -1,15 +1,15 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster::List do
+describe Immutable::List do
   describe "#uniq" do
     it "is lazy" do
-      -> { Hamster.stream { fail }.uniq }.should_not raise_error
+      -> { Immutable.stream { fail }.uniq }.should_not raise_error
     end
 
     context "when passed a block" do
       it "uses the block to identify duplicates" do
-        L["a", "A", "b"].uniq(&:upcase).should eql(Hamster::List["a", "b"])
+        L["a", "A", "b"].uniq(&:upcase).should eql(Immutable::List["a", "b"])
       end
     end
 

@@ -1,16 +1,16 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster::List do
+describe Immutable::List do
   describe "#reverse" do
     context "on a really big list" do
       it "doesn't run out of stack" do
-        -> { Hamster.interval(0, STACK_OVERFLOW_DEPTH).reverse }.should_not raise_error
+        -> { Immutable.interval(0, STACK_OVERFLOW_DEPTH).reverse }.should_not raise_error
       end
     end
 
     it "is lazy" do
-      -> { Hamster.stream { fail }.reverse }.should_not raise_error
+      -> { Immutable.stream { fail }.reverse }.should_not raise_error
     end
 
     [

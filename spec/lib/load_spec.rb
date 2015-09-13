@@ -24,7 +24,7 @@ describe :Hamster do
 
   describe :List do
     it "can be loaded separately" do
-      system(%{ruby -e "$:.unshift('#{hamster_lib_dir}'); require 'hamster/list'; Hamster::List[]"}).should be(true)
+      system(%{ruby -e "$:.unshift('#{hamster_lib_dir}'); require 'hamster/list'; Immutable::List[]"}).should be(true)
     end
   end
 

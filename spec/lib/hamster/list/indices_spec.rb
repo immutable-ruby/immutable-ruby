@@ -1,18 +1,18 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster::List do
+describe Immutable::List do
   describe "#indices" do
     context "when called with a block" do
       it "is lazy" do
         count = 0
-        Hamster.stream { count += 1 }.indices { |item| true }
+        Immutable.stream { count += 1 }.indices { |item| true }
         count.should <= 1
       end
 
       context "on a large list which doesn't contain desired item" do
         it "doesn't blow the stack" do
-          -> { Hamster.interval(0, STACK_OVERFLOW_DEPTH).indices { |x| x < 0 }.size }.should_not raise_error
+          -> { Immutable.interval(0, STACK_OVERFLOW_DEPTH).indices { |x| x < 0 }.size }.should_not raise_error
         end
       end
 
@@ -37,7 +37,7 @@ describe Hamster::List do
     context "when called with a single argument" do
       it "is lazy" do
         count = 0
-        Hamster.stream { count += 1 }.indices(nil)
+        Immutable.stream { count += 1 }.indices(nil)
         count.should <= 1
       end
 

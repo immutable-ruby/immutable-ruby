@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster::List do
+describe Immutable::List do
   describe "#permutation" do
     let(:list) { L[1,2,3,4] }
 
@@ -17,7 +17,7 @@ describe Hamster::List do
         perms = list.permutation.to_a
         perms.size.should be(24)
         perms.sort.should == [1,2,3,4].permutation.to_a.sort
-        perms.each { |item| item.should be_kind_of(Hamster::List) }
+        perms.each { |item| item.should be_kind_of(Immutable::List) }
       end
     end
 
@@ -26,7 +26,7 @@ describe Hamster::List do
         perms = list.permutation(2).to_a
         perms.size.should be(12)
         perms.sort.should == [1,2,3,4].permutation(2).to_a.sort
-        perms.each { |item| item.should be_kind_of(Hamster::List) }
+        perms.each { |item| item.should be_kind_of(Immutable::List) }
       end
     end
 
@@ -40,7 +40,7 @@ describe Hamster::List do
       it "yields an empty list" do
         perms = list.permutation(0).to_a
         perms.size.should be(1)
-        perms[0].should be_kind_of(Hamster::List)
+        perms[0].should be_kind_of(Immutable::List)
         perms[0].should be_empty
       end
     end

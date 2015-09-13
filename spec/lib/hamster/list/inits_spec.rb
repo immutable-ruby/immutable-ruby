@@ -1,10 +1,10 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster::List do
+describe Immutable::List do
   describe "#inits" do
     it "is lazy" do
-      -> { Hamster.stream { fail }.inits }.should_not raise_error
+      -> { Immutable.stream { fail }.inits }.should_not raise_error
     end
 
     [

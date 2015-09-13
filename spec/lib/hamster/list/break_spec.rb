@@ -1,10 +1,10 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster::List do
+describe Immutable::List do
   describe "#break" do
     it "is lazy" do
-      -> { Hamster.stream { fail }.break { |item| false } }.should_not raise_error
+      -> { Immutable.stream { fail }.break { |item| false } }.should_not raise_error
     end
 
     [

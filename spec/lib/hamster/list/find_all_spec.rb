@@ -1,13 +1,13 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster::List do
+describe Immutable::List do
   let(:list) { L[*values] }
   let(:found_list) { L[*found_values] }
 
   describe "#find_all" do
     it "is lazy" do
-      expect { Hamster.stream { fail }.find_all { |item| false } }.to_not raise_error
+      expect { Immutable.stream { fail }.find_all { |item| false } }.to_not raise_error
     end
 
     shared_examples "checking values" do

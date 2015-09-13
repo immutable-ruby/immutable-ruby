@@ -66,8 +66,8 @@ module Immutable
     end
 
     def initialize(items=[])
-      @front = Hamster::List.from_enum(items)
-      @rear  = Hamster::EmptyList
+      @front = List.from_enum(items)
+      @rear  = EmptyList
       freeze
     end
 
@@ -135,7 +135,7 @@ module Immutable
 
       if rear.empty?
         return self.class.empty if front.empty?
-        front, rear = Hamster::EmptyList, front.reverse
+        front, rear = EmptyList, front.reverse
       end
 
       self.class.alloc(front, rear.tail)
@@ -165,7 +165,7 @@ module Immutable
 
       if front.empty?
         return self.class.empty if rear.empty?
-        front, rear = rear.reverse, Hamster::EmptyList
+        front, rear = rear.reverse, EmptyList
       end
 
       self.class.alloc(front.tail, rear)
@@ -199,7 +199,7 @@ module Immutable
     alias :to_ary  :to_a
 
     # Return a {List} with the same elements, in the same order.
-    # @return [Hamster::List]
+    # @return [Immutable::List]
     def to_list
       @front.append(@rear.reverse)
     end

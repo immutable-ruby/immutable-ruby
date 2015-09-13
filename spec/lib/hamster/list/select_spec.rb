@@ -1,13 +1,13 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster::List do
+describe Immutable::List do
   let(:list) { L[*values] }
   let(:selected_list) { L[*selected_values] }
 
   describe "#select" do
     it "is lazy" do
-      expect { Hamster.stream { fail }.select { |item| false } }.to_not raise_error
+      expect { Immutable.stream { fail }.select { |item| false } }.to_not raise_error
     end
 
     shared_examples "checking values" do

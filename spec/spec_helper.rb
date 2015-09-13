@@ -22,13 +22,13 @@ RSpec.configure do |config|
   end
 end
 
-V = Immutable::Vector
-L = Hamster::List
-H = Immutable::Hash
-S = Immutable::Set
+V  = Immutable::Vector
+L  = Immutable::List
+H  = Immutable::Hash
+S  = Immutable::Set
 SS = Immutable::SortedSet
-D = Immutable::Deque
-EmptyList = Hamster::EmptyList
+D  = Immutable::Deque
+EmptyList = Immutable::EmptyList
 
 def fixture(name)
   File.read(fixture_path(name))

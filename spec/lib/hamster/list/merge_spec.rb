@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster::List do
+describe Immutable::List do
   context "without a comparator" do
     context "on an empty list" do
       subject { L.empty }

@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster::List do
+describe Immutable::List do
   let(:list) { L[*values] }
 
   describe "#flat_map" do
@@ -11,12 +11,12 @@ describe Hamster::List do
 
     shared_examples "checking flattened result" do
 
-      it "returns the flattened values as a Hamster::List" do
+      it "returns the flattened values as a Immutable::List" do
         expect(flat_map).to eq(flattened_list)
       end
 
-      it "returns a Hamster::List" do
-        expect(flat_map).to be_a(Hamster::List)
+      it "returns a Immutable::List" do
+        expect(flat_map).to be_a(Immutable::List)
       end
     end
 

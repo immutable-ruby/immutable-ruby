@@ -4,7 +4,7 @@ require "hamster/list"
 describe Hamster do
   describe "#flatten" do
     it "is lazy" do
-      -> { Hamster.stream { fail }.flatten }.should_not raise_error
+      -> { Immutable.stream { fail }.flatten }.should_not raise_error
     end
 
     [

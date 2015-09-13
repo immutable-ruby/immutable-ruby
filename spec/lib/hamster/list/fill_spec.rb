@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster::List do
+describe Immutable::List do
   describe "#fill" do
     let(:list) { L[1, 2, 3, 4, 5, 6] }
 
@@ -44,7 +44,7 @@ describe Hamster::List do
     end
 
     it "is lazy" do
-      -> { Hamster.stream { fail }.fill(:a, 0, 1) }.should_not raise_error
+      -> { Immutable.stream { fail }.fill(:a, 0, 1) }.should_not raise_error
     end
   end
 end

@@ -1,11 +1,11 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster::List do
+describe Immutable::List do
   [:reject, :delete_if].each do |method|
     describe "##{method}" do
       it "is lazy" do
-        -> { Hamster.stream { fail }.send(method) { |item| false } }.should_not raise_error
+        -> { Immutable.stream { fail }.send(method) { |item| false } }.should_not raise_error
       end
 
       [

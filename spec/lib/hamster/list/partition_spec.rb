@@ -2,10 +2,10 @@ require "spec_helper"
 require "hamster/list"
 require "thread"
 
-describe Hamster::List do
+describe Immutable::List do
   describe "#partition" do
     it "is lazy" do
-      -> { Hamster.stream { fail }.partition }.should_not raise_error
+      -> { Immutable.stream { fail }.partition }.should_not raise_error
     end
 
     it "calls the passed block only once for each item" do
@@ -39,7 +39,7 @@ describe Hamster::List do
     it "calls the passed block only once for each item, even with multiple threads" do
       mutex = Mutex.new
       yielded = [] # record all the numbers yielded to the block, to make sure each is yielded only once
-      list = Hamster.iterate(0) do |n|
+      list = Immutable.iterate(0) do |n|
         sleep(rand / 500) # give another thread a chance to get in
         mutex.synchronize { yielded << n }
         sleep(rand / 500)

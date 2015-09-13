@@ -1,11 +1,11 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster::List do
+describe Immutable::List do
   describe "#product" do
     context "on a really big list" do
       it "doesn't run out of stack" do
-        -> { Hamster.interval(0, STACK_OVERFLOW_DEPTH).product }.should_not raise_error
+        -> { Immutable.interval(0, STACK_OVERFLOW_DEPTH).product }.should_not raise_error
       end
     end
 

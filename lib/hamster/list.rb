@@ -7,7 +7,7 @@ require "hamster/enumerable"
 require "hamster/hash"
 require "hamster/set"
 
-module Hamster
+module Immutable
   class << self
 
     # Create a lazy, infinite list.
@@ -15,8 +15,8 @@ module Hamster
     # The given block is called as necessary to return successive elements of the list.
     #
     # @example
-    #   Hamster.stream { :hello }.take(3)
-    #   # => Hamster::List[:hello, :hello, :hello]
+    #   Immutable.stream { :hello }.take(3)
+    #   # => Immutable::List[:hello, :hello, :hello]
     #
     # @return [List]
     def stream(&block)
@@ -27,8 +27,8 @@ module Hamster
     # Construct a list of consecutive integers.
     #
     # @example
-    #   Hamster.interval(5,9)
-    #   # => Hamster::List[5, 6, 7, 8, 9]
+    #   Immutable.interval(5,9)
+    #   # => Immutable::List[5, 6, 7, 8, 9]
     #
     # @param from [Integer] Start value, inclusive
     # @param to [Integer] End value, inclusive
@@ -41,8 +41,8 @@ module Hamster
     # Create an infinite list repeating the same item indefinitely
     #
     # @example
-    #   Hamster.repeat(:chunky).take(4)
-    #   => Hamster::List[:chunky, :chunky, :chunky, :chunky]
+    #   Immutable.repeat(:chunky).take(4)
+    #   => Immutable::List[:chunky, :chunky, :chunky, :chunky]
     #
     # @return [List]
     def repeat(item)
@@ -52,8 +52,8 @@ module Hamster
     # Create a list that contains a given item a fixed number of times
     #
     # @example
-    #   Hamster.replicate(3, :hamster)
-    #   #=> Hamster::List[:hamster, :hamster, :hamster]
+    #   Immutable.replicate(3, :hamster)
+    #   #=> Immutable::List[:hamster, :hamster, :hamster]
     #
     # @return [List]
     def replicate(number, item)
@@ -64,8 +64,8 @@ module Hamster
     # using the provided block
     #
     # @example
-    #   Hamster.iterate(0) { |i| i.next }.take(5)
-    #   # => Hamster::List[0, 1, 2, 3, 4]
+    #   Immutable.iterate(0) { |i| i.next }.take(5)
+    #   # => Immutable::List[0, 1, 2, 3, 4]
     #
     # @param [Object] item Starting value
     # @yieldparam [Object] previous The previous value
@@ -75,7 +75,7 @@ module Hamster
       LazyList.new { Cons.new(item, iterate(yield(item), &block)) }
     end
 
-    # Turn an `Enumerator` into a `Hamster::List`. The result is a lazy
+    # Turn an `Enumerator` into a `Immutable::List`. The result is a lazy
     # collection where the values are memoized as they are generated.
     #
     # If your code uses multiple threads, you need to make sure that the returned
@@ -85,7 +85,7 @@ module Hamster
     #
     # @example
     #   def rg; loop { yield rand(100) }; end
-    #   Hamster.enumerate(to_enum(:rg)).take(10)
+    #   Immutable.enumerate(to_enum(:rg)).take(10)
     #
     # @param enum [Enumerator] The object to iterate over
     # @return [List]
@@ -117,7 +117,7 @@ module Hamster
   # traversed to find the element.
   #
   module List
-    include Enumerable
+    include Hamster::Enumerable
 
     # @private
     CADR = /^c([ad]+)r$/
@@ -125,8 +125,8 @@ module Hamster
     # Create a new `List` populated with the given items.
     #
     # @example
-    #   list = Hamster::List[:a, :b, :c]
-    #   # => Hamster::List[:a, :b, :c]
+    #   list = Immutable::List[:a, :b, :c]
+    #   # => Immutable::List[:a, :b, :c]
     #
     # @return [List]
     def self.[](*items)
@@ -150,14 +150,14 @@ module Hamster
     def self.from_enum(items)
       # use destructive operations to build up a new list, like Common Lisp's NCONC
       # this is a very fast way to build up a linked list
-      list = tail = Hamster::Cons.allocate
+      list = tail = Cons.allocate
       items.each do |item|
-        new_node = Hamster::Cons.allocate
+        new_node = Cons.allocate
         new_node.instance_variable_set(:@head, item)
         tail.instance_variable_set(:@tail, new_node)
         tail = new_node
       end
-      tail.instance_variable_set(:@tail, Hamster::EmptyList)
+      tail.instance_variable_set(:@tail, EmptyList)
       list.tail
     end
 
@@ -181,8 +181,8 @@ module Hamster
     # time operation.
     #
     # @example
-    #   Hamster::List[:b, :c].add(:a)
-    #   # => Hamster::List[:a, :b, :c]
+    #   Immutable::List[:b, :c].add(:a)
+    #   # => Immutable::List[:a, :b, :c]
     #
     # @param item [Object] The item to add
     # @return [List]
@@ -195,8 +195,8 @@ module Hamster
     # than adding items at the front.
     #
     # @example
-    #   Hamster::List[:a, :b] << :c
-    #   # => Hamster::List[:a, :b, :c]
+    #   Immutable::List[:a, :b] << :c
+    #   # => Immutable::List[:a, :b, :c]
     #
     # @param item [Object] The item to add
     # @return [List]
@@ -224,7 +224,7 @@ module Hamster
     # is given, returns an `Enumerator`.
     #
     # @example
-    #   Hamster::List[3, 2, 1].map { |e| e * e } # => Hamster::List[9, 4, 1]
+    #   Immutable::List[3, 2, 1].map { |e| e * e } # => Immutable::List[9, 4, 1]
     #
     # @return [List, Enumerator]
     # @yield [item]
@@ -241,8 +241,8 @@ module Hamster
     # and flattening the resulting lists.
     #
     # @example
-    #   Hamster::List[1, 2, 3].flat_map { |x| Hamster::List[x, 100] }
-    #   # => Hamster::List[1, 100, 2, 100, 3, 100]
+    #   Immutable::List[1, 2, 3].flat_map { |x| Immutable::List[x, 100] }
+    #   # => Immutable::List[1, 100, 2, 100, 3, 100]
     #
     # @return [List]
     def flat_map(&block)
@@ -259,8 +259,8 @@ module Hamster
     # returns true.
     #
     # @example
-    #   Hamster::List["Bird", "Cow", "Elephant"].select { |e| e.size >= 4 }
-    #   # => Hamster::List["Bird", "Elephant"]
+    #   Immutable::List["Bird", "Cow", "Elephant"].select { |e| e.size >= 4 }
+    #   # => Immutable::List["Bird", "Elephant"]
     #
     # @return [List]
     # @yield [item] Once for each item.
@@ -282,8 +282,8 @@ module Hamster
     # first element for which the block returns `nil` or `false`.
     #
     # @example
-    #   Hamster::List[1, 3, 5, 7, 6, 4, 2].take_while { |e| e < 5 }
-    #   # => Hamster::List[1, 3]
+    #   Immutable::List[1, 3, 5, 7, 6, 4, 2].take_while { |e| e < 5 }
+    #   # => Immutable::List[1, 3]
     #
     # @return [List, Enumerator]
     # @yield [item]
@@ -300,8 +300,8 @@ module Hamster
     # first element for which the block returns `nil` or `false`.
     #
     # @example
-    #   Hamster::List[1, 3, 5, 7, 6, 4, 2].drop_while { |e| e < 5 }
-    #   # => Hamster::List[5, 7, 6, 4, 2]
+    #   Immutable::List[1, 3, 5, 7, 6, 4, 2].drop_while { |e| e < 5 }
+    #   # => Immutable::List[5, 7, 6, 4, 2]
     #
     # @return [List, Enumerator]
     # @yield [item]
@@ -317,8 +317,8 @@ module Hamster
     # Return a `List` containing the first `number` items from this `List`.
     #
     # @example
-    #   Hamster::List[1, 3, 5, 7, 6, 4, 2].take(3)
-    #   # => Hamster::List[1, 3, 5]
+    #   Immutable::List[1, 3, 5, 7, 6, 4, 2].take(3)
+    #   # => Immutable::List[1, 3, 5]
     #
     # @param number [Integer] The number of items to retain
     # @return [List]
@@ -333,7 +333,7 @@ module Hamster
     # Return a `List` containing all but the last item from this `List`.
     #
     # @example
-    #   Hamster::List["A", "B", "C"].pop  # => Hamster::List["A", "B"]
+    #   Immutable::List["A", "B", "C"].pop  # => Immutable::List["A", "B"]
     #
     # @return [List]
     def pop
@@ -349,8 +349,8 @@ module Hamster
     # this `List`.
     #
     # @example
-    #   Hamster::List[1, 3, 5, 7, 6, 4, 2].drop(3)
-    #   # => Hamster::List[7, 6, 4, 2]
+    #   Immutable::List[1, 3, 5, 7, 6, 4, 2].drop(3)
+    #   # => Immutable::List[7, 6, 4, 2]
     #
     # @param number [Integer] The number of items to skip over
     # @return [List]
@@ -369,8 +369,8 @@ module Hamster
     # `other`.
     #
     # @example
-    #   Hamster::List[1, 2, 3].append(Hamster::List[4, 5])
-    #   # => Hamster::List[1, 2, 3, 4, 5]
+    #   Immutable::List[1, 2, 3].append(Immutable::List[4, 5])
+    #   # => Immutable::List[1, 2, 3, 4, 5]
     #
     # @param other [List] The list to add onto the end of this one
     # @return [List]
@@ -386,7 +386,7 @@ module Hamster
     # Return a `List` with the same items, but in reverse order.
     #
     # @example
-    #   Hamster::List["A", "B", "C"].reverse # => Hamster::List["C", "B", "A"]
+    #   Immutable::List["A", "B", "C"].reverse # => Immutable::List["C", "B", "A"]
     #
     # @return [List]
     def reverse
@@ -401,8 +401,8 @@ module Hamster
     # for padding.
     #
     # @example
-    #   Hamster::List["A", "B", "C"].zip(Hamster::List[1, 2, 3])
-    #   # => Hamster::List[Hamster::List["A", 1], Hamster::List["B", 2], Hamster::List["C", 3]]
+    #   Immutable::List["A", "B", "C"].zip(Immutable::List[1, 2, 3])
+    #   # => Immutable::List[Immutable::List["A", 1], Immutable::List["B", 2], Immutable::List["C", 3]]
     #
     # @param others [List] The list to zip together with this one
     # @return [List]
@@ -424,17 +424,17 @@ module Hamster
     #
     # @example
     #   # First let's create some infinite lists
-    #   list1 = Hamster.iterate(1, &:next)
-    #   list2 = Hamster.iterate(2) { |n| n * 2 }
-    #   list3 = Hamster.iterate(3) { |n| n * 3 }
+    #   list1 = Immutable.iterate(1, &:next)
+    #   list2 = Immutable.iterate(2) { |n| n * 2 }
+    #   list3 = Immutable.iterate(3) { |n| n * 3 }
     #
     #   # Now we transpose our 3 infinite "rows" into an infinite series of 3-element "columns"
-    #   Hamster::List[list1, list2, list3].transpose.take(4)
-    #   # => Hamster::List[
-    #   #      Hamster::List[1, 2, 3],
-    #   #      Hamster::List[2, 4, 9],
-    #   #      Hamster::List[3, 8, 27],
-    #   #      Hamster::List[4, 16, 81]]
+    #   Immutable::List[list1, list2, list3].transpose.take(4)
+    #   # => Immutable::List[
+    #   #      Immutable::List[1, 2, 3],
+    #   #      Immutable::List[2, 4, 9],
+    #   #      Immutable::List[3, 8, 27],
+    #   #      Immutable::List[4, 16, 81]]
     #
     # @return [List]
     def transpose
@@ -451,8 +451,8 @@ module Hamster
     # new `List`. Or, if empty, just return an empty list.
     #
     # @example
-    #   Hamster::List[1, 2, 3].cycle.take(10)
-    #   # => Hamster::List[1, 2, 3, 1, 2, 3, 1, 2, 3, 1]
+    #   Immutable::List[1, 2, 3].cycle.take(10)
+    #   # => Immutable::List[1, 2, 3, 1, 2, 3, 1, 2, 3, 1]
     #
     # @return [List]
     def cycle
@@ -469,9 +469,9 @@ module Hamster
     # right, and those shifted past the last position will be moved to the beginning.
     #
     # @example
-    #   l = Hamster::List["A", "B", "C", "D", "E", "F"]
-    #   l.rotate(2)   # => Hamster::List["C", "D", "E", "F", "A", "B"]
-    #   l.rotate(-1)  # => Hamster::List["F", "A", "B", "C", "D", "E"]
+    #   l = Immutable::List["A", "B", "C", "D", "E", "F"]
+    #   l.rotate(2)   # => Immutable::List["C", "D", "E", "F", "A", "B"]
+    #   l.rotate(-1)  # => Immutable::List["F", "A", "B", "C", "D", "E"]
     #
     # @param count [Integer] The number of positions to shift items by
     # @return [Vector]
@@ -487,8 +487,8 @@ module Hamster
     # remaining.
     #
     # @example
-    #   Hamster::List["a", "b", "c", "d"].split_at(2)
-    #   # => [Hamster::List["a", "b"], Hamster::List["c", "d"]]
+    #   Immutable::List["a", "b", "c", "d"].split_at(2)
+    #   # => [Immutable::List["a", "b"], Immutable::List["c", "d"]]
     #
     # @param number [Integer] The index at which to split this list
     # @return [Array]
@@ -500,8 +500,8 @@ module Hamster
     # block returns `nil` or `false`, and another of all the remaining items.
     #
     # @example
-    #   Hamster::List[4, 3, 5, 2, 1].span { |x| x > 2 }
-    #   # => [Hamster::List[4, 3, 5], Hamster::List[2, 1]]
+    #   Immutable::List[4, 3, 5, 2, 1].span { |x| x > 2 }
+    #   # => [Immutable::List[4, 3, 5], Immutable::List[2, 1]]
     #
     # @return [Array]
     # @yield [item]
@@ -517,8 +517,8 @@ module Hamster
     # block returns true, and another of all the remaining items.
     #
     # @example
-    #   Hamster::List[1, 3, 4, 2, 5].break { |x| x > 3 }
-    #   # => [Hamster::List[1, 3], Hamster::List[4, 2, 5]]
+    #   Immutable::List[1, 3, 4, 2, 5].break { |x| x > 3 }
+    #   # => [Immutable::List[1, 3], Immutable::List[4, 2, 5]]
     #
     # @return [Array]
     # @yield [item]
@@ -541,8 +541,8 @@ module Hamster
     #   Compare elements with their natural sort key (`#<=>`).
     #
     #   @example
-    #     Hamster::List["Elephant", "Dog", "Lion"].sort
-    #     # => Hamster::List["Dog", "Elephant", "Lion"]
+    #     Immutable::List["Elephant", "Dog", "Lion"].sort
+    #     # => Immutable::List["Dog", "Elephant", "Lion"]
     #
     # @overload sort
     #   Uses the block as a comparator to determine sorted order.
@@ -552,8 +552,8 @@ module Hamster
     #                          lower, positive if the latter element, or 0 if
     #                          equal.
     #   @example
-    #     Hamster::List["Elephant", "Dog", "Lion"].sort { |a,b| a.size <=> b.size }
-    #     # => Hamster::List["Dog", "Lion", "Elephant"]
+    #     Immutable::List["Elephant", "Dog", "Lion"].sort { |a,b| a.size <=> b.size }
+    #     # => Immutable::List["Dog", "Lion", "Elephant"]
     #
     # @return [List]
     def sort(&comparator)
@@ -568,8 +568,8 @@ module Hamster
     # @yield [element] Once for each element.
     # @yieldreturn a sort key object for the yielded element.
     # @example
-    #   Hamster::List["Elephant", "Dog", "Lion"].sort_by { |e| e.size }
-    #   # => Hamster::List["Dog", "Lion", "Elephant"]
+    #   Immutable::List["Elephant", "Dog", "Lion"].sort_by { |e| e.size }
+    #   # => Immutable::List["Dog", "Lion", "Elephant"]
     #
     # @return [List]
     def sort_by(&transformer)
@@ -580,8 +580,8 @@ module Hamster
     # Return a new `List` with `sep` inserted between each of the existing elements.
     #
     # @example
-    #   Hamster::List["one", "two", "three"].intersperse(" ")
-    #   # => Hamster::List["one", " ", "two", " ", "three"]
+    #   Immutable::List["one", "two", "three"].intersperse(" ")
+    #   # => Immutable::List["one", " ", "two", " ", "three"]
     #
     # @return [List]
     def intersperse(sep)
@@ -595,8 +595,8 @@ module Hamster
     # Use `#hash` and `#eql?` to determine which items are duplicates.
     #
     # @example
-    #   Hamster::List[:a, :b, :a, :c, :b].uniq      # => Hamster::List[:a, :b, :c]
-    #   Hamster::List["a", "A", "b"].uniq(&:upcase) # => Hamster::List["a", "b"]
+    #   Immutable::List[:a, :b, :a, :c, :b].uniq      # => Immutable::List[:a, :b, :c]
+    #   Immutable::List["a", "A", "b"].uniq(&:upcase) # => Immutable::List["a", "b"]
     #
     # @return [List]
     def uniq(&block)
@@ -629,7 +629,7 @@ module Hamster
     # with all duplicates removed.
     #
     # @example
-    #   Hamster::List[1, 2].union(Hamster::List[2, 3]) # => Hamster::List[1, 2, 3]
+    #   Immutable::List[1, 2].union(Immutable::List[2, 3]) # => Immutable::List[1, 2, 3]
     #
     # @param other [List] The list to merge with
     # @return [List]
@@ -645,7 +645,7 @@ module Hamster
     # Return a `List` with all elements except the last one.
     #
     # @example
-    #   Hamster::List["a", "b", "c"].init # => Hamster::List["a", "b"]
+    #   Immutable::List["a", "b", "c"].init # => Immutable::List["a", "b"]
     #
     # @return [List]
     def init
@@ -664,11 +664,11 @@ module Hamster
     # Return a `List` of all suffixes of this list.
     #
     # @example
-    #   Hamster::List[1,2,3].tails
-    #   # => Hamster::List[
-    #   #      Hamster::List[1, 2, 3],
-    #   #      Hamster::List[2, 3],
-    #   #      Hamster::List[3]]
+    #   Immutable::List[1,2,3].tails
+    #   # => Immutable::List[
+    #   #      Immutable::List[1, 2, 3],
+    #   #      Immutable::List[2, 3],
+    #   #      Immutable::List[3]]
     #
     # @return [List]
     def tails
@@ -681,11 +681,11 @@ module Hamster
     # Return a `List` of all prefixes of this list.
     #
     # @example
-    #   Hamster::List[1,2,3].inits
-    #   # => Hamster::List[
-    #   #      Hamster::List[1],
-    #   #      Hamster::List[1, 2],
-    #   #      Hamster::List[1, 2, 3]]
+    #   Immutable::List[1,2,3].inits
+    #   # => Immutable::List[
+    #   #      Immutable::List[1],
+    #   #      Immutable::List[1, 2],
+    #   #      Immutable::List[1, 2, 3]]
     #
     # @return [List]
     def inits
@@ -698,11 +698,11 @@ module Hamster
     # Return a `List` of all combinations of length `n` of items from this `List`.
     #
     # @example
-    #   Hamster::List[1,2,3].combination(2)
-    #   # => Hamster::List[
-    #   #      Hamster::List[1, 2],
-    #   #      Hamster::List[1, 3],
-    #   #      Hamster::List[2, 3]]
+    #   Immutable::List[1,2,3].combination(2)
+    #   # => Immutable::List[
+    #   #      Immutable::List[1, 2],
+    #   #      Immutable::List[1, 3],
+    #   #      Immutable::List[2, 3]]
     #
     # @return [List]
     def combination(n)
@@ -717,10 +717,10 @@ module Hamster
     #
     # @example
     #   ("a".."o").to_list.chunk(5)
-    #   # => Hamster::List[
-    #   #      Hamster::List["a", "b", "c", "d", "e"],
-    #   #      Hamster::List["f", "g", "h", "i", "j"],
-    #   #      Hamster::List["k", "l", "m", "n", "o"]]
+    #   # => Immutable::List[
+    #   #      Immutable::List["a", "b", "c", "d", "e"],
+    #   #      Immutable::List["f", "g", "h", "i", "j"],
+    #   #      Immutable::List["k", "l", "m", "n", "o"]]
     #
     # @return [List]
     def chunk(number)
@@ -749,8 +749,8 @@ module Hamster
     # the nested list originally was.
     #
     # @example
-    #   Hamster::List[Hamster::List[1, 2], Hamster::List[3, 4]].flatten
-    #   # => Hamster::List[1, 2, 3, 4]
+    #   Immutable::List[Immutable::List[1, 2], Immutable::List[3, 4]].flatten
+    #   # => Immutable::List[1, 2, 3, 4]
     #
     # @return [List]
     def flatten
@@ -768,10 +768,10 @@ module Hamster
     # @return [Hash]
     # @yield [item]
     # @example
-    #    Hamster::List["a", "b", "ab"].group_by { |e| e.size }
+    #    Immutable::List["a", "b", "ab"].group_by { |e| e.size }
     #    # Immutable::Hash[
-    #    #   1 => Hamster::List["b", "a"],
-    #    #   2 => Hamster::List["ab"]
+    #    #   1 => Immutable::List["b", "a"],
+    #    #   2 => Immutable::List["ab"]
     #    # ]
     def group_by(&block)
       group_by_with(EmptyList, &block)
@@ -805,7 +805,7 @@ module Hamster
     #   @param index [Integer] The index to retrieve. May be negative.
     #   @return [Object]
     #   @example
-    #     l = Hamster::List["A", "B", "C", "D", "E", "F"]
+    #     l = Immutable::List["A", "B", "C", "D", "E", "F"]
     #     l[2]  # => "C"
     #     l[-1] # => "F"
     #     l[6]  # => nil
@@ -819,9 +819,9 @@ module Hamster
     #   @param length [Integer] The number of items to retrieve.
     #   @return [List]
     #   @example
-    #     l = Hamster::List["A", "B", "C", "D", "E", "F"]
-    #     l[2, 3]  # => Hamster::List["C", "D", "E"]
-    #     l[-2, 3] # => Hamster::List["E", "F"]
+    #     l = Immutable::List["A", "B", "C", "D", "E", "F"]
+    #     l[2, 3]  # => Immutable::List["C", "D", "E"]
+    #     l[-2, 3] # => Immutable::List["E", "F"]
     #     l[20, 1] # => nil
     #
     # @overload list.slice(index..end)
@@ -831,9 +831,9 @@ module Hamster
     #   @param range [Range] The range of indices to retrieve.
     #   @return [Vector]
     #   @example
-    #     l = Hamster::List["A", "B", "C", "D", "E", "F"]
-    #     l[2..3]    # => Hamster::List["C", "D"]
-    #     l[-2..100] # => Hamster::List["E", "F"]
+    #     l = Immutable::List["A", "B", "C", "D", "E", "F"]
+    #     l[2..3]    # => Immutable::List["C", "D"]
+    #     l[-2..100] # => Immutable::List["E", "F"]
     #     l[20..21]  # => nil
     def slice(arg, length = (missing_length = true))
       if missing_length
@@ -877,8 +877,8 @@ module Hamster
     #   testing equality.
     #
     #   @example
-    #     Hamster::List[1, 2, 3, 4].indices(2)
-    #     # => Hamster::List[1]
+    #     Immutable::List[1, 2, 3, 4].indices(2)
+    #     # => Immutable::List[1]
     #
     # @overload indices
     #   Pass each item successively to the block. Return a list of indices
@@ -886,17 +886,17 @@ module Hamster
     #
     #   @yield [item]
     #   @example
-    #     Hamster::List[1, 2, 3, 4].indices { |e| e.even? }
-    #     # => Hamster::List[1, 3]
+    #     Immutable::List[1, 2, 3, 4].indices { |e| e.even? }
+    #     # => Immutable::List[1, 3]
     #
     # @return [List]
-    def indices(object = Undefined, i = 0, &block)
+    def indices(object = Hamster::Undefined, i = 0, &block)
       return indices { |item| item == object } if not block_given?
       return EmptyList if empty?
       LazyList.new do
         node = self
         while true
-          break Cons.new(i, node.tail.indices(Undefined, i + 1, &block)) if yield(node.head)
+          break Cons.new(i, node.tail.indices(Hamster::Undefined, i + 1, &block)) if yield(node.head)
           node = node.tail
           break EmptyList if node.empty?
           i += 1
@@ -909,10 +909,10 @@ module Hamster
     # lists and into the output list.
     #
     # @example
-    #   list_1 = Hamster::List[1, -3, -5]
-    #   list_2 = Hamster::List[-2, 4, 6]
-    #   Hamster::List[list_1, list_2].merge { |a,b| a.abs <=> b.abs }
-    #   # => Hamster::List[1, -2, -3, 4, -5, 6]
+    #   list_1 = Immutable::List[1, -3, -5]
+    #   list_2 = Immutable::List[-2, 4, 6]
+    #   Immutable::List[list_1, list_2].merge { |a,b| a.abs <=> b.abs }
+    #   # => Immutable::List[1, -2, -3, 4, -5, 6]
     #
     # @return [List]
     # @yield [a, b] Pairs of items from matching indices in each list.
@@ -937,10 +937,10 @@ module Hamster
     # their natural order) will be the first in the merged `List`.
     #
     # @example
-    #   list_1 = Hamster::List[1, -3, -5]
-    #   list_2 = Hamster::List[-2, 4, 6]
-    #   Hamster::List[list_1, list_2].merge_by { |x| x.abs }
-    #   # => Hamster::List[1, -2, -3, 4, -5, 6]
+    #   list_1 = Immutable::List[1, -3, -5]
+    #   list_2 = Immutable::List[-2, 4, 6]
+    #   Immutable::List[list_1, list_2].merge_by { |x| x.abs }
+    #   # => Immutable::List[1, -2, -3, 4, -5, 6]
     #
     # @return [List]
     # @yield [item] Once for each item in either list.
@@ -965,7 +965,7 @@ module Hamster
     # Return a new `List` with the given items inserted before the item at `index`.
     #
     # @example
-    #   Hamster::List["A", "D", "E"].insert(1, "B", "C") # => Hamster::List["A", "B", "C", "D", "E"]
+    #   Immutable::List["A", "D", "E"].insert(1, "B", "C") # => Immutable::List["A", "B", "C", "D", "E"]
     #
     # @param index [Integer] The index where the new items should go
     # @param items [Array] The items to add
@@ -987,7 +987,7 @@ module Hamster
     # for testing equality.
     #
     # @example
-    #   Hamster::List[:a, :b, :a, :a, :c].delete(:a) # => Hamster::List[:b, :c]
+    #   Immutable::List[:a, :b, :a, :a, :c].delete(:a) # => Immutable::List[:b, :c]
     #
     # @param obj [Object] The object to remove.
     # @return [List]
@@ -1002,8 +1002,8 @@ module Hamster
     # If `index` is negative, it counts back from the end of the list.
     #
     # @example
-    #   Hamster::List[1, 2, 3].delete_at(1)  # => Hamster::List[1, 3]
-    #   Hamster::List[1, 2, 3].delete_at(-1) # => Hamster::List[1, 2]
+    #   Immutable::List[1, 2, 3].delete_at(1)  # => Immutable::List[1, 3]
+    #   Immutable::List[1, 2, 3].delete_at(-1) # => Immutable::List[1, 2]
     #
     # @param index [Integer] The index of the item to remove
     # @return [List]
@@ -1026,8 +1026,8 @@ module Hamster
     #
     #   @param [Object] object Fill value.
     #   @example
-    #     Hamster::List["A", "B", "C", "D", "E", "F"].fill("Z")
-    #     # => Hamster::List["Z", "Z", "Z", "Z", "Z", "Z"]
+    #     Immutable::List["A", "B", "C", "D", "E", "F"].fill("Z")
+    #     # => Immutable::List["Z", "Z", "Z", "Z", "Z", "Z"]
     #
     # @overload fill(object, index)
     #   Return a new `List` with all indexes from `index` to the end of the
@@ -1036,8 +1036,8 @@ module Hamster
     #   @param [Object] object Fill value.
     #   @param [Integer] index Starting index. May be negative.
     #   @example
-    #     Hamster::List["A", "B", "C", "D", "E", "F"].fill("Z", 3)
-    #     # => Hamster::List["A", "B", "C", "Z", "Z", "Z"]
+    #     Immutable::List["A", "B", "C", "D", "E", "F"].fill("Z", 3)
+    #     # => Immutable::List["A", "B", "C", "Z", "Z", "Z"]
     #
     # @overload fill(object, index, length)
     #   Return a new `List` with `length` indexes, beginning from `index`,
@@ -1048,10 +1048,10 @@ module Hamster
     #   @param [Integer] index Starting index. May be negative.
     #   @param [Integer] length
     #   @example
-    #     Hamster::List["A", "B", "C", "D", "E", "F"].fill("Z", 3, 2)
-    #     # => Hamster::List["A", "B", "C", "Z", "Z", "F"]
-    #     Hamster::List["A", "B"].fill("Z", 1, 5)
-    #     # => Hamster::List["A", "Z", "Z", "Z", "Z", "Z"]
+    #     Immutable::List["A", "B", "C", "D", "E", "F"].fill("Z", 3, 2)
+    #     # => Immutable::List["A", "B", "C", "Z", "Z", "F"]
+    #     Immutable::List["A", "B"].fill("Z", 1, 5)
+    #     # => Immutable::List["A", "Z", "Z", "Z", "Z", "Z"]
     #
     # @return [List]
     # @raise [IndexError] if index is out of negative range.
@@ -1084,13 +1084,13 @@ module Hamster
     # If no block is given, an `Enumerator` is returned instead.
     #
     # @example
-    #   Hamster::List[1, 2, 3].permutation.to_a
-    #   # => [Hamster::List[1, 2, 3],
-    #   #     Hamster::List[2, 1, 3],
-    #   #     Hamster::List[2, 3, 1],
-    #   #     Hamster::List[1, 3, 2],
-    #   #     Hamster::List[3, 1, 2],
-    #   #     Hamster::List[3, 2, 1]]
+    #   Immutable::List[1, 2, 3].permutation.to_a
+    #   # => [Immutable::List[1, 2, 3],
+    #   #     Immutable::List[2, 1, 3],
+    #   #     Immutable::List[2, 3, 1],
+    #   #     Immutable::List[1, 3, 2],
+    #   #     Immutable::List[3, 1, 2],
+    #   #     Immutable::List[3, 2, 1]]
     #
     # @return [self, Enumerator]
     # @yield [list] Once for each permutation.
@@ -1119,14 +1119,14 @@ module Hamster
     # counts as one sublist.)
     #
     # @example
-    #   Hamster::List[1, 2, 3].subsequences { |list| p list }
+    #   Immutable::List[1, 2, 3].subsequences { |list| p list }
     #   # prints:
-    #   # Hamster::List[1]
-    #   # Hamster::List[1, 2]
-    #   # Hamster::List[1, 2, 3]
-    #   # Hamster::List[2]
-    #   # Hamster::List[2, 3]
-    #   # Hamster::List[3]
+    #   # Immutable::List[1]
+    #   # Immutable::List[1, 2]
+    #   # Immutable::List[1, 2, 3]
+    #   # Immutable::List[2]
+    #   # Immutable::List[2, 3]
+    #   # Immutable::List[3]
     #
     # @yield [sublist] One or more contiguous elements from this list
     # @return [self]
@@ -1145,8 +1145,8 @@ module Hamster
     # block evaluates to true, the second containing the rest.
     #
     # @example
-    #   Hamster::List[1, 2, 3, 4, 5, 6].partition { |x| x.even? }
-    #   # => [Hamster::List[2, 4, 6], Hamster::List[1, 3, 5]]
+    #   Immutable::List[1, 2, 3, 4, 5, 6].partition { |x| x.even? }
+    #   # => [Immutable::List[2, 4, 6], Immutable::List[1, 3, 5]]
     #
     # @return [List]
     # @yield [item] Once for each item.
@@ -1201,7 +1201,7 @@ module Hamster
     #
     # @return [String]
     def inspect
-      result = "Hamster::List["
+      result = "Immutable::List["
       each_with_index { |obj, i| result << ', ' if i > 0; result << obj.inspect }
       result << "]"
     end
@@ -1213,7 +1213,7 @@ module Hamster
     #
     # @private
     def pretty_print(pp)
-      pp.group(1, "Hamster::List[", "]") do
+      pp.group(1, "Immutable::List[", "]") do
         pp.breakable ''
         pp.seplist(self) { |obj| obj.pretty_print(pp) }
       end
@@ -1241,10 +1241,10 @@ module Hamster
     #
     # @return [Object, List]
     # @example
-    #   l = Hamster::List[nil, Hamster::List[1]]
+    #   l = Immutable::List[nil, Immutable::List[1]]
     #   l.car   # => nil
-    #   l.cdr   # => Hamster::List[Hamster::List[1]]
-    #   l.cadr  # => Hamster::List[1]
+    #   l.cdr   # => Immutable::List[Immutable::List[1]]
+    #   l.cadr  # => Immutable::List[1]
     #   l.caadr # => 1
     def method_missing(name, *args, &block)
       if name.to_s.match(CADR)
@@ -1385,22 +1385,22 @@ module Hamster
     include List
 
     def initialize
-      @head, @tail, @size = Undefined, Undefined, nil
+      @head, @tail, @size = Hamster::Undefined, Hamster::Undefined, nil
     end
 
     def head
-      realize if @head == Undefined
+      realize if @head == Hamster::Undefined
       @head
     end
     alias :first :head
 
     def tail
-      realize if @tail == Undefined
+      realize if @tail == Hamster::Undefined
       @tail
     end
 
     def empty?
-      realize if @head == Undefined
+      realize if @head == Hamster::Undefined
       @size == 0
     end
 
@@ -1414,7 +1414,7 @@ module Hamster
     end
 
     def realized?
-      @head != Undefined
+      @head != Hamster::Undefined
     end
   end
 
@@ -1454,7 +1454,7 @@ module Hamster
       # another thread may get ahead of us and null out @mutex
       mutex = @mutex
       mutex && mutex.synchronize do
-        return if @head != Undefined # another thread got ahead of us
+        return if @head != Hamster::Undefined # another thread got ahead of us
         while true
           if !@buffer.empty?
             @head = @buffer.shift
@@ -1515,7 +1515,7 @@ module Hamster
         # another thread may get ahead of us and null out @mutex
         mutex = @mutex
         mutex && mutex.synchronize do
-          return if @head != Undefined # another thread got ahead of us
+          return if @head != Hamster::Undefined # another thread got ahead of us
           while true
             if !@buffer.empty?
               @head = @buffer.shift
@@ -1544,7 +1544,7 @@ module Hamster
       def realize
         mutex = @mutex
         mutex && mutex.synchronize do
-          return if @head != Undefined
+          return if @head != Hamster::Undefined
           @splitter.next_item until @splitter.done?
           if @splitter.right.empty?
             @head, @size, @tail = nil, 0, self

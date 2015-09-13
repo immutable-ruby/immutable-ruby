@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster::List do
+describe Immutable::List do
   describe "#each_with_index" do
     context "with no block" do
       let(:list) { L["A", "B", "C"] }
@@ -13,7 +13,7 @@ describe Hamster::List do
     end
 
     context "with a block" do
-      let(:list) { Hamster.interval(1, 1025) }
+      let(:list) { Immutable.interval(1, 1025) }
 
       it "returns self" do
         list.each_with_index { |item, index| item }.should be(list)

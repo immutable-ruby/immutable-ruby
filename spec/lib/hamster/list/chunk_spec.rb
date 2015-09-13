@@ -1,10 +1,10 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster::List do
+describe Immutable::List do
   describe "#chunk" do
     it "is lazy" do
-      -> { Hamster.stream { fail }.chunk(2) }.should_not raise_error
+      -> { Immutable.stream { fail }.chunk(2) }.should_not raise_error
     end
 
     [

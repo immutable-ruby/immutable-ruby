@@ -3,7 +3,7 @@ require "hamster/list"
 
 describe "Hamster::list#span" do
   it "is lazy" do
-    -> { Hamster.stream { |item| fail }.span { true } }.should_not raise_error
+    -> { Immutable.stream { |item| fail }.span { true } }.should_not raise_error
   end
 
   describe <<-DESC do

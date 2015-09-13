@@ -1,10 +1,10 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster::List do
+describe Immutable::List do
   describe "#split_at" do
     it "is lazy" do
-      -> { Hamster.stream { fail }.split_at(1) }.should_not raise_error
+      -> { Immutable.stream { fail }.split_at(1) }.should_not raise_error
     end
 
     [

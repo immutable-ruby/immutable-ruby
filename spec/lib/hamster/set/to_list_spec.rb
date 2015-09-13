@@ -14,7 +14,7 @@ describe Immutable::Set do
         let(:list) { set.to_list }
 
         it "returns a list" do
-          list.is_a?(Hamster::List).should == true
+          list.is_a?(Immutable::List).should == true
         end
 
         it "doesn't change the original Set" do

@@ -1,14 +1,14 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster::List do
+describe Immutable::List do
   [
     [:sort, ->(left, right) { left.length <=> right.length }],
     [:sort_by, ->(item) { item.length }],
   ].each do |method, comparator|
     describe "##{method}" do
       it "is lazy" do
-        -> { Hamster.stream { fail }.send(method, &comparator) }.should_not raise_error
+        -> { Immutable.stream { fail }.send(method, &comparator) }.should_not raise_error
       end
 
       [
