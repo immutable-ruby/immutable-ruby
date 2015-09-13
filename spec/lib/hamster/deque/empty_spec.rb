@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/deque"
 
-describe Hamster::Deque do
+describe Immutable::Deque do
   describe "#empty?" do
     [
       [[], true],
@@ -25,13 +25,13 @@ describe Hamster::Deque do
   describe ".empty" do
     it "returns the canonical empty deque" do
       D.empty.size.should be(0)
-      D.empty.class.should be(Hamster::Deque)
-      D.empty.object_id.should be(Hamster::EmptyDeque.object_id)
+      D.empty.class.should be(Immutable::Deque)
+      D.empty.object_id.should be(Immutable::EmptyDeque.object_id)
     end
 
     context "from a subclass" do
       it "returns an empty instance of the subclass" do
-        subclass = Class.new(Hamster::Deque)
+        subclass = Class.new(Immutable::Deque)
         subclass.empty.class.should be(subclass)
         subclass.empty.should be_empty
       end

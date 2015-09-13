@@ -36,7 +36,7 @@ describe :Hamster do
 
   describe :Deque do
     it "can be loaded separately" do
-      system(%{ruby -e "$:.unshift('#{hamster_lib_dir}'); require 'hamster/deque'; Hamster::Deque.new"}).should be(true)
+      system(%{ruby -e "$:.unshift('#{hamster_lib_dir}'); require 'hamster/deque'; Immutable::Deque.new"}).should be(true)
     end
   end
 end

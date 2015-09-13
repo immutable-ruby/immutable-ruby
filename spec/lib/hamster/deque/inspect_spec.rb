@@ -1,12 +1,12 @@
 require "spec_helper"
 require "hamster/deque"
 
-describe Hamster::Deque do
+describe Immutable::Deque do
   describe "#inspect" do
     [
-      [[], 'Hamster::Deque[]'],
-      [["A"], 'Hamster::Deque["A"]'],
-      [%w[A B C], 'Hamster::Deque["A", "B", "C"]']
+      [[], 'Immutable::Deque[]'],
+      [["A"], 'Immutable::Deque["A"]'],
+      [%w[A B C], 'Immutable::Deque["A", "B", "C"]']
     ].each do |values, expected|
       context "on #{values.inspect}" do
         let(:deque) { D[*values] }

@@ -1,11 +1,11 @@
 require "spec_helper"
 require "hamster/deque"
 
-describe Hamster::Deque do
+describe Immutable::Deque do
   describe ".[]" do
     context "with no arguments" do
       it "always returns the same instance" do
-        D[].class.should be(Hamster::Deque)
+        D[].class.should be(Immutable::Deque)
         D[].should equal(D[])
       end
 

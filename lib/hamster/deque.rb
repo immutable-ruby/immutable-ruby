@@ -1,6 +1,6 @@
 require "hamster/list"
 
-module Hamster
+module Immutable
 
   # A `Deque` (or double-ended queue) is an ordered, sequential collection of
   # objects, which allows elements to be retrieved, added and removed at the
@@ -14,24 +14,24 @@ module Hamster
   #
   # To create a new `Deque`:
   #
-  #     Hamster::Deque.new([:first, :second, :third])
-  #     Hamster::Deque[1, 2, 3, 4, 5]
+  #     Immutable::Deque.new([:first, :second, :third])
+  #     Immutable::Deque[1, 2, 3, 4, 5]
   #
   # Or you can start with an empty deque and build it up:
   #
-  #     Hamster::Deque.empty.push('b').push('c').unshift('a')
+  #     Immutable::Deque.empty.push('b').push('c').unshift('a')
   #
-  # Like all Hamster collections, `Deque` is immutable. The four basic
+  # Like all `immutable-ruby` collections, `Deque` is immutable. The four basic
   # operations that "modify" deques ({#push}, {#pop}, {#shift}, and
   # {#unshift}) all return a new collection and leave the existing one
   # unchanged.
   #
   # @example
-  #   deque = Hamster::Deque.empty                 # => Hamster::Deque[]
-  #   deque = deque.push('a').push('b').push('c')  # => Hamster::Deque['a', 'b', 'c']
+  #   deque = Immutable::Deque.empty               # => Immutable::Deque[]
+  #   deque = deque.push('a').push('b').push('c')  # => Immutable::Deque['a', 'b', 'c']
   #   deque.first                                  # => 'a'
   #   deque.last                                   # => 'c'
-  #   deque = deque.shift                          # => Hamster::Deque['b', 'c']
+  #   deque = deque.shift                          # => Immutable::Deque['b', 'c']
   #
   # @see http://en.wikipedia.org/wiki/Deque "Deque" on Wikipedia
   #
@@ -67,7 +67,7 @@ module Hamster
 
     def initialize(items=[])
       @front = Hamster::List.from_enum(items)
-      @rear  = EmptyList
+      @rear  = Hamster::EmptyList
       freeze
     end
 
@@ -80,7 +80,7 @@ module Hamster
     # Return the number of items in this `Deque`.
     #
     # @example
-    #   Hamster::Deque["A", "B", "C"].size  #=> 3
+    #   Immutable::Deque["A", "B", "C"].size # => 3
     #
     # @return [Integer]
     def size
@@ -91,7 +91,7 @@ module Hamster
     # Return the first item in the `Deque`. If the deque is empty, return `nil`.
     #
     # @example
-    #   Hamster::Deque["A", "B", "C"].first  #=> "A"
+    #   Immutable::Deque["A", "B", "C"].first # => "A"
     #
     # @return [Object]
     def first
@@ -102,7 +102,7 @@ module Hamster
     # Return the last item in the `Deque`. If the deque is empty, return `nil`.
     #
     # @example
-    #   Hamster::Deque["A", "B", "C"].last  #=> "C"
+    #   Immutable::Deque["A", "B", "C"].last # => "C"
     #
     # @return [Object]
     def last
@@ -113,8 +113,8 @@ module Hamster
     # Return a new `Deque` with `item` added at the end.
     #
     # @example
-    #   Hamster::Deque["A", "B", "C"].add("Z")
-    #   # => Hamster::Deque["A", "B", "C", "Z"]
+    #   Immutable::Deque["A", "B", "C"].add("Z")
+    #   # => Immutable::Deque["A", "B", "C", "Z"]
     #
     # @param item [Object] The item to add
     # @return [Deque]
@@ -126,8 +126,8 @@ module Hamster
     # Return a new `Deque` with the last item removed.
     #
     # @example
-    #   Hamster::Deque["A", "B", "C"].pop
-    #   # => Hamster::Deque["A", "B"]
+    #   Immutable::Deque["A", "B", "C"].pop
+    #   # => Immutable::Deque["A", "B"]
     #
     # @return [Deque]
     def pop
@@ -135,7 +135,7 @@ module Hamster
 
       if rear.empty?
         return self.class.empty if front.empty?
-        front, rear = EmptyList, front.reverse
+        front, rear = Hamster::EmptyList, front.reverse
       end
 
       self.class.alloc(front, rear.tail)
@@ -144,8 +144,8 @@ module Hamster
     # Return a new `Deque` with `item` added at the front.
     #
     # @example
-    #   Hamster::Deque["A", "B", "C"].unshift("Z")
-    #   # => Hamster::Deque["Z", "A", "B", "C"]
+    #   Immutable::Deque["A", "B", "C"].unshift("Z")
+    #   # => Immutable::Deque["Z", "A", "B", "C"]
     #
     # @param item [Object] The item to add
     # @return [Deque]
@@ -156,8 +156,8 @@ module Hamster
     # Return a new `Deque` with the first item removed.
     #
     # @example
-    #   Hamster::Deque["A", "B", "C"].shift
-    #   # => Hamster::Deque["B", "C"]
+    #   Immutable::Deque["A", "B", "C"].shift
+    #   # => Immutable::Deque["B", "C"]
     #
     # @return [Deque]
     def shift
@@ -165,7 +165,7 @@ module Hamster
 
       if front.empty?
         return self.class.empty if rear.empty?
-        front, rear = rear.reverse, EmptyList
+        front, rear = rear.reverse, Hamster::EmptyList
       end
 
       self.class.alloc(front.tail, rear)
@@ -250,5 +250,5 @@ module Hamster
   # one rather than creating many empty deques using `Deque.new`.
   #
   # @private
-  EmptyDeque = Hamster::Deque.empty
+  EmptyDeque = Immutable::Deque.empty
 end

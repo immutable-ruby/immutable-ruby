@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/deque"
 
-describe Hamster::Deque do
+describe Immutable::Deque do
   let(:deque) { D["A", "B", "C", "D"] }
 
   describe "#to_ary" do

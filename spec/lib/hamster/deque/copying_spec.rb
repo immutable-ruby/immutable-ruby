@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/deque"
 
-describe Hamster::Deque do
+describe Immutable::Deque do
   [:dup, :clone].each do |method|
     [
       [],

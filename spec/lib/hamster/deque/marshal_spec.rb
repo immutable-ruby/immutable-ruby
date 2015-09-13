@@ -1,13 +1,13 @@
 require "spec_helper"
 require "hamster/deque"
 
-describe Hamster::Deque do
+describe Immutable::Deque do
   describe "#marshal_dump/#marshal_load" do
     let(:ruby) do
       File.join(RbConfig::CONFIG["bindir"], RbConfig::CONFIG["ruby_install_name"])
     end
     let(:child_cmd) do
-      %Q|#{ruby} -I lib -r hamster -e 'deque = Hamster::Deque[5, 10, 15]; $stdout.write(Marshal.dump(deque))'|
+      %Q|#{ruby} -I lib -r hamster -e 'deque = Immutable::Deque[5, 10, 15]; $stdout.write(Marshal.dump(deque))'|
     end
 
     let(:reloaded_deque) do

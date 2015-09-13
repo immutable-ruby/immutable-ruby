@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/deque"
 
-describe Hamster::Deque do
+describe Immutable::Deque do
   describe "#clear" do
     [
       [],
@@ -25,7 +25,7 @@ describe Hamster::Deque do
 
   context "from a subclass" do
     it "returns an instance of the subclass" do
-      subclass = Class.new(Hamster::Deque)
+      subclass = Class.new(Immutable::Deque)
       instance = subclass.new([1,2])
       instance.clear.should be_empty
       instance.clear.class.should be(subclass)

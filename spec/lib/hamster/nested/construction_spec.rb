@@ -66,15 +66,15 @@ describe Hamster do
       end
     end
 
-    context "with Hamster::Deque[] as input" do
+    context "with Immutable::Deque[] as input" do
       it "should return []" do
-        Hamster.to_ruby(Hamster::Deque[]).should eql([])
+        Hamster.to_ruby(Immutable::Deque[]).should eql([])
       end
     end
 
-    context "with Hamster::Deque[Immutable::Hash[\"a\" => 1]] as input" do
+    context "with Immutable::Deque[Immutable::Hash[\"a\" => 1]] as input" do
       it "should return [{\"a\" => 1}]" do
-        Hamster.to_ruby(Hamster::Deque[Immutable::Hash["a" => 1]]).should eql([{"a" => 1}])
+        Hamster.to_ruby(Immutable::Deque[Immutable::Hash["a" => 1]]).should eql([{"a" => 1}])
       end
     end
 

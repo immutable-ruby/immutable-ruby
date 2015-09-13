@@ -46,7 +46,7 @@ module Hamster
 
     # Create a Ruby object from Hamster data. This method recursively "walks"
     # the Hamster object, converting {Immutable::Hash} to Ruby `Hash`,
-    # {Immutable::Vector} and {Hamster::Deque} to Ruby `Array`, {Immutable::Set}
+    # {Immutable::Vector} and {Immutable::Deque} to Ruby `Array`, {Immutable::Set}
     # to Ruby `Set`, and {Immutable::SortedSet} to Ruby `SortedSet`.  Other
     # objects are left as-is.
     #
@@ -65,7 +65,7 @@ module Hamster
         obj.each_with_object(::Set.new) { |element, set| set << to_ruby(element) }
       when Immutable::SortedSet, ::SortedSet
         obj.each_with_object(::SortedSet.new) { |element, set| set << to_ruby(element) }
-      when Hamster::Deque
+      when Immutable::Deque
         obj.to_a.tap { |arr| arr.map! { |element| to_ruby(element) }}
       else
         obj

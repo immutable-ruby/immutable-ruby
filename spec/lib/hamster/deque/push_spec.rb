@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/deque"
 
-describe Hamster::Deque do
+describe Immutable::Deque do
   describe "#push" do
     [
       [[], "A", ["A"]],
@@ -27,7 +27,7 @@ describe Hamster::Deque do
     end
 
     context "on a subclass" do
-      let(:subclass) { Class.new(Hamster::Deque) }
+      let(:subclass) { Class.new(Immutable::Deque) }
       let(:empty_instance) { subclass.new }
       it "returns an object of same class" do
         empty_instance.push(1).class.should be subclass

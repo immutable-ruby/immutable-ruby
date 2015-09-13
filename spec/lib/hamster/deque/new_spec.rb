@@ -1,10 +1,10 @@
 require "spec_helper"
 require "hamster/deque"
 
-describe Hamster::Deque do
+describe Immutable::Deque do
   describe ".new" do
     it "accepts a single enumerable argument and creates a new deque" do
-      deque = Hamster::Deque.new([1,2,3])
+      deque = Immutable::Deque.new([1,2,3])
       deque.size.should be(3)
       deque.first.should be(1)
       deque.dequeue.first.should be(2)
@@ -12,7 +12,7 @@ describe Hamster::Deque do
     end
 
     it "is amenable to overriding of #initialize" do
-      class SnazzyDeque < Hamster::Deque
+      class SnazzyDeque < Immutable::Deque
         def initialize
           super(['SNAZZY!!!'])
         end
@@ -25,7 +25,7 @@ describe Hamster::Deque do
 
     context "from a subclass" do
       it "returns a frozen instance of the subclass" do
-        subclass = Class.new(Hamster::Deque)
+        subclass = Class.new(Immutable::Deque)
         instance = subclass.new(["some", "values"])
         instance.class.should be subclass
         instance.frozen?.should be true
@@ -35,7 +35,7 @@ describe Hamster::Deque do
 
   describe ".[]" do
     it "accepts a variable number of items and creates a new deque" do
-      deque = Hamster::Deque['a', 'b']
+      deque = Immutable::Deque['a', 'b']
       deque.size.should be(2)
       deque.first.should == 'a'
       deque.dequeue.first.should == 'b'

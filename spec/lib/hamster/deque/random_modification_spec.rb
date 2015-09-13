@@ -1,11 +1,11 @@
 require "spec_helper"
 require "hamster/deque"
 
-describe Hamster::Deque do
+describe Immutable::Deque do
   describe "modification (using #push, #pop, #shift, and #unshift)" do
     it "works when applied in many random combinations" do
       array = [1,2,3]
-      deque = Hamster::Deque.new(array)
+      deque = Immutable::Deque.new(array)
       1000.times do
         case [:push, :pop, :shift, :unshift].sample
         when :push

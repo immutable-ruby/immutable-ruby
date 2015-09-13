@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/deque"
 
-describe Hamster::Deque do
+describe Immutable::Deque do
   describe "#pop" do
     [
       [[], []],
@@ -23,9 +23,9 @@ describe Hamster::Deque do
     end
 
     context "on empty subclass" do
-      let(:subclass) { Class.new(Hamster::Deque) }
+      let(:subclass) { Class.new(Immutable::Deque) }
       let(:empty_instance) { subclass.new }
-      it "returns emtpy object of same class" do
+      it "returns an empty object of the same class" do
         empty_instance.pop.class.should be subclass
       end
     end
