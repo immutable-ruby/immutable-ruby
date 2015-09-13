@@ -758,6 +758,14 @@ module Hamster
       result << "]"
     end
 
+    # Return `self`. Since this is an immutable object duplicates are
+    # equivalent.
+    # @return [Hash]
+    def dup
+      self
+    end
+    alias :clone :dup
+
     # Allows this `Hash` to be printed at the `pry` console, or using `pp` (from the
     # Ruby standard library), in a way which takes the amount of horizontal space on
     # the screen into account, and which indents nested structures to make them easier

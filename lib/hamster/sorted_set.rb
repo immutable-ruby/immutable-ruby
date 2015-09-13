@@ -937,6 +937,14 @@ module Hamster
       reduce(0) { |hash, item| (hash << 5) - hash + item.hash }
     end
 
+    # Return `self`. Since this is an immutable object duplicates are
+    # equivalent.
+    # @return [SortedSet]
+    def dup
+      self
+    end
+    alias :clone :dup
+
     # @return [::Array]
     # @private
     def marshal_dump

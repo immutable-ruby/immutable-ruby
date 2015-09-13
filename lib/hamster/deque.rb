@@ -217,6 +217,14 @@ module Hamster
       result << "]"
     end
 
+    # Return `self`. Since this is an immutable object duplicates are
+    # equivalent.
+    # @return [Deque]
+    def dup
+      self
+    end
+    alias :clone :dup
+
     # @private
     def pretty_print(pp)
       pp.group(1, "#{self.class}[", "]") do

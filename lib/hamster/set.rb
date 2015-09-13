@@ -527,6 +527,14 @@ module Hamster
       reduce(0) { |hash, item| (hash << 5) - hash + item.hash }
     end
 
+    # Return `self`. Since this is an immutable object duplicates are
+    # equivalent.
+    # @return [Set]
+    def dup
+      self
+    end
+    alias :clone :dup
+
     undef :"<=>" # Sets are not ordered, so Enumerable#<=> will give a meaningless result
     undef :each_index # Set members cannot be accessed by 'index', so #each_index is not meaningful
 
