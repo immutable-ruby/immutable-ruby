@@ -70,13 +70,14 @@ module Hamster
       # @return [Set]
       # @private
       def alloc(trie = EmptyTrie)
-        allocate.tap { |s| s.instance_variable_set(:@trie, trie) }
+        allocate.tap { |s| s.instance_variable_set(:@trie, trie) }.freeze
       end
     end
 
     def initialize(items=[])
       @trie = Trie.new(0)
       items.each { |item| @trie.put!(item, nil) }
+      freeze
     end
 
     # Return `true` if this `Set` contains no items.

@@ -61,13 +61,14 @@ module Hamster
         result = allocate
         result.instance_variable_set(:@front, front)
         result.instance_variable_set(:@rear,  rear)
-        result
+        result.freeze
       end
     end
 
     def initialize(items=[])
       @front = Hamster::List.from_enum(items)
       @rear  = EmptyList
+      freeze
     end
 
     # Return `true` if this `Deque` contains no items.

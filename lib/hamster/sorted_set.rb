@@ -74,9 +74,7 @@ module Hamster
       # @return [Set]
       # @private
       def alloc(node)
-        result = allocate
-        result.instance_variable_set(:@node, node)
-        result
+        allocate.tap { |s| s.instance_variable_set(:@node, node) }.freeze
       end
     end
 
@@ -94,6 +92,7 @@ module Hamster
       else
         @node = PlainAVLNode.from_items(items.sort)
       end
+      freeze
     end
 
     # Return `true` if this `SortedSet` contains no items.

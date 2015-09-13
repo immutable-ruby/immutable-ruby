@@ -74,7 +74,7 @@ module Hamster
         obj.instance_variable_set(:@root, root)
         obj.instance_variable_set(:@size, size)
         obj.instance_variable_set(:@levels, levels)
-        obj
+        obj.freeze
       end
     end
 
@@ -91,6 +91,7 @@ module Hamster
         end
         @root, @size, @levels = root.freeze, size, levels
       end
+      freeze
     end
 
     # Return `true` if this `Vector` contains no items.

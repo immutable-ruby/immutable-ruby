@@ -89,7 +89,7 @@ module Hamster
         obj = allocate
         obj.instance_variable_set(:@trie, trie)
         obj.instance_variable_set(:@default, block)
-        obj
+        obj.freeze
       end
     end
 
@@ -97,8 +97,9 @@ module Hamster
     # @yield [key] Optional _default block_ to be stored and used to calculate the default value of a missing key. It will not be yielded during this method. It will not be preserved when marshalling.
     # @yieldparam key Key that was not present in the hash.
     def initialize(pairs = nil, &block)
-      @trie = pairs ? Trie[pairs] : EmptyTrie
+      @trie    = pairs ? Trie[pairs] : EmptyTrie
       @default = block
+      freeze
     end
 
     # Return the default block if there is one. Otherwise, return `nil`.
