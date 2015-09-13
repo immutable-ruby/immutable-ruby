@@ -1592,4 +1592,4 @@ module Immutable
       end
     end
   end
-end
+end.freeze
