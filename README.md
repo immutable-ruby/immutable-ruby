@@ -1,7 +1,6 @@
 Hamster
 =======
 
-  - [![Quality](http://img.shields.io/codeclimate/github/hamstergem/hamster.svg?style=flat-square)](https://codeclimate.com/github/hamstergem/hamster)
   - [![Coverage](http://img.shields.io/codeclimate/coverage/github/hamstergem/hamster.svg?style=flat-square)](https://codeclimate.com/github/hamstergem/hamster)
   - [![Build](http://img.shields.io/travis-ci/hamstergem/hamster.svg?style=flat-square)](https://travis-ci.org/hamstergem/hamster)
   - [![Dependencies](http://img.shields.io/gemnasium/hamstergem/hamster.svg?style=flat-square)](https://gemnasium.com/hamstergem/hamster)
