@@ -1,5 +1,4 @@
 require "spec_helper"
-require "hamster/core_ext/enumerable"
 
 describe Array do
   let(:array) { %w[A B C] }

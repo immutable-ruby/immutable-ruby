@@ -1,5 +1,4 @@
 require "spec_helper"
-require "hamster/set"
 
 describe Immutable::SortedSet do
   describe "#max" do

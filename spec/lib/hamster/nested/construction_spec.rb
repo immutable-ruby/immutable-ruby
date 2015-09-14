@@ -1,6 +1,4 @@
 require "spec_helper"
-require "hamster/nested"
-require "hamster/deque"
 require "set"
 
 describe Immutable do

@@ -1,5 +1,4 @@
 require "spec_helper"
-require "hamster/list"
 
 describe Immutable::List do
   let(:list) { L[1,2,3,4] }

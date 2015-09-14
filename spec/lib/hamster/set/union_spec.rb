@@ -1,5 +1,4 @@
 require "spec_helper"
-require "hamster/set"
 
 describe Immutable::Set do
   [:union, :|, :+, :merge].each do |method|

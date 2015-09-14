@@ -1,5 +1,4 @@
 require "spec_helper"
-require "hamster/core_ext/io"
 
 describe IO do
   describe "#to_list" do

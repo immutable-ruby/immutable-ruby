@@ -1,5 +1,4 @@
 require "spec_helper"
-require "hamster/list"
 
 describe Immutable::List do
   [:each_chunk, :each_slice].each do |method|

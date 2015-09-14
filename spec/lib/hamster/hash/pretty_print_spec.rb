@@ -1,5 +1,4 @@
 require "spec_helper"
-require "hamster/hash"
 require "pp"
 require "stringio"
 

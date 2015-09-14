@@ -1,6 +1,5 @@
 require "spec_helper"
 require "set"
-require "hamster/set"
 
 describe Immutable::Set do
   let(:set) { S["A", "B", "C"] }

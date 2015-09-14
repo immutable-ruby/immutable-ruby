@@ -1,6 +1,4 @@
 require "spec_helper"
-require "hamster/hash"
-require "hamster/set"
 
 describe Immutable::Hash do
   describe "#keys" do

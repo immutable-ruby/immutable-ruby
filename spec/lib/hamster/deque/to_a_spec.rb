@@ -1,5 +1,4 @@
 require "spec_helper"
-require "hamster/deque"
 
 describe Immutable::Deque do
   [:to_a, :entries].each do |method|

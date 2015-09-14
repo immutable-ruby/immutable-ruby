@@ -1,5 +1,4 @@
 require "spec_helper"
-require "hamster/hash"
 
 describe Immutable::Hash do
   let(:hash) { H.new("A" => "aye", "B" => "bee", "C" => "see", nil => "NIL") }

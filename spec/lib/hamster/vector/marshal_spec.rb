@@ -1,5 +1,4 @@
 require "spec_helper"
-require "hamster/vector"
 
 describe Immutable::Vector do
   describe "#marshal_dump/#marshal_load" do

@@ -1,5 +1,4 @@
 require "spec_helper"
-require "hamster/hash"
 
 describe Immutable::Hash do
   [:to_hash, :to_h].each do |method|

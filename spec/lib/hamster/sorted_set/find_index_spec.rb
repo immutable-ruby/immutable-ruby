@@ -1,5 +1,4 @@
 require "spec_helper"
-require "hamster/sorted_set"
 
 describe Immutable::SortedSet do
   [:find_index, :index].each do |method|

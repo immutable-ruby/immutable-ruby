@@ -1,5 +1,4 @@
 require "spec_helper"
-require "hamster/list"
 
 describe Immutable::List do
   [:map, :collect].each do |method|

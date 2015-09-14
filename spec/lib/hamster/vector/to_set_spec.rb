@@ -1,6 +1,4 @@
 require "spec_helper"
-require "hamster/vector"
-require "hamster/set"
 
 describe Immutable::Vector do
   describe "#to_set" do

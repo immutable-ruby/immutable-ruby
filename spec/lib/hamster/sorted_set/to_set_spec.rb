@@ -1,6 +1,4 @@
 require "spec_helper"
-require "hamster/sorted_set"
-require "hamster/set"
 
 describe Immutable::SortedSet do
   describe "#to_set" do

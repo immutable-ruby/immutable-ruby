@@ -1,6 +1,5 @@
 require "spec_helper"
 require "set"
-require "hamster/set"
 
 describe Immutable::SortedSet do
   let(:set) { SS[*values] }

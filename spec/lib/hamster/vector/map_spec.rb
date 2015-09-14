@@ -1,5 +1,4 @@
 require "spec_helper"
-require "hamster/vector"
 
 describe Immutable::Vector do
   [:map, :collect].each do |method|

@@ -1,5 +1,4 @@
 require "spec_helper"
-require "hamster/deque"
 
 describe Immutable::Deque do
   let(:deque) { D["A", "B", "C", "D"] }

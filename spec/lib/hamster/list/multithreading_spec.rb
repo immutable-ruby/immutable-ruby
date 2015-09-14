@@ -1,5 +1,4 @@
 require "spec_helper"
-require "hamster/list"
 require "concurrent/atomics"
 
 describe Immutable::List do

@@ -1,5 +1,4 @@
 require "spec_helper"
-require "hamster/list"
 
 describe Immutable::List do
   [:reject, :delete_if].each do |method|

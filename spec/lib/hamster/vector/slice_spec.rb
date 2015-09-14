@@ -1,5 +1,4 @@
 require "spec_helper"
-require "hamster/vector"
 
 describe Immutable::Vector do
   let(:vector) { V[1,2,3,4] }

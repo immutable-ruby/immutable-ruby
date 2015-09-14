@@ -1,5 +1,4 @@
 require "spec_helper"
-require "hamster/deque"
 
 describe Immutable::Deque do
   describe "#inspect" do

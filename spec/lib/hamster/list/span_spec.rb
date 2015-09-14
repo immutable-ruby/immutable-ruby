@@ -1,5 +1,4 @@
 require "spec_helper"
-require "hamster/list"
 
 describe "List#span" do
   it "is lazy" do

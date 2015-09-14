@@ -1,5 +1,4 @@
 require "spec_helper"
-require "hamster/sorted_set"
 
 describe Immutable::SortedSet do
   describe "#first" do

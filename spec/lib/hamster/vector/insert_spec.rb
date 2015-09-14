@@ -1,5 +1,4 @@
 require "spec_helper"
-require "hamster/vector"
 require 'pry'
 
 describe Immutable::Vector do

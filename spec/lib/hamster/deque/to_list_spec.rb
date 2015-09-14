@@ -1,6 +1,4 @@
 require "spec_helper"
-require "hamster/deque"
-require "hamster/list"
 
 describe Immutable::Deque do
   describe "#to_list" do

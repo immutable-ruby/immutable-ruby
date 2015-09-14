@@ -10,6 +10,7 @@ require "hamster/sorted_set"
 require "hamster/list"
 require "hamster/deque"
 require "hamster/core_ext"
+require "hamster/nested"
 
 # Suppress warnings from use of old RSpec expectation and mock syntax
 # If all tests are eventually updated to use the new syntax, this can be removed

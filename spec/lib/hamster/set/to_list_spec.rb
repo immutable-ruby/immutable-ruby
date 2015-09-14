@@ -1,6 +1,4 @@
 require "spec_helper"
-require "hamster/set"
-require "hamster/list"
 
 describe Immutable::Set do
   describe "#to_list" do
