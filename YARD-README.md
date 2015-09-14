@@ -184,7 +184,7 @@ end
 The following code will only call `#prime?` as many times as necessary to generate the first 3 prime numbers between 10,000 and 1,000,000:
 
 ``` ruby
-immutable.interval(10_000, 1_000_000).select do |number|
+Immutable.interval(10_000, 1_000_000).select do |number|
   prime?(number)
 end.take(3)
   # => 0.0009s
@@ -230,13 +230,13 @@ Besides `Immutable::List[]` there are other ways to construct lists:
     would be:
 
     ``` ruby
-    immutable.iterate(1) { |i| i + 1 }
+    Immutable.iterate(1) { |i| i + 1 }
     ```
 
     or even more succinctly:
 
     ``` ruby
-    immutable.iterate(1, &:next)
+    Immutable.iterate(1, &:next)
     ```
   - {Immutable::List.empty} returns an empty list, which you can
     build up using repeated calls to {Immutable::List#add #add} or other `List` methods.

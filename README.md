@@ -24,12 +24,12 @@ Where possible, `Immutable` collections offer an interface compatible with Ruby'
 And lastly, `Immutable` lists are lazy, making it possible to (among other things) process "infinitely large" lists.
 
 [PDS]: http://en.wikipedia.org/wiki/Persistent_data_structure
-[HASH-DOC]: http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Hamster/Hash
-[SET-DOC]: http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Hamster/Set
-[VECTOR-DOC]: http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Hamster/Vector
-[LIST-DOC]: http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Hamster/List
-[SORTED-SET-DOC]: http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Hamster/SortedSet
-[DEQUE-DOC]: http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Hamster/Deque
+[HASH-DOC]: http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Immutable/Hash
+[SET-DOC]: http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Immutable/Set
+[VECTOR-DOC]: http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Immutable/Vector
+[LIST-DOC]: http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Immutable/List
+[SORTED-SET-DOC]: http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Immutable/SortedSet
+[DEQUE-DOC]: http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Immutable/Deque
 
 
 Using
@@ -52,7 +52,7 @@ require "immutable/list"
 require "immutable/deque"
 ```
 
-<h2>Hash <span style="font-size:0.7em">(<a href="http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Hamster/Hash">API Documentation</a>)</span></h2>
+<h2>Hash <span style="font-size:0.7em">(<a href="http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Immutable/Hash">API Documentation</a>)</span></h2>
 
 Constructing an `Immutable::Hash` is almost as simple as a regular one:
 
@@ -101,7 +101,7 @@ counters.put(:odds, &:next)         # => {:odds => 1, :evens => 0}
 This is just the beginning; see the [API documentation][HASH-DOC] for details on all `Hash` methods.
 
 
-<h2>Vector <span style="font-size:0.7em">(<a href="http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Hamster/Vector">API Documentation</a>)</span></h2>
+<h2>Vector <span style="font-size:0.7em">(<a href="http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Immutable/Vector">API Documentation</a>)</span></h2>
 
 A `Vector` is an integer-indexed collection much like an immutable `Array`. Examples:
 
@@ -121,7 +121,7 @@ Other `Array`-like methods like `#select`, `#map`, `#shuffle`, `#uniq`, `#revers
 [API documentation][VECTOR-DOC] for details on all `Vector` methods.
 
 
-<h2>Set <span style="font-size:0.7em">(<a href="http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Hamster/Set">API Documentation</a>)</span></h2>
+<h2>Set <span style="font-size:0.7em">(<a href="http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Immutable/Set">API Documentation</a>)</span></h2>
 
 A `Set` is an unordered collection of values with no duplicates. It is much like the Ruby standard library's `Set`, but immutable. Examples:
 
@@ -135,12 +135,12 @@ set.union([:red, :blue, :pink])            # => Immutable::Set[:red, :blue, :yel
 set.intersection([:red, :blue, :pink])     # => Immutable::Set[:red, :blue]
 ```
 
-Like most `Immutable` methods, the set-theoretic methods `#union`, `#intersection`, `#difference`, and `#exclusion` (aliased as `#|`, `#&`, `#-`, and `#^`) all work with regular Ruby collections, or indeed any `Enumerable` object. So just like all the other Hamster collections, `Immutable::Set` can easily be used in combination with "ordinary" Ruby code.
+Like most `Immutable` methods, the set-theoretic methods `#union`, `#intersection`, `#difference`, and `#exclusion` (aliased as `#|`, `#&`, `#-`, and `#^`) all work with regular Ruby collections, or indeed any `Enumerable` object. So just like all the other `Immutable` collections, `Immutable::Set` can easily be used in combination with "ordinary" Ruby code.
 
 See the [API documentation][SET-DOC] for details on all `Set` methods.
 
 
-<h2>SortedSet <span style="font-size:0.7em">(<a href="http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Hamster/SortedSet">API Documentation</a>)</span></h2>
+<h2>SortedSet <span style="font-size:0.7em">(<a href="http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Immutable/SortedSet">API Documentation</a>)</span></h2>
 
 A `SortedSet` is like a `Set`, but ordered. You can do everything with it that you can
 do with a `Set`. Additionally, you can get the `#first` and `#last` item, or retrieve
@@ -163,7 +163,7 @@ Immutable::SortedSet.new(['toast', 'jam', 'bacon']) { |str| str.chars.last }
 See the [API documentation][SORTED-SET-DOC] for details on all `SortedSet` methods.
 
 
-<h2>List <span style="font-size:0.7em">(<a href="http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Hamster/List">API Documentation</a>)</span></h2>
+<h2>List <span style="font-size:0.7em">(<a href="http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Immutable/List">API Documentation</a>)</span></h2>
 
 `Immutable::List`s have a *head* (the value at the front of the list),
 and a *tail* (a list of the remaining items):
@@ -199,7 +199,7 @@ necessary to generate the first 3 prime numbers between 10,000
 and 1,000,000:
 
 ``` ruby
-Hamster.interval(10_000, 1_000_000).select do |number|
+Immutable.interval(10_000, 1_000_000).select do |number|
   prime?(number)
 end.take(3)
   # => 0.0009s
@@ -231,7 +231,7 @@ Besides `Immutable::List[]` there are other ways to construct lists:
 
     ``` ruby
     count = 0
-    Hamster.stream { count += 1 }
+    Immutable.stream { count += 1 }
     ```
 
   - `Immutable.repeat(x)` creates an infinite list with `x` as the
@@ -248,13 +248,13 @@ Besides `Immutable::List[]` there are other ways to construct lists:
     would be:
 
     ``` ruby
-    Hamster.iterate(1) { |i| i + 1 }
+    Immutable.iterate(1) { |i| i + 1 }
     ```
 
     or even more succinctly:
 
     ``` ruby
-    Hamster.iterate(1, &:next)
+    Immutable.iterate(1, &:next)
     ```
 
   - `Immutable::List.empty` returns an empty list, which you can
@@ -304,7 +304,7 @@ example.
 See the API documentation for details on all [`List`][LIST-DOC] methods.
 
 
-<h2>Deque <span style="font-size:0.7em">(<a href="http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Hamster/Deque">API Documentation</a>)</span></h2>
+<h2>Deque <span style="font-size:0.7em">(<a href="http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Immutable/Deque">API Documentation</a>)</span></h2>
 
 A `Deque` (or "double-ended queue") is an ordered collection, which allows you to push and pop items from both front and back. This makes it perfect as an immutable stack *or* queue. Examples:
 
