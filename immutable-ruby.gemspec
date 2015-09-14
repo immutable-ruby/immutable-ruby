@@ -1,24 +1,24 @@
 # coding: utf-8
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "hamster/version"
+require "immutable/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "hamster"
+  spec.name          = "immutable-ruby"
   spec.version       = Immutable::VERSION
   spec.authors       = ["Simon Harris"]
   spec.email         = ["haruki_zaemon@mac.com"]
   spec.summary       = %q{Efficient, immutable, thread-safe collection classes for Ruby}
   spec.description   = spec.summary
-  spec.homepage      = "https://github.com/hamstergem/hamster"
+  spec.homepage      = "https://github.com/immutable-ruby/immutable-ruby"
   spec.license       = "MIT"
+  spec.date          = Time.now.strftime("%Y-%m-%d")
 
   spec.platform      = Gem::Platform::RUBY
   spec.required_ruby_version = ">= 1.9.3"
 
   spec.files         = Dir["lib/**/*"]
-  spec.executables   = Dir["bin/**/*"].map! { |f| f.gsub(/bin\//, '') }
-  spec.test_files    = Dir["test/**/*", "spec/**/*"]
+  spec.test_files    = Dir["spec/**/*"]
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency     "concurrent-ruby", "~> 0.8"
