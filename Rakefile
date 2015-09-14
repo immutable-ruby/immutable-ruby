@@ -4,7 +4,7 @@ require "rspec/core/rake_task"
 require "yard"
 require "pathname"
 
-HAMSTER_ROOT = Pathname.new(__FILE__).dirname
+IMMUTABLE_ROOT = Pathname.new(__FILE__).dirname
 
 desc "Run all the tests in spec/"
 RSpec::Core::RakeTask.new(:spec) do |config|
@@ -17,7 +17,7 @@ YARD::Rake::YardocTask.new do |config|
 end
 
 def bench_suites
-  Dir[HAMSTER_ROOT.join('bench/*')].map(&method(:Pathname)).select(&:directory?)
+  Dir[IMMUTABLE_ROOT.join('bench/*')].map(&method(:Pathname)).select(&:directory?)
 end
 
 def bench_files(suite)
@@ -25,7 +25,7 @@ def bench_files(suite)
 end
 
 def bench_task_name(file_name)
-  file_name.relative_path_from(HAMSTER_ROOT).sub(/\_bench.rb$/, '').to_s.tr('/', ':')
+  file_name.relative_path_from(IMMUTABLE_ROOT).sub(/\_bench.rb$/, '').to_s.tr('/', ':')
 end
 
 bench_suites.each do |suite|
@@ -35,7 +35,7 @@ bench_suites.each do |suite|
     desc "Benchmark #{name}"
     task name do
       begin
-        $LOAD_PATH.unshift HAMSTER_ROOT.join('lib')
+        $LOAD_PATH.unshift IMMUTABLE_ROOT.join('lib')
         load bench_file
       rescue LoadError => e
         if e.message == /benchmark\/ips/
@@ -88,7 +88,7 @@ task :dependency_graph do
   end
   dependencies.each { |from,to| find_reachable[from,to,[from]] }
 
-  dot = %|digraph { graph [label="Hamster srcfile dependencies"]\n|
+  dot = %|digraph { graph [label="Immutable srcfile dependencies"]\n|
   dependencies.each do |from,to|
     dot << %|"#{from}" [color=red]\n| if reachable[from].include?(from)
     to.each do |t|
@@ -98,7 +98,7 @@ task :dependency_graph do
   dot << "\n}"
 
   require "tempfile"
-  Tempfile.open("hamster-depgraph") do |f|
+  Tempfile.open("immutable-depgraph") do |f|
     f.write(dot)
     f.flush
     message = `dot -Tgif #{f.path} -o depgraph.gif`
