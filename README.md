@@ -52,7 +52,7 @@ require "immutable/list"
 require "immutable/deque"
 ```
 
-<h2>Hash <span style="font-size:0.7em">(<a href="http://rubydoc.info/github/hamstergem/hamster/master/Hamster/Hash">API Documentation</a>)</span></h2>
+<h2>Hash <span style="font-size:0.7em">(<a href="http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Hamster/Hash">API Documentation</a>)</span></h2>
 
 Constructing an `Immutable::Hash` is almost as simple as a regular one:
 
@@ -101,7 +101,7 @@ counters.put(:odds, &:next)         # => {:odds => 1, :evens => 0}
 This is just the beginning; see the [API documentation][HASH-DOC] for details on all `Hash` methods.
 
 
-<h2>Vector <span style="font-size:0.7em">(<a href="http://rubydoc.info/github/hamstergem/hamster/master/Hamster/Vector">API Documentation</a>)</span></h2>
+<h2>Vector <span style="font-size:0.7em">(<a href="http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Hamster/Vector">API Documentation</a>)</span></h2>
 
 A `Vector` is an integer-indexed collection much like an immutable `Array`. Examples:
 
@@ -121,7 +121,7 @@ Other `Array`-like methods like `#select`, `#map`, `#shuffle`, `#uniq`, `#revers
 [API documentation][VECTOR-DOC] for details on all `Vector` methods.
 
 
-<h2>Set <span style="font-size:0.7em">(<a href="http://rubydoc.info/github/hamstergem/hamster/master/Hamster/Set">API Documentation</a>)</span></h2>
+<h2>Set <span style="font-size:0.7em">(<a href="http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Hamster/Set">API Documentation</a>)</span></h2>
 
 A `Set` is an unordered collection of values with no duplicates. It is much like the Ruby standard library's `Set`, but immutable. Examples:
 
@@ -140,7 +140,7 @@ Like most `Immutable` methods, the set-theoretic methods `#union`, `#intersectio
 See the [API documentation][SET-DOC] for details on all `Set` methods.
 
 
-<h2>SortedSet <span style="font-size:0.7em">(<a href="http://rubydoc.info/github/hamstergem/hamster/master/Hamster/SortedSet">API Documentation</a>)</span></h2>
+<h2>SortedSet <span style="font-size:0.7em">(<a href="http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Hamster/SortedSet">API Documentation</a>)</span></h2>
 
 A `SortedSet` is like a `Set`, but ordered. You can do everything with it that you can
 do with a `Set`. Additionally, you can get the `#first` and `#last` item, or retrieve
@@ -163,7 +163,7 @@ Immutable::SortedSet.new(['toast', 'jam', 'bacon']) { |str| str.chars.last }
 See the [API documentation][SORTED-SET-DOC] for details on all `SortedSet` methods.
 
 
-<h2>List <span style="font-size:0.7em">(<a href="http://rubydoc.info/github/hamstergem/hamster/master/Hamster/List">API Documentation</a>)</span></h2>
+<h2>List <span style="font-size:0.7em">(<a href="http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Hamster/List">API Documentation</a>)</span></h2>
 
 `Immutable::List`s have a *head* (the value at the front of the list),
 and a *tail* (a list of the remaining items):
@@ -304,7 +304,7 @@ example.
 See the API documentation for details on all [`List`][LIST-DOC] methods.
 
 
-<h2>Deque <span style="font-size:0.7em">(<a href="http://rubydoc.info/github/hamstergem/hamster/master/Hamster/Deque">API Documentation</a>)</span></h2>
+<h2>Deque <span style="font-size:0.7em">(<a href="http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Hamster/Deque">API Documentation</a>)</span></h2>
 
 A `Deque` (or "double-ended queue") is an ordered collection, which allows you to push and pop items from both front and back. This makes it perfect as an immutable stack *or* queue. Examples:
 
