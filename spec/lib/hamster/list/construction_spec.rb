@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster do
+describe Immutable do
   describe ".list" do
     context "with no arguments" do
       it "always returns the same instance" do

@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/list"
 
-describe "Hamster::list#span" do
+describe "List#span" do
   it "is lazy" do
     -> { Immutable.stream { |item| fail }.span { true } }.should_not raise_error
   end

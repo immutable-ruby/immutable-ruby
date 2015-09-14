@@ -3,7 +3,7 @@ require "hamster/nested"
 require "hamster/deque"
 require "set"
 
-describe Hamster do
+describe Immutable do
   expectations = [
     # [Ruby, Immutable]
     [ { "a" => 1,

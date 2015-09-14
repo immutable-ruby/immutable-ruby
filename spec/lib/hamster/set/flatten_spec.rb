@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/set"
 
-describe Hamster do
+describe Immutable do
   describe "#flatten" do
     [
       [["A"], ["A"]],

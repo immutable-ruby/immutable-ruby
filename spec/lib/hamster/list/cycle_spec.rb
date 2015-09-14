@@ -1,7 +1,7 @@
 require "spec_helper"
 require "hamster/list"
 
-describe Hamster do
+describe Immutable do
   describe "#cycle" do
     it "is lazy" do
       -> { Immutable.stream { fail }.cycle }.should_not raise_error
