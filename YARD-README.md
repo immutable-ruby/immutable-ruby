@@ -346,7 +346,6 @@ Other Reading
 - The structure which is used for Hamster's `Hash` and `Set`: [Hash Array Mapped Tries][HAMT]
 - An interesting perspective on why immutability itself is inherently a good thing: Matthias Felleisen's [Function Objects presentation][FO].
 - The Hamster {file:FAQ.md FAQ}
-- {file:CHANGELOG.md Changelog}
 - {file:CONDUCT.md Contributor's Code of Conduct}
 - {file:LICENSE License}
 
