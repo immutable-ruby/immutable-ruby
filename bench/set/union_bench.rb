@@ -1,5 +1,5 @@
 require "benchmark/ips"
-require "hamster/set"
+require "immutable/set"
 
 Benchmark.ips do |b|
   small_set = Immutable::Set.new((1..10).to_a)

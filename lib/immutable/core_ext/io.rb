@@ -1,4 +1,4 @@
-require "hamster/list"
+require "immutable/list"
 
 # Monkey-patches to Ruby's built-in `IO` class.
 # @see http://www.ruby-doc.org/core/IO.html

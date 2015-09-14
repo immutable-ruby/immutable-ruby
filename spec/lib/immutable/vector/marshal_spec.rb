@@ -6,7 +6,7 @@ describe Immutable::Vector do
       File.join(RbConfig::CONFIG["bindir"], RbConfig::CONFIG["ruby_install_name"])
     end
     let(:child_cmd) do
-      %Q|#{ruby} -I lib -r hamster -e 'vector = Immutable::Vector[5, 10, 15]; $stdout.write(Marshal.dump(vector))'|
+      %Q|#{ruby} -I lib -r immutable -e 'vector = Immutable::Vector[5, 10, 15]; $stdout.write(Marshal.dump(vector))'|
     end
 
     let(:reloaded_vector) do

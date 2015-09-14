@@ -1,5 +1,5 @@
 require "benchmark/ips"
-require "hamster/list"
+require "immutable/list"
 
 Benchmark.ips do |b|
   sml_list = Immutable::List[1]

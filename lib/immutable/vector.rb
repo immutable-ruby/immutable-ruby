@@ -1,5 +1,5 @@
-require "hamster/enumerable"
-require "hamster/hash"
+require "immutable/enumerable"
+require "immutable/hash"
 
 module Immutable
 

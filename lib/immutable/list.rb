@@ -2,10 +2,10 @@ require "thread"
 require "set"
 require "concurrent/atomics"
 
-require "hamster/undefined"
-require "hamster/enumerable"
-require "hamster/hash"
-require "hamster/set"
+require "immutable/undefined"
+require "immutable/enumerable"
+require "immutable/hash"
+require "immutable/set"
 
 module Immutable
   class << self

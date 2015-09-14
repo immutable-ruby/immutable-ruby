@@ -1,4 +1,4 @@
-require "hamster/enumerable"
+require "immutable/enumerable"
 
 module Immutable
 

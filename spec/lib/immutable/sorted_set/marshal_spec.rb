@@ -6,7 +6,7 @@ describe Immutable::SortedSet do
       File.join(RbConfig::CONFIG["bindir"], RbConfig::CONFIG["ruby_install_name"])
     end
     let(:child_cmd) do
-      %Q|#{ruby} -I lib -r hamster -e 'set = Immutable::SortedSet[5, 10, 15]; $stdout.write(Marshal.dump(set))'|
+      %Q|#{ruby} -I lib -r immutable -e 'set = Immutable::SortedSet[5, 10, 15]; $stdout.write(Marshal.dump(set))'|
     end
 
     let(:reloaded_set) do

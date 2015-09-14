@@ -5,7 +5,7 @@ describe Immutable::Set do
     let(:ruby) { File.join(RbConfig::CONFIG["bindir"], RbConfig::CONFIG["ruby_install_name"]) }
 
     let(:child_cmd) do
-      %Q|#{ruby} -I lib -r hamster -e 'set = Immutable::Set[:one, :two]; $stdout.write(Marshal.dump(set))'|
+      %Q|#{ruby} -I lib -r immutable -e 'set = Immutable::Set[:one, :two]; $stdout.write(Marshal.dump(set))'|
     end
 
     let(:reloaded_hash) do

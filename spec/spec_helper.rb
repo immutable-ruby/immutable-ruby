@@ -3,14 +3,14 @@ CodeClimate::TestReporter.start
 
 require "pry"
 require "rspec"
-require "hamster/hash"
-require "hamster/set"
-require "hamster/vector"
-require "hamster/sorted_set"
-require "hamster/list"
-require "hamster/deque"
-require "hamster/core_ext"
-require "hamster/nested"
+require "immutable/hash"
+require "immutable/set"
+require "immutable/vector"
+require "immutable/sorted_set"
+require "immutable/list"
+require "immutable/deque"
+require "immutable/core_ext"
+require "immutable/nested"
 
 # Suppress warnings from use of old RSpec expectation and mock syntax
 # If all tests are eventually updated to use the new syntax, this can be removed

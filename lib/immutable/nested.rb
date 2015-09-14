@@ -1,10 +1,10 @@
 require "set"
-require "hamster/hash"
-require "hamster/set"
-require "hamster/vector"
-require "hamster/sorted_set"
-require "hamster/list"
-require "hamster/deque"
+require "immutable/hash"
+require "immutable/set"
+require "immutable/vector"
+require "immutable/sorted_set"
+require "immutable/list"
+require "immutable/deque"
 
 module Immutable
   class << self

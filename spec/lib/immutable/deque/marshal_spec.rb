@@ -6,7 +6,7 @@ describe Immutable::Deque do
       File.join(RbConfig::CONFIG["bindir"], RbConfig::CONFIG["ruby_install_name"])
     end
     let(:child_cmd) do
-      %Q|#{ruby} -I lib -r hamster -e 'deque = Immutable::Deque[5, 10, 15]; $stdout.write(Marshal.dump(deque))'|
+      %Q|#{ruby} -I lib -r immutable -e 'deque = Immutable::Deque[5, 10, 15]; $stdout.write(Marshal.dump(deque))'|
     end
 
     let(:reloaded_deque) do

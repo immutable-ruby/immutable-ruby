@@ -6,7 +6,7 @@ describe Immutable::Hash do
       File.join(RbConfig::CONFIG["bindir"], RbConfig::CONFIG["ruby_install_name"])
     end
     let(:child_cmd) do
-      %Q|#{ruby} -I lib -r hamster -e 'dict = Immutable::Hash[existing_key: 42, other_thing: "data"]; $stdout.write(Marshal.dump(dict))'|
+      %Q|#{ruby} -I lib -r immutable -e 'dict = Immutable::Hash[existing_key: 42, other_thing: "data"]; $stdout.write(Marshal.dump(dict))'|
     end
 
     let(:reloaded_hash) do

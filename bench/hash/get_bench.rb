@@ -1,6 +1,6 @@
 require "benchmark/ips"
 
-require "hamster/hash"
+require "immutable/hash"
 
 Benchmark.ips do |b|
   sml_hash = Immutable::Hash[1 => 1]

@@ -1,8 +1,8 @@
-require "hamster/undefined"
-require "hamster/enumerable"
-require "hamster/hash"
-require "hamster/trie"
-require "hamster/sorted_set"
+require "immutable/undefined"
+require "immutable/enumerable"
+require "immutable/hash"
+require "immutable/trie"
+require "immutable/sorted_set"
 require "set"
 
 module Immutable

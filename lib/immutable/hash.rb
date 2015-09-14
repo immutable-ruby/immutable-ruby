@@ -1,8 +1,8 @@
-require "hamster/undefined"
-require "hamster/enumerable"
-require "hamster/trie"
-require "hamster/set"
-require "hamster/vector"
+require "immutable/undefined"
+require "immutable/enumerable"
+require "immutable/trie"
+require "immutable/set"
+require "immutable/vector"
 
 module Immutable
 

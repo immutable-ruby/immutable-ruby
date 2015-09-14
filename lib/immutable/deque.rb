@@ -1,4 +1,4 @@
-require "hamster/list"
+require "immutable/list"
 
 module Immutable
 
