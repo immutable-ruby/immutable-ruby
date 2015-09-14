@@ -1,9 +1,9 @@
-# It should be possible to require any one Hamster structure,
+# It should be possible to require any one Immutable structure,
 # without loading all the others
 
 hamster_lib_dir = File.join(File.dirname(__FILE__), "..", "..", 'lib')
 
-describe :Hamster do
+describe :Immutable do
   describe :Hash do
     it "can be loaded separately" do
       system(%{ruby -e "$:.unshift('#{hamster_lib_dir}'); require 'hamster/hash'; Immutable::Hash.new"}).should be(true)
