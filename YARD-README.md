@@ -1,30 +1,17 @@
-Hamster
-=======
+Immutable Ruby
+==============
 
 Efficient, immutable, and thread-safe collection classes for Ruby.
 
-Hamster provides 6 [Persistent Data
-Structures][PDS]: {Hamster::Hash Hash}, {Hamster::Vector Vector}, {Hamster::Set Set}, {Hamster::SortedSet SortedSet}, {Hamster::List List}, and {Hamster::Deque Deque} (which works as an immutable queue or stack).
+The `immutable-ruby` gem provides 6 [Persistent Data Structures][PDS]: {Immutable::Hash Hash}, {Immutable::Vector Vector}, {Immutable::Set Set}, {Immutable::SortedSet SortedSet}, {Immutable::List List}, and {Immutable::Deque Deque} (which works as an immutable queue or stack).
 
-Hamster collections are **immutable**. Whenever you modify a Hamster
-collection, the original is preserved and a modified copy is returned. This
-makes them inherently thread-safe and shareable. At the same time, they remain
-CPU and memory-efficient by sharing between copies.
+Whenever you modify an `Immutable` collection, the original is preserved and a modified copy is returned. This makes them inherently thread-safe and shareable. At the same time, they remain CPU and memory-efficient by sharing between copies. (However, you *can* still mutate objects stored in these collections. We don't recommend that you do this, unless you are sure you know what you are doing.)
 
-While Hamster collections are immutable, you can still mutate objects stored
-in them. We recommend that  you don't do this, unless you are sure you know
-what you are doing. Hamster collections are thread-safe and can be freely
-shared between threads, but you are responsible for making sure that the
-objects stored in them are used in a thread-safe manner.
+`Immutable` collections are almost always closed under a given operation. That is, whereas Ruby's collection methods always return arrays, `Immutable` collections will return an instance of the same class wherever possible.
 
-Hamster collections are almost always closed under a given operation. That is,
-whereas Ruby's collection methods always return arrays, Hamster collections
-will return an instance of the same class wherever possible.
+Where possible, `Immutable` collections offer an interface compatible with Ruby's built-in `Hash`, `Array`, `Set`, and `Enumerable`, to ease code migration. Also, `Immutable` methods accept regular Ruby collections as arguments, so code which uses `Immutable` can easily interoperate with your other Ruby code.
 
-Where possible, Hamster collections offer an interface compatible with Ruby's
-built-in `Hash`, `Array`, and `Enumerable`, to ease code migration. Also, Hamster methods accept regular Ruby collections as arguments, so code which uses `Hamster` can easily interoperate with your other Ruby code.
-
-And lastly, Hamster lists are lazy, making it possible to (among other things)
+And lastly, `Immutable` lists are lazy, making it possible to (among other things)
 process "infinitely large" lists.
 
 [PDS]: http://en.wikipedia.org/wiki/Persistent_data_structure
@@ -36,27 +23,27 @@ Using
 To make the collection classes available in your code:
 
 ``` ruby
-require "hamster"
+require "immutable"
 ```
 
 Or if you prefer to only pull in certain collection types:
 
 ``` ruby
-require "hamster/hash"
-require "hamster/vector"
-require "hamster/set"
-require "hamster/sorted_set"
-require "hamster/list"
-require "hamster/deque"
+require "immutable/hash"
+require "immutable/vector"
+require "immutable/set"
+require "immutable/sorted_set"
+require "immutable/list"
+require "immutable/deque"
 ```
 
-<h2>Hash <span style="font-size:0.7em">({Hamster::Hash API Documentation}</a>)</span></h2>
+<h2>Hash <span style="font-size:0.7em">({Immutable::Hash API Documentation}</a>)</span></h2>
 
-Constructing a Hamster `Hash` is almost as simple as a regular one:
+Constructing an `Immutable::Hash` is almost as simple as a regular one:
 
 ``` ruby
-person = Hamster::Hash[name: "Simon", gender: :male]
-# => Hamster::Hash[:name => "Simon", :gender => :male]
+person = Immutable::Hash[name: "Simon", gender: :male]
+# => Immutable::Hash[:name => "Simon", :gender => :male]
 ```
 
 Accessing the contents will be familiar to you:
@@ -69,29 +56,25 @@ person.get(:gender)                 # => :male
 Updating the contents is a little different than you are used to:
 
 ``` ruby
-friend = person.put(:name, "James") # => Hamster::Hash[:name => "James", :gender => :male]
-person                              # => Hamster::Hash[:name => "Simon", :gender => :male]
+friend = person.put(:name, "James") # => Immutable::Hash[:name => "James", :gender => :male]
+person                              # => Immutable::Hash[:name => "Simon", :gender => :male]
 friend[:name]                       # => "James"
 person[:name]                       # => "Simon"
 ```
 
-As you can see, updating the hash returned a copy leaving
-the original intact. Similarly, deleting a key returns
-yet another copy:
+As you can see, updating the hash returned a copy, leaving the original intact. Similarly, deleting a key returns yet another copy:
 
 ``` ruby
-male = person.delete(:name)         # => Hamster::Hash[:gender => :male]
-person                              # => Hamster::Hash[:name => "Simon", :gender => :male]
+male = person.delete(:name)         # => Immutable::Hash[:gender => :male]
+person                              # => Immutable::Hash[:name => "Simon", :gender => :male]
 male.key?(:name)                    # => false
 person.key?(:name)                  # => true
 ```
 
-Since it is immutable, Hamster's `Hash` doesn't provide an assignment
-(`Hash#[]=`) method. However, `Hash#put` can accept a block which
-transforms the value associated with a given key:
+Since it is immutable, `Immutable::Hash` doesn't provide an assignment (`Hash#[]=`) method. However, `Hash#put` can accept a block which transforms the value associated with a given key:
 
 ``` ruby
-counters.put(:odds) { |value| value + 1 } # => Hamster::Hash[:odds => 1, :evens => 0]
+counters.put(:odds) { |value| value + 1 } # => Immutable::Hash[:odds => 1, :evens => 0]
 ```
 
 Or more succinctly:
@@ -100,97 +83,94 @@ Or more succinctly:
 counters.put(:odds, &:next)         # => {:odds => 1, :evens => 0}
 ```
 
-This is just the beginning; see the {Hamster::Hash API documentation} for details on all `Hash` methods.
+This is just the beginning; see the {Immutable::Hash API documentation} for details on all `Hash` methods.
 
 
-<h2>Vector <span style="font-size:0.7em">({Hamster::Vector API Documentation})</span></h2>
+<h2>Vector <span style="font-size:0.7em">({Immutable::Vector API Documentation})</span></h2>
 
 A `Vector` is an integer-indexed collection much like an immutable `Array`. Examples:
 
 ``` ruby
-vector = Hamster::Vector[1, 2, 3, 4] # => Hamster::Vector[1, 2, 3, 4]
-vector[0]                            # => 1
-vector[-1]                           # => 4
-vector.set(1, :a)                    # => Hamster::Vector[1, :a, 3, 4]
-vector.add(:b)                       # => Hamster::Vector[1, 2, 3, 4, :b]
-vector.insert(2, :a, :b)             # => Hamster::Vector[1, 2, :a, :b, 3, 4]
-vector.delete_at(0)                  # => Hamster::Vector[2, 3, 4]
+vector = Immutable::Vector[1, 2, 3, 4] # => Immutable::Vector[1, 2, 3, 4]
+vector[0]                              # => 1
+vector[-1]                             # => 4
+vector.set(1, :a)                      # => Immutable::Vector[1, :a, 3, 4]
+vector.add(:b)                         # => Immutable::Vector[1, 2, 3, 4, :b]
+vector.insert(2, :a, :b)               # => Immutable::Vector[1, 2, :a, :b, 3, 4]
+vector.delete_at(0)                    # => Immutable::Vector[2, 3, 4]
 ```
 
 Other `Array`-like methods like `#select`, `#map`, `#shuffle`, `#uniq`, `#reverse`,
 `#rotate`, `#flatten`, `#sort`, `#sort_by`, `#take`, `#drop`, `#take_while`,
 `#drop_while`, `#fill`, `#product`, and `#transpose` are also supported. See the
-{Hamster::Vector API documentation} for details on all `Vector` methods.
+{Immutable::Vector API documentation} for details on all `Vector` methods.
 
 
-<h2>Set <span style="font-size:0.7em">({Hamster::Set API Documentation})</span></h2>
+<h2>Set <span style="font-size:0.7em">({Immutable::Set API Documentation})</span></h2>
 
 A `Set` is an unordered collection of values with no duplicates. It is much like the Ruby standard library's `Set`, but immutable. Examples:
 
 ``` ruby
-set = Hamster::Set[:red, :blue, :yellow] # => Hamster::Set[:red, :blue, :yellow]
-set.include? :red                        # => true
-set.add :green                           # => Hamster::Set[:red, :blue, :yellow, :green]
-set.delete :blue                         # => Hamster::Set[:red, :yellow]
-set.superset? Hamster::Set[:red, :blue]  # => true
-set.union([:red, :blue, :pink])          # => Hamster::Set[:red, :blue, :yellow, :pink]
-set.intersection([:red, :blue, :pink])   # => Hamster::Set[:red, :blue]
+set = Immutable::Set[:red, :blue, :yellow] # => Immutable::Set[:red, :blue, :yellow]
+set.include? :red                          # => true
+set.add :green                             # => Immutable::Set[:red, :blue, :yellow, :green]
+set.delete :blue                           # => Immutable::Set[:red, :yellow]
+set.superset? Immutable::Set[:red, :blue]  # => true
+set.union([:red, :blue, :pink])            # => Immutable::Set[:red, :blue, :yellow, :pink]
+set.intersection([:red, :blue, :pink])     # => Immutable::Set[:red, :blue]
 ```
 
-Like most Hamster methods, the set-theoretic methods `#union`, `#intersection`, `#difference`, and `#exclusion` (aliased as `#|`, `#&`, `#-`, and `#^`) all work with regular Ruby collections, or indeed any `Enumerable` object. So just like all the other Hamster collections, `Hamster::Set` can easily be used in combination with "ordinary" Ruby code.
+Like most immutable methods, the set-theoretic methods `#union`, `#intersection`, `#difference`, and `#exclusion` (aliased as `#|`, `#&`, `#-`, and `#^`) all work with regular Ruby collections, or indeed any `Enumerable` object. So just like all the other immutable collections, `Immutable::Set` can easily be used in combination with "ordinary" Ruby code.
 
-See the {Hamster::Set API documentation} for details on all `Set` methods.
+See the {Immutable::Set API documentation} for details on all `Set` methods.
 
 
-<h2>SortedSet <span style="font-size:0.7em">({Hamster::SortedSet API Documentation})</span></h2>
+<h2>SortedSet <span style="font-size:0.7em">({Immutable::SortedSet API Documentation})</span></h2>
 
 A `SortedSet` is like a `Set`, but ordered. You can do everything with it that you can
 do with a `Set`. Additionally, you can get the `#first` and `#last` item, or retrieve
 an item using an integral index:
 
 ``` ruby
-set = Hamster::SortedSet['toast', 'jam', 'bacon'] # => Hamster::SortedSet["bacon", "jam", "toast"]
-set.first                                         # => "bacon"
-set.last                                          # => "toast"
-set[1]                                            # => "jam"
+set = Immutable::SortedSet['toast', 'jam', 'bacon'] # => Immutable::SortedSet["bacon", "jam", "toast"]
+set.first                                           # => "bacon"
+set.last                                            # => "toast"
+set[1]                                              # => "jam"
 ```
 
 You can also specify the sort order using a block:
 
 ``` ruby
-Hamster::SortedSet.new(['toast', 'jam', 'bacon']) { |a,b| b <=> a }
-Hamster::SortedSet.new(['toast', 'jam', 'bacon']) { |str| str.chars.last }
+Immutable::SortedSet.new(['toast', 'jam', 'bacon']) { |a,b| b <=> a }
+Immutable::SortedSet.new(['toast', 'jam', 'bacon']) { |str| str.chars.last }
 ```
 
-See the {Hamster::SortedSet API documentation} for details on all `SortedSet` methods.
+See the {Immutable::SortedSet API documentation} for details on all `SortedSet` methods.
 
 
-<h2>List <span style="font-size:0.7em">({Hamster::List API Documentation})</span></h2>
+<h2>List <span style="font-size:0.7em">({Immutable::List API Documentation})</span></h2>
 
-Hamster `List`s have a *head* (the value at the front of the list),
-and a *tail* (a list of the remaining items):
+`Immutable::List`s have a *head* (the value at the front of the list), and a *tail* (a list of the remaining items):
 
 ``` ruby
-list = Hamster::List[1, 2, 3]
+list = Immutable::List[1, 2, 3]
 list.head                    # => 1
-list.tail                    # => Hamster::List[2, 3]
+list.tail                    # => Immutable::List[2, 3]
 ```
 
-Add to a list with {Hamster::List#add}:
+Add to a list with {Immutable::List#add}:
 
 ``` ruby
-original = Hamster::List[1, 2, 3]
-copy = original.add(0)      # => Hamster::List[0, 1, 2, 3]
+original = Immutable::List[1, 2, 3]
+copy = original.add(0)      # => Immutable::List[0, 1, 2, 3]
 ```
 
 Notice how modifying a list actually returns a new list.
-That's because Hamster `List`s are immutable.
+
 
 ### Laziness
 
-`List` is lazy where possible. It tries to defer processing items until
-absolutely necessary. For example, given a crude function to detect prime
-numbers:
+`Immutable::List` is lazy where possible. It tries to defer processing items until absolutely necessary. For example, given a crude function to detect prime numbers:
 
 ``` ruby
 def prime?(number)
@@ -201,20 +181,16 @@ def prime?(number)
 end
 ```
 
-The following code will only call `#prime?` as many times as
-necessary to generate the first 3 prime numbers between 10,000
-and 1,000,000:
+The following code will only call `#prime?` as many times as necessary to generate the first 3 prime numbers between 10,000 and 1,000,000:
 
 ``` ruby
-Hamster.interval(10_000, 1_000_000).select do |number|
+immutable.interval(10_000, 1_000_000).select do |number|
   prime?(number)
 end.take(3)
   # => 0.0009s
 ```
 
-Compare that to the conventional equivalent which needs to
-calculate all possible values in the range before taking the
-first three:
+Compare that to the conventional equivalent which needs to calculate all possible values in the range before taking the first three:
 
 ``` ruby
 (10000..1000000).select do |number|
@@ -225,29 +201,28 @@ end.take(3)
 
 ### Construction
 
-Besides `Hamster::List[]` there are other ways to construct lists:
+Besides `Immutable::List[]` there are other ways to construct lists:
 
-  - {Hamster.interval Hamster.interval(from, to)} creates a lazy list
+  - {Immutable.interval Immutable.interval(from, to)} creates a lazy list
     equivalent to a list containing all the values between
     `from` and `to` without actually creating a list that big.
 
-  - {Hamster.stream Hamster.stream { ... }} allows you to creates infinite
+  - {Immutable.stream Immutable.stream { ... }} allows you to creates infinite
     lists. Each time a new value is required, the supplied
-    block is called. To generate a list of integers you
-    could do:
+    block is called. To generate a list of integers you could do:
 
     ``` ruby
     count = 0
-    Hamster.stream { count += 1 }
+    Immutable.stream { count += 1 }
     ```
 
-  - {Hamster.repeat Hamster.repeat(x)} creates an infinite list with `x` the
+  - {Immutable.repeat Immutable.repeat(x)} creates an infinite list with `x` as the
     value for every element.
 
-  - {Hamster.replicate Hamster.replicate(n, x)} creates a list of size `n` with
-    `x` the value for every element.
+  - {Immutable.replicate Immutable.replicate(n, x)} creates a list of size `n` with
+    `x` as the value for every element.
 
-  - {Hamster.iterate Hamster.iterate(x) { |x| ... }} creates an infinite
+  - {Immutable.iterate Immutable.iterate(x) { |x| ... }} creates an infinite
     list where the first item is calculated by applying the
     block on the initial argument, the second item by applying
     the function on the previous result and so on. For
@@ -255,27 +230,28 @@ Besides `Hamster::List[]` there are other ways to construct lists:
     would be:
 
     ``` ruby
-    Hamster.iterate(1) { |i| i + 1 }
+    immutable.iterate(1) { |i| i + 1 }
     ```
 
     or even more succinctly:
 
     ``` ruby
-    Hamster.iterate(1, &:next)
+    immutable.iterate(1, &:next)
     ```
-  - {Hamster::List.empty} returns an empty list, which you can
-    build up using repeated calls to {Hamster::List#add #add} or other `List` methods.
+  - {Immutable::List.empty} returns an empty list, which you can
+    build up using repeated calls to {Immutable::List#add #add} or other `List` methods.
+
 
 ### Core Extensions
 
 {Enumerable#to_list} will convert any existing `Enumerable` to a list, so you can
-slowly transition from built-in collection classes to Hamster.
+slowly transition from built-in collection classes to immutable.
 
 {IO#to_list} enables lazy processing of huge files. For example, imagine the
 following code to process a 100MB file:
 
 ``` ruby
-require 'hamster/core_ext'
+require 'immutable/core_ext'
 
 File.open("my_100_mb_file.txt") do |file|
   lines = []
@@ -294,11 +270,7 @@ File.open("my_100_mb_file.txt") do |file|
 end
 ```
 
-Unfortunately, though the second example reads nicely it
-takes many seconds to run (compared with milliseconds
-for the first) even though we're only interested in the first
-ten lines. Using `#to_list` we can get the running time back comparable to the
-imperative version.
+Unfortunately, though the second example reads nicely it takes many seconds to run (compared with milliseconds for the first) even though we're only interested in the first ten lines. Using `#to_list` we can get the running time back comparable to the imperative version.
 
 ``` ruby
 File.open("my_100_mb_file.txt") do |file|
@@ -310,42 +282,32 @@ This is possible because `IO#to_list` creates a lazy list whereby each line is
 only ever read and processed as needed, in effect converting it to the first
 example.
 
-See the {Hamster::List API documentation} for details on all List methods.
+See the {Immutable::List API documentation} for details on all List methods.
 
 
-<h2>Deque <span style="font-size:0.7em">({Hamster::Deque API Documentation})</span></h2>
+<h2>Deque <span style="font-size:0.7em">({Immutable::Deque API Documentation})</span></h2>
 
 A `Deque` (or "double-ended queue") is an ordered collection, which allows you to push and pop items from both front and back. This makes it perfect as an immutable stack *or* queue. Examples:
 
 ``` ruby
-deque = Hamster::Deque[1, 2, 3] # => Hamster::Deque[1, 2, 3]
-deque.first                     # 1
-deque.last                      # 3
-deque.pop                       # => Hamster::Deque[1, 2]
-deque.push(:a)                  # => Hamster::Deque[1, 2, 3, :a]
-deque.shift                     # => Hamster::Deque[2, 3]
-deque.unshift(:a)               # => Hamster::Deque[:a, 1, 2, 3]
+deque = Immutable::Deque[1, 2, 3] # => Immutable::Deque[1, 2, 3]
+deque.first                       # 1
+deque.last                        # 3
+deque.pop                         # => Immutable::Deque[1, 2]
+deque.push(:a)                    # => Immutable::Deque[1, 2, 3, :a]
+deque.shift                       # => Immutable::Deque[2, 3]
+deque.unshift(:a)                 # => Immutable::Deque[:a, 1, 2, 3]
 ```
 
-Of course, you can do the same thing with a `Vector`, but a `Deque` is more efficient. See the {Hamster::Deque API documentation} for details on all Deque methods.
-
-
-Contributing
-============
-
-  1. Fork it
-  2. Create your feature branch (`git checkout -b my-new-feature`)
-  3. Commit your changes (`git commit -am "Add some feature"`)
-  4. Push to the branch (`git push origin my-new-feature`)
-  5. Create new Pull Request
+Of course, you can do the same thing with a `Vector`, but a `Deque` is more efficient. See the {Immutable::Deque API documentation} for details on all Deque methods.
 
 
 Other Reading
 =============
 
-- The structure which is used for Hamster's `Hash` and `Set`: [Hash Array Mapped Tries][HAMT]
+- The structure which is used for `Immutable::Hash` and `Immutable::Set`: [Hash Array Mapped Tries][HAMT]
 - An interesting perspective on why immutability itself is inherently a good thing: Matthias Felleisen's [Function Objects presentation][FO].
-- The Hamster {file:FAQ.md FAQ}
+- The `immutable-ruby` {file:FAQ.md FAQ}
 - {file:CONDUCT.md Contributor's Code of Conduct}
 - {file:LICENSE License}
 
