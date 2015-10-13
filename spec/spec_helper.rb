@@ -28,6 +28,8 @@ SS = Immutable::SortedSet
 D  = Immutable::Deque
 EmptyList = Immutable::EmptyList
 
+Struct.new("Customer", :name, :address)
+
 def fixture(name)
   File.read(fixture_path(name))
 end

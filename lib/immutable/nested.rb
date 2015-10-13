@@ -30,6 +30,8 @@ module Immutable
       when ::Array
         res = obj.map { |element| from(element) }
         Immutable::Vector.new(res)
+      when ::Struct
+        from(obj.to_h)
       when ::SortedSet
         # This clause must go before ::Set clause, since ::SortedSet is a ::Set.
         res = obj.map { |element| from(element) }
