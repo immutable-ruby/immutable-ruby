@@ -1,6 +1,6 @@
 require "thread"
 require "set"
-require "concurrent/atomics"
+require "concurrent"
 
 require "immutable/undefined"
 require "immutable/enumerable"
@@ -1311,23 +1311,23 @@ module Immutable
     def initialize(&block)
       @head   = block # doubles as storage for block while yet unrealized
       @tail   = nil
-      @atomic = Concurrent::Atomic.new(0) # haven't yet run block
+      @atomic = Concurrent::Atom.new(0) # haven't yet run block
       @size   = nil
     end
 
     def head
-      realize if @atomic.get != 2
+      realize if @atomic.value != 2
       @head
     end
     alias :first :head
 
     def tail
-      realize if @atomic.get != 2
+      realize if @atomic.value != 2
       @tail
     end
 
     def empty?
-      realize if @atomic.get != 2
+      realize if @atomic.value != 2
       @size == 0
     end
 
@@ -1348,7 +1348,7 @@ module Immutable
     def realize
       while true
         # try to "claim" the right to run the block which realizes target
-        if @atomic.compare_and_swap(0,1) # full memory barrier here
+        if @atomic.compare_and_set(0,1) # full memory barrier here
           begin
             list = @head.call
             if list.empty?
@@ -1357,22 +1357,22 @@ module Immutable
               @head, @tail = list.head, list.tail
             end
           rescue
-            @atomic.set(0)
+            @atomic.reset(0)
             MUTEX.synchronize { QUEUE.broadcast }
             raise
           end
-          @atomic.set(2)
+          @atomic.reset(2)
           MUTEX.synchronize { QUEUE.broadcast }
           return
         end
         # we failed to "claim" it, another thread must be running it
-        if @atomic.get == 1 # another thread is running the block
+        if @atomic.value == 1 # another thread is running the block
           MUTEX.synchronize do
             # check value of @atomic again, in case another thread already changed it
             #   *and* went past the call to QUEUE.broadcast before we got here
-            QUEUE.wait(MUTEX) if @atomic.get == 1
+            QUEUE.wait(MUTEX) if @atomic.value == 1
           end
-        elsif @atomic.get == 2 # another thread finished the block
+        elsif @atomic.value == 2 # another thread finished the block
           return
         end
       end

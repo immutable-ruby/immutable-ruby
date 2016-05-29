@@ -3,8 +3,8 @@ require "concurrent/atomics"
 
 describe Immutable::List do
   it "ensures each node of a lazy list will only be realized on ONE thread, even when accessed by multiple threads" do
-    counter = Concurrent::Atomic.new(0)
-    list = (1..10000).to_list.map { |x| counter.update { |count| count + 1 }; x * 2 }
+    counter = Concurrent::Atom.new(0)
+    list = (1..10000).to_list.map { |x| counter.swap { |count| count + 1 }; x * 2 }
 
     threads = 10.times.collect do
       Thread.new do
@@ -14,7 +14,7 @@ describe Immutable::List do
     end
     threads.each(&:join)
 
-    counter.get.should == 10000
+    counter.value.should == 10000
     list.sum.should == 100010000
   end
 
