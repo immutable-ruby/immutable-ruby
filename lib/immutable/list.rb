@@ -1591,5 +1591,5 @@ module Immutable
         true
       end
     end
-  end
-end.freeze
+  end.freeze
+end
