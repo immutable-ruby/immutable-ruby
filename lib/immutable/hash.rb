@@ -817,6 +817,22 @@ module Immutable
     end
     alias :to_h :to_hash
 
+    # Return a `Proc` which accepts a key as an argument and returns the value.
+    # The `Proc` behaves like {#get} (when the key is missing, it returns nil or
+    # the result of the default proc).
+    #
+    # @example
+    #   h = Immutable::Hash["A" => 1, "B" => 2, "C" => 3]
+    #   h.to_proc.call("B")
+    #   # => 2
+    #   ["A", "C", "X"].map(&h)   # The & is short for .to_proc in Ruby
+    #   # => [1, 3, nil]
+    #
+    # @return [Proc]
+    def to_proc
+      lambda { |key| get(key) }
+    end
+
     # @return [::Hash]
     # @private
     def marshal_dump
