@@ -600,6 +600,24 @@ module Immutable
       Vector.new(array.freeze)
     end
 
+    # Return the value of successively indexing into a `Hash`.
+    # If any of the keys is not present in the `Hash`, return `nil`.
+    #
+    # @example
+    #   h = Immutable::Hash[a: 9, b: Immutable::Hash[c: 'a', d: 4], e: nil]
+    #   h.dig(:b, :c) # => "a"
+    #   h.dig(:b, :f) # => nil
+    #
+    # @return [Object]
+    def dig(key, *rest)
+      value = self[key]
+      if rest.empty? || value.nil?
+        value
+      else
+        value.dig(*rest)
+      end
+    end
+
     # Return a new {Set} containing the keys from this `Hash`.
     #
     # @example
