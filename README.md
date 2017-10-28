@@ -183,24 +183,16 @@ copy = original.add(0)      # => Immutable::List[0, 1, 2, 3]
 
 ### Laziness
 
-`Immutable::List` is lazy where possible. It tries to defer processing items until absolutely necessary. For example, given a crude function to detect prime numbers:
+`Immutable::List` is lazy where possible. It tries to defer processing items until
+absolutely necessary. For example, the following code will only call
+`Prime.prime?` as many times as necessary to generate the first 3 prime numbers
+between 10,000 and 1,000,000:
 
 ``` ruby
-def prime?(number)
-  2.upto(Math.sqrt(number).round) do |integer|
-    return false if (number % integer).zero?
-  end
-  true
-end
-```
+require 'prime'
 
-The following code will only call `#prime?` as many times as
-necessary to generate the first 3 prime numbers between 10,000
-and 1,000,000:
-
-``` ruby
 Immutable.interval(10_000, 1_000_000).select do |number|
-  prime?(number)
+  Prime.prime?(number)
 end.take(3)
   # => 0.0009s
 ```
@@ -211,7 +203,7 @@ first three:
 
 ``` ruby
 (10000..1000000).select do |number|
-  prime?(number)
+  Prime.prime?(number)
 end.take(3)
   # => 10s
 ```
