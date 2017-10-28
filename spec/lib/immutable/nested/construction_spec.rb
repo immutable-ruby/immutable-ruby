@@ -28,7 +28,7 @@ describe Immutable do
     [ 42, 42 ],
     [ STDOUT, STDOUT ],
 
-    # Struct conversion is one-way (from Ruby core Struct to Hamster::Hash), not back again!
+    # Struct conversion is one-way (from Ruby core Struct to Immutable::Hash), not back again!
     [ Struct::Customer.new, Immutable::Hash[name: nil, address: nil], true ],
     [ Struct::Customer.new('Dave', '123 Main'), Immutable::Hash[name: 'Dave', address: '123 Main'], true ]
   ]

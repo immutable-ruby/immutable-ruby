@@ -24,7 +24,7 @@ built-in, native, hand-crafted C-code implementation of Hash.
 For example:
 
 ``` ruby
-hash = Hamster::Hash.empty
+hash = Immutable::Hash.empty
 (1..10000).each { |i| hash = hash.put(i, i) }
   # => 0.05s
 (1..10000).each { |i| hash.get(i) }
@@ -51,7 +51,7 @@ writing--the contents things get much better.
 A more realistic comparison might look like:
 
 ``` ruby
-hash = Hamster::Hash.empty
+hash = Immutable::Hash.empty
 (1..10000).each { |i| hash = hash.put(i, i) }
   # => 0.05s
 (1..10000).each { |i| hash.get(i) }
@@ -74,7 +74,7 @@ What's even better -- or worse depending on your perspective
 isn't thread-safe and still requires some synchronization
 around it slowing it down even further.
 
-The Hamster version on the other hand was unchanged from the
+The immutable version, on the other hand, was unchanged from the
 original whilst remaining inherently thread-safe, and 3 orders
 of magnitude faster.
 
