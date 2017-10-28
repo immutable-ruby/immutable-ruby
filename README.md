@@ -89,7 +89,8 @@ person.key?(:name)                  # => true
 Since it is immutable, `Immutable::Hash` doesn't provide an assignment (`Hash#[]=`) method. However, `Hash#put` can accept a block which transforms the value associated with a given key:
 
 ``` ruby
-counters.put(:odds) { |value| value + 1 } # => Immutable::Hash[:odds => 1, :evens => 0]
+counters = Immutable::Hash[evens: 0, odds: 0]
+counters.put(:odds) { |n| n + 1 }   # => Immutable::Hash[:odds => 1, :evens => 0]
 ```
 
 Or more succinctly:
