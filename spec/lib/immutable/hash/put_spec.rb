@@ -1,6 +1,15 @@
 require "spec_helper"
 
 describe Immutable::Hash do
+  describe "#[]=" do
+    let(:hash) { H["A" => "aye", "B" => "bee", "C" => "see"] }
+
+    it 'raises error pointing to #put' do
+      expect { hash[:A] = 'aye' }
+        .to raise_error(NoMethodError, /Immutable::Hash.*`put'/)
+    end
+  end
+
   describe "#put" do
     let(:hash) { H["A" => "aye", "B" => "bee", "C" => "see"] }
 

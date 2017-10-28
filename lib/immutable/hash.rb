@@ -264,6 +264,12 @@ module Immutable
       end
     end
 
+    # @private
+    # @raise NoMethodError
+    def []=(*)
+      raise NoMethodError, "Immutable::Hash doesn't support `[]='; use `put' instead"
+    end
+
     # Return a new `Hash` with a deeply nested value modified to the result of
     # the given code block.  When traversing the nested `Hash`es and `Vector`s,
     # non-existing keys are created with empty `Hash` values.
