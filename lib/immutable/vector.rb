@@ -279,6 +279,24 @@ module Immutable
       end
     end
 
+    # Return the value of successively indexing into a nested collection.
+    # If any of the keys is not present, return `nil`.
+    #
+    # @example
+    #   v = Immutable::Vector[9, Immutable::Hash[c: 'a', d: 4]]
+    #   v.dig(1, :c) # => "a"
+    #   v.dig(1, :f) # => nil
+    #
+    # @return [Object]
+    def dig(key, *rest)
+      value = self[key]
+      if rest.empty? || value.nil?
+        value
+      else
+        value.dig(*rest)
+      end
+    end
+
     # Return specific objects from the `Vector`. All overloads return `nil` if
     # the starting index is out of range.
     #

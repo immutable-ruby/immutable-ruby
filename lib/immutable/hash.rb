@@ -606,8 +606,8 @@ module Immutable
       Vector.new(array.freeze)
     end
 
-    # Return the value of successively indexing into a `Hash`.
-    # If any of the keys is not present in the `Hash`, return `nil`.
+    # Return the value of successively indexing into a nested collection.
+    # If any of the keys is not present, return `nil`.
     #
     # @example
     #   h = Immutable::Hash[a: 9, b: Immutable::Hash[c: 'a', d: 4], e: nil]
