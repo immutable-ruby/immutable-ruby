@@ -4,7 +4,7 @@ describe Immutable::List do
   describe "#each" do
     context "on a really big list" do
       it "doesn't run out of stack" do
-        -> { Immutable.interval(0, STACK_OVERFLOW_DEPTH).each { |item| } }.should_not raise_error
+        -> { BigList.each { |item| } }.should_not raise_error
       end
     end
 

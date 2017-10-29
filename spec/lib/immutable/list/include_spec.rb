@@ -5,7 +5,7 @@ describe Immutable::List do
     describe "##{method}" do
       context "on a really big list" do
         it "doesn't run out of stack" do
-          -> { Immutable.interval(0, STACK_OVERFLOW_DEPTH).send(method, nil) }.should_not raise_error
+          -> { BigList.send(method, nil) }.should_not raise_error
         end
       end
 

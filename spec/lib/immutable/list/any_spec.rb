@@ -3,7 +3,7 @@ require "spec_helper"
 describe Immutable::List do
   describe "#any?" do
     context "on a really big list" do
-      let(:list) { Immutable.interval(0, STACK_OVERFLOW_DEPTH) }
+      let(:list) { BigList }
 
       it "doesn't run out of stack" do
         -> { list.any? { false } }.should_not raise_error

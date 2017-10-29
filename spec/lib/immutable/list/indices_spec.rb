@@ -11,7 +11,7 @@ describe Immutable::List do
 
       context "on a large list which doesn't contain desired item" do
         it "doesn't blow the stack" do
-          -> { Immutable.interval(0, STACK_OVERFLOW_DEPTH).indices { |x| x < 0 }.size }.should_not raise_error
+          -> { BigList.indices { |x| x < 0 }.size }.should_not raise_error
         end
       end
 

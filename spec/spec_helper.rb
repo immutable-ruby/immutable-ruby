@@ -49,6 +49,8 @@ else
   STACK_OVERFLOW_DEPTH = 16_384
 end
 
+BigList = Immutable.interval(0, STACK_OVERFLOW_DEPTH)
+
 class DeterministicHash
   attr_reader :hash, :value
 

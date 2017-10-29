@@ -4,7 +4,7 @@ describe Immutable::List do
   describe "#sum" do
     context "on a really big list" do
       it "doesn't run out of stack" do
-        -> { Immutable.interval(0, STACK_OVERFLOW_DEPTH).sum }.should_not raise_error
+        -> { BigList.sum }.should_not raise_error
       end
     end
 

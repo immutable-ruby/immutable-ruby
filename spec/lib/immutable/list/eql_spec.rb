@@ -4,7 +4,7 @@ describe Immutable::List do
   describe "#eql?" do
     context "on a really big list" do
       it "doesn't run out of stack" do
-        -> { Immutable.interval(0, STACK_OVERFLOW_DEPTH).eql?(Immutable.interval(0, STACK_OVERFLOW_DEPTH)) }.should_not raise_error
+        -> { BigList.eql?(Immutable.interval(0, STACK_OVERFLOW_DEPTH)) }.should_not raise_error
       end
     end
   end
