@@ -74,7 +74,8 @@ person.key?(:name)                  # => true
 Since it is immutable, `Immutable::Hash` doesn't provide an assignment (`Hash#[]=`) method. However, `Hash#put` can accept a block which transforms the value associated with a given key:
 
 ``` ruby
-counters.put(:odds) { |value| value + 1 } # => Immutable::Hash[:odds => 1, :evens => 0]
+counters = Immutable::Hash[evens: 0, odds: 0]
+counters.put(:odds) { |n| n + 1 }   # => Immutable::Hash[:odds => 1, :evens => 0]
 ```
 
 Or more succinctly:
@@ -167,34 +168,29 @@ copy = original.add(0)      # => Immutable::List[0, 1, 2, 3]
 
 Notice how modifying a list actually returns a new list.
 
-
 ### Laziness
 
-`Immutable::List` is lazy where possible. It tries to defer processing items until absolutely necessary. For example, given a crude function to detect prime numbers:
+`Immutable::List` is lazy where possible. It tries to defer processing items until
+absolutely necessary. For example, the following code will only call
+`Prime.prime?` as many times as necessary to generate the first 3 prime numbers
+between 10,000 and 1,000,000:
 
 ``` ruby
-def prime?(number)
-  2.upto(Math.sqrt(number).round) do |integer|
-    return false if (number % integer).zero?
-  end
-  true
-end
-```
+require 'prime'
 
-The following code will only call `#prime?` as many times as necessary to generate the first 3 prime numbers between 10,000 and 1,000,000:
-
-``` ruby
 Immutable.interval(10_000, 1_000_000).select do |number|
-  prime?(number)
+  Prime.prime?(number)
 end.take(3)
   # => 0.0009s
 ```
 
-Compare that to the conventional equivalent which needs to calculate all possible values in the range before taking the first three:
+Compare that to the conventional equivalent which needs to
+calculate all possible values in the range before taking the
+first three:
 
 ``` ruby
 (10000..1000000).select do |number|
-  prime?(number)
+  Prime.prime?(number)
 end.take(3)
   # => 10s
 ```

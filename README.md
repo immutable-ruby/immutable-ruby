@@ -148,9 +148,9 @@ an item using an integral index:
 
 ``` ruby
 set = Immutable::SortedSet['toast', 'jam', 'bacon'] # => Immutable::SortedSet["bacon", "jam", "toast"]
-set.first                                         # => "bacon"
-set.last                                          # => "toast"
-set[1]                                            # => "jam"
+set.first                                           # => "bacon"
+set.last                                            # => "toast"
+set[1]                                              # => "jam"
 ```
 
 You can also specify the sort order using a block:
@@ -180,6 +180,8 @@ Add to a list with `List#add`:
 original = Immutable::List[1, 2, 3]
 copy = original.add(0)      # => Immutable::List[0, 1, 2, 3]
 ```
+
+Notice how modifying a list actually returns a new list.
 
 ### Laziness
 
