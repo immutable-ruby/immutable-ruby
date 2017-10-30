@@ -7,7 +7,6 @@ Immutable Ruby
 [![Issues](http://img.shields.io/github/issues/immutable-ruby/immutable-ruby.svg)](http://github.com/immutable-ruby/immutable-ruby/issues)
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 [![Version](http://img.shields.io/gem/v/immutable-ruby.svg)](https://rubygems.org/gems/immutable-ruby)
-[![Discuss](http://img.shields.io/badge/discuss-join%20gitter-green.svg?style)](https://gitter.im/immutable-ruby/immutable-ruby)
 
 Efficient, immutable, and thread-safe collection classes for Ruby.
 
