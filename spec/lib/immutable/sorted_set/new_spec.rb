@@ -67,5 +67,13 @@ describe Immutable::SortedSet do
       sorted_set[0].should == 'a'
       sorted_set[1].should == 'b'
     end
+
+    it "filters out duplicate items" do
+      sorted_set = SS['a', 'b', 'a', 'c', 'b', 'a', 'c', 'c']
+      expect(sorted_set.size).to be(3)
+      sorted_set[0].should == 'a'
+      sorted_set[1].should == 'b'
+      sorted_set[2].should == 'c'
+    end
   end
 end

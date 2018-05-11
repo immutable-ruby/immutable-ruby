@@ -90,7 +90,7 @@ module Immutable
         end
         @node = AVLNode.from_items(items, comparator)
       else
-        @node = PlainAVLNode.from_items(items.sort)
+        @node = PlainAVLNode.from_items(items.uniq.sort!)
       end
       freeze
     end
@@ -1397,7 +1397,8 @@ module Immutable
     # AVL node which does not use a comparator function; it keeps items sorted
     #   in their natural order
     class PlainAVLNode < AVLNode
-      def self.from_items(items, from = 0, to = items.size-1) # items must be sorted
+      def self.from_items(items, from = 0, to = items.size-1)
+        # items must be sorted, with no duplicates
         size = to - from + 1
         if size >= 3
           middle = (to + from) / 2
@@ -1419,7 +1420,7 @@ module Immutable
       attr_reader :item, :left, :right, :height, :size
 
       def from_items(items)
-        PlainAVLNode.from_items(items.sort)
+        PlainAVLNode.from_items(items.uniq.sort!)
       end
 
       def natural_order?
@@ -1447,7 +1448,7 @@ module Immutable
         end
         def bulk_insert(items)
           items = items.to_a if !items.is_a?(Array)
-          PlainAVLNode.from_items(items.sort)
+          PlainAVLNode.from_items(items.uniq.sort!)
         end
       end
 

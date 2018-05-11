@@ -5,7 +5,7 @@ describe Immutable::SortedSet do
     context "when called without a block" do
       it "returns a sorted set of all items equal to or less than the argument" do
         100.times do
-          items     = rand(100).times.collect { rand(1000) }
+          items     = rand(100).times.collect { rand(1000) }.uniq
           set       = SS.new(items)
           threshold = rand(1000)
           result    = set.up_to(threshold)
@@ -20,7 +20,7 @@ describe Immutable::SortedSet do
     context "when called with a block" do
       it "yields all the items equal to or less than than the argument" do
         100.times do
-          items     = rand(100).times.collect { rand(1000) }
+          items     = rand(100).times.collect { rand(1000) }.uniq
           set       = SS.new(items)
           threshold = rand(1000)
           result    = []
