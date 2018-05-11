@@ -41,6 +41,10 @@ describe Immutable::SortedSet do
         it "returns a new set with the mapped values" do
           sorted_set.send(method, &:downcase).should == ['c', 'b', 'a']
         end
+
+        it "filters out duplicates" do
+          sorted_set.send(method) { 'blah' }.should eq(SS['blah'])
+        end
       end
     end
   end

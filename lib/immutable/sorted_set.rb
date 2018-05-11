@@ -76,17 +76,39 @@ module Immutable
       def alloc(node)
         allocate.tap { |s| s.instance_variable_set(:@node, node) }.freeze
       end
+
+      # @private
+      # Unfortunately, Ruby's stdlib doesn't do this for us
+      # array must be sorted
+      def uniq_by_comparator!(array, comparator)
+        to_check, shift, sz, prev_obj = 1, 0, array.size, array[0]
+        while to_check < sz
+          next_obj = array[to_check]
+          if comparator.call(prev_obj, next_obj) == 0
+            shift += 1
+          else
+            if shift > 0
+              array[to_check - shift] = next_obj
+            end
+            prev_obj = next_obj
+          end
+          to_check += 1
+        end
+        array.pop(shift) if shift > 0
+      end
     end
 
     def initialize(items=[], &block)
       items = items.to_a
       if block
         if block.arity == 1 || block.arity == -1
+          items = items.uniq(&block)
+          items.sort_by!(&block)
           comparator = lambda { |a,b| block.call(a) <=> block.call(b) }
-          items = items.sort_by(&block)
         else
-          comparator = block
           items = items.sort(&block)
+          SortedSet.uniq_by_comparator!(items, block)
+          comparator = block
         end
         @node = AVLNode.from_items(items, comparator)
       else
@@ -990,7 +1012,8 @@ module Immutable
 
     # @private
     class AVLNode
-      def self.from_items(items, comparator, from = 0, to = items.size-1) # items must be sorted
+      def self.from_items(items, comparator, from = 0, to = items.size-1)
+        # items must be sorted, without duplicates (as determined by comparator)
         size = to - from + 1
         if size >= 3
           middle = (to + from) / 2
@@ -1014,7 +1037,9 @@ module Immutable
       attr_reader :item, :left, :right, :height, :size
 
       def from_items(items)
-        AVLNode.from_items(items.sort(&@comparator), @comparator)
+        items.sort!(&@comparator)
+        SortedSet.uniq_by_comparator!(items, @comparator)
+        AVLNode.from_items(items, @comparator)
       end
 
       def natural_order?
@@ -1374,7 +1399,9 @@ module Immutable
         end
         def bulk_insert(items)
           items = items.to_a if !items.is_a?(Array)
-          AVLNode.from_items(items.sort(&@comparator), @comparator)
+          items = items.sort(&@comparator)
+          SortedSet.uniq_by_comparator!(items, @comparator)
+          AVLNode.from_items(items, @comparator)
         end
         def bulk_delete(items); self; end
         def keep_only(items);   self; end

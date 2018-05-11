@@ -47,13 +47,19 @@ describe Immutable::Set do
   end
 
   describe "#sort_by" do
-    it "only calls the passed block once for each item" do
+    # originally this test checked that #sort_by only called the block once
+    #   for each item
+    # however, when initializing a SortedSet, we need to make sure that it
+    #   does not include any duplicates, and we use the block when checking that
+    # the real point here is that the block should not be called an excessive
+    #   number of times, degrading performance
+    it "calls the passed block no more than twice for each item" do
       count = 0
       fn    = lambda { |x| count += 1; -x }
       items = 100.times.collect { rand(10000) }.uniq
 
       S[*items].sort_by(&fn).to_a.should == items.sort.reverse
-      count.should == items.length
+      count.should <= (items.length * 2)
     end
   end
 end
