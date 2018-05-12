@@ -41,4 +41,16 @@ describe Immutable::SortedSet do
       end
     end
   end
+
+  describe :sort do
+    context "on a SortedSet with custom sort order" do
+      let(:sorted_set) { SS.new([1,2,3,4]) { |x,y| y <=> x }}
+
+      it "returns a SortedSet with the natural sort order" do
+        result = sorted_set.sort
+        expect(sorted_set.to_a).to eq([4,3,2,1])
+        expect(result.to_a).to eq([1,2,3,4])
+      end
+    end
+  end
 end

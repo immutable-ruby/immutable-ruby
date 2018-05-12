@@ -498,9 +498,11 @@ module Immutable
     def sort(&block)
       if block
         self.class.new(self.to_a, &block)
+      elsif @node.natural_order?
+        self
       else
-        self.class.new(self.to_a.sort)
-      end      
+        self.class.new(self)
+      end
     end
     alias :sort_by :sort
 
