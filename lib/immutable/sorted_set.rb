@@ -1038,6 +1038,8 @@ module Immutable
       end
       attr_reader :item, :left, :right, :height, :size
 
+      # Used to implement #map
+      # Takes advantage of the fact that Enumerable#map allocates a new Array
       def from_items(items)
         items.sort!(&@comparator)
         SortedSet.uniq_by_comparator!(items, @comparator)
@@ -1448,8 +1450,12 @@ module Immutable
       end
       attr_reader :item, :left, :right, :height, :size
 
+      # Used to implement #map
+      # Takes advantage of the fact that Enumerable#map allocates a new Array
       def from_items(items)
-        PlainAVLNode.from_items(items.uniq.sort!)
+        items.uniq!
+        items.sort!
+        PlainAVLNode.from_items(items)
       end
 
       def natural_order?
