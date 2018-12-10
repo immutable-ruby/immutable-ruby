@@ -110,10 +110,32 @@ module Immutable
       @front.last # memoize?
     end
 
+    # Return a new `Deque` with `n` rotatations performed. Positive is right, negative is left, and 0 is no-op
+    #
+    # @example
+    #   Immutable::Deque["A", "B", "C"].rotate(1)
+    #   # => Immutable::Deque["C", "A", "B"]
+    #   Immutable::Deque["A", "B", "C"].rotate(-1)
+    #   # => Immutable::Deque["B", "C", "A"]
+    #
+    # @param n [Integer] number of rotations to perform
+    # @return [Deque]
+    def rotate(n)
+      return self.class.empty if self.empty?
+
+      if n < 0
+        self.shift.push(self.first).rotate(n + 1)
+      elsif n > 0
+        self.pop.unshift(self.last).rotate(n - 1)
+      else
+        self
+      end
+    end
+
     # Return a new `Deque` with `item` added at the end.
     #
     # @example
-    #   Immutable::Deque["A", "B", "C"].add("Z")
+    #   Immutable::Deque["A", "B", "C"].push("Z")
     #   # => Immutable::Deque["A", "B", "C", "Z"]
     #
     # @param item [Object] The item to add
