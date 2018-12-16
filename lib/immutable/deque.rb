@@ -203,6 +203,13 @@ module Immutable
       self.class.empty
     end
 
+    # Return a new `Deque` with the same items, but in reverse order.
+    #
+    # @return [Deque]
+    def reverse
+      self.class.alloc(@rear, @front)
+    end
+
     # Return true if `other` has the same type and contents as this `Deque`.
     #
     # @param other [Object] The collection to compare with
