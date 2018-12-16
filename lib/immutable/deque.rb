@@ -124,12 +124,30 @@ module Immutable
     def rotate(n)
       return self.class.empty if self.empty?
 
-      if n < 0
-        self.shift.push(self.first).rotate(n + 1)
-      elsif n > 0
-        self.pop.unshift(self.last).rotate(n - 1)
+      n %= self.size
+      return self if n == 0
+
+      if n > self.size / 2
+        m = self.size - n
+        a, b = @rear, @front
+
+        if b.size >= m
+          m.times { a = a.cons(b.head); b = b.tail }
+        else
+          n.times { b = b.cons(a.head); a = a.tail }
+        end
+
+        self.class.alloc(b, a)
       else
-        self
+        a, b = @front, @rear
+
+        if b.size >= n
+          n.times { a = a.cons(b.head); b = b.tail }
+        else
+          (self.size - n).times { b = b.cons(a.head); a = a.tail }
+        end
+
+        self.class.alloc(a, b)
       end
     end
 
