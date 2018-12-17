@@ -127,28 +127,15 @@ module Immutable
       n %= self.size
       return self if n == 0
 
-      if n > self.size / 2
-        m = self.size - n
-        a, b = @rear, @front
+      a, b = @front, @rear
 
-        if b.size >= m
-          m.times { a = a.cons(b.head); b = b.tail }
-        else
-          n.times { b = b.cons(a.head); a = a.tail }
-        end
-
-        self.class.alloc(b, a)
+      if b.size >= n
+        n.times { a = a.cons(b.head); b = b.tail }
       else
-        a, b = @front, @rear
-
-        if b.size >= n
-          n.times { a = a.cons(b.head); b = b.tail }
-        else
-          (self.size - n).times { b = b.cons(a.head); a = a.tail }
-        end
-
-        self.class.alloc(a, b)
+        (self.size - n).times { b = b.cons(a.head); a = a.tail }
       end
+
+      self.class.alloc(a, b)
     end
 
     # Return a new `Deque` with `item` added at the end.
