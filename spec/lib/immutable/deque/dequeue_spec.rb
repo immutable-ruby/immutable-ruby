@@ -26,7 +26,7 @@ describe Immutable::Deque do
     context "on empty subclass" do
       let(:subclass) { Class.new(Immutable::Deque) }
       let(:empty_instance) { subclass.new }
-      it "returns emtpy object of same class" do
+      it "returns empty object of same class" do
         empty_instance.send(method).class.should be subclass
       end
     end
