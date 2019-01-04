@@ -326,5 +326,5 @@ module Immutable
   end
 
   # @private
-  EmptyTrie = Trie.new(0)
+  EmptyTrie = Trie.new(0).freeze
 end
