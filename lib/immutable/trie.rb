@@ -10,8 +10,8 @@ module Immutable
     # Returns the number of key-value pairs in the trie.
     attr_reader :size
 
-    def initialize(significant_bits, size = 0, entries = [], children = [])
-      @significant_bits = significant_bits
+    def initialize(bitshift, size = 0, entries = [], children = [])
+      @bitshift = bitshift
       @entries = entries
       @children = children
       @size = size
@@ -74,7 +74,7 @@ module Immutable
         entries = @entries.dup
         key = key.dup.freeze if key.is_a?(String) && !key.frozen?
         entries[index] = [key, value].freeze
-        Trie.new(@significant_bits, @size + 1, entries, @children)
+        Trie.new(@bitshift, @size + 1, entries, @children)
       elsif entry[0].eql?(key)
         if entry[1].equal?(value)
           self
@@ -82,7 +82,7 @@ module Immutable
           entries = @entries.dup
           key = key.dup.freeze if key.is_a?(String) && !key.frozen?
           entries[index] = [key, value].freeze
-          Trie.new(@significant_bits, @size, entries, @children)
+          Trie.new(@bitshift, @size, entries, @children)
         end
       else
         child = @children[index]
@@ -94,12 +94,12 @@ module Immutable
             children = @children.dup
             children[index] = new_child
             new_self_size = @size + (new_child.size - child.size)
-            Trie.new(@significant_bits, new_self_size, @entries, children)
+            Trie.new(@bitshift, new_self_size, @entries, children)
           end
         else
           children = @children.dup
-          children[index] = Trie.new(@significant_bits + 5).put!(key, value)
-          Trie.new(@significant_bits, @size + 1, @entries, children)
+          children[index] = Trie.new(@bitshift + 5).put!(key, value)
+          Trie.new(@bitshift, @size + 1, @entries, children)
         end
       end
     end
@@ -141,14 +141,14 @@ module Immutable
             end
           else
             new_children ||= @children.dup
-            new_children[index] = Trie.new(@significant_bits + 5).put!(key, value)
+            new_children[index] = Trie.new(@bitshift + 5).put!(key, value)
             new_size += 1
           end
         end
       end
 
       if new_entries || new_children
-        Trie.new(@significant_bits, new_size, new_entries || @entries, new_children || @children)
+        Trie.new(@bitshift, new_size, new_entries || @entries, new_children || @children)
       else
         self
       end
@@ -172,7 +172,7 @@ module Immutable
           @children[index] = child.put!(key, value)
           @size += child.size - old_child_size
         else
-          @children[index] = Trie.new(@significant_bits + 5).put!(key, value)
+          @children[index] = Trie.new(@bitshift + 5).put!(key, value)
           @size += 1
         end
       end
@@ -193,7 +193,7 @@ module Immutable
 
     # Returns a copy of <tt>self</tt> with the given key (and associated value) deleted. If not found, returns <tt>self</tt>.
     def delete(key)
-      find_and_delete(key) || Trie.new(@significant_bits)
+      find_and_delete(key) || Trie.new(@bitshift)
     end
 
     # Delete multiple elements from a Trie.  This is more efficient than
@@ -238,7 +238,7 @@ module Immutable
       end
 
       if new_entries || new_children
-        Trie.new(@significant_bits, new_size, new_entries || @entries, new_children || @children)
+        Trie.new(@bitshift, new_size, new_entries || @entries, new_children || @children)
       else
         self
       end
@@ -297,7 +297,7 @@ module Immutable
             children = @children.dup
             children[index] = copy
             new_size = @size - (child.size - copy_size(copy))
-            return Trie.new(@significant_bits, new_size, @entries, children)
+            return Trie.new(@bitshift, new_size, @entries, children)
           end
         end
       end
@@ -318,14 +318,14 @@ module Immutable
         else
           entries[index] = nil
         end
-        Trie.new(@significant_bits, @size - 1, entries, children || @children)
+        Trie.new(@bitshift, @size - 1, entries, children || @children)
       end
     end
 
     private
 
     def index_for(key)
-      (key.hash.abs >> @significant_bits) & 31
+      (key.hash.abs >> @bitshift) & 31
     end
 
     def copy_size(copy)
