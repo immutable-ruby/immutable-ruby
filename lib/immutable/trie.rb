@@ -65,7 +65,7 @@ module Immutable
 
     # @return [Trie] A copy of `self` with the given value associated with the
     #   key (or `self` if no modification was needed because an identical
-    #   key-value pair wes already stored
+    #   key-value pair was already stored
     def put(key, value)
       index = index_for(key)
       entry = @entries[index]
