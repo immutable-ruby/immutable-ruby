@@ -19,7 +19,7 @@ module Immutable
 
     # Returns <tt>true</tt> if the trie contains no key-value pairs.
     def empty?
-      size == 0
+      @size == 0
     end
 
     # Returns <tt>true</tt> if the given key is present in the trie.
