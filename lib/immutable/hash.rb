@@ -771,7 +771,7 @@ module Immutable
     # @param other [Object] The object to compare with
     # @return [Boolean]
     def ==(other)
-      self.eql?(other) || (other.respond_to?(:to_hash) && to_hash.eql?(other.to_hash))
+      self.eql?(other) || (other.respond_to?(:to_hash) && to_hash == other.to_hash)
     end
 
     # Return true if this `Hash` is a proper superset of `other`, which means
