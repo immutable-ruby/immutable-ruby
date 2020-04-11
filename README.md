@@ -1,8 +1,6 @@
 Immutable Ruby
 ==============
 
-[![Build](http://img.shields.io/travis-ci/immutable-ruby/immutable-ruby.svg)](https://travis-ci.org/immutable-ruby/immutable-ruby)
-[![Dependencies](http://img.shields.io/gemnasium/immutable-ruby/immutable-ruby.svg)](https://gemnasium.com/immutable-ruby/immutable-ruby)
 [![Downloads](http://img.shields.io/gem/dtv/immutable-ruby.svg)](https://rubygems.org/gems/immutable-ruby)
 [![Issues](http://img.shields.io/github/issues/immutable-ruby/immutable-ruby.svg)](http://github.com/immutable-ruby/immutable-ruby/issues)
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
