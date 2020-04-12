@@ -1,10 +1,10 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::SortedSet do
-  describe "#empty?" do
+  describe '#empty?' do
     [
       [[], true],
-      [["A"], false],
+      [['A'], false],
       [%w[A B C], false],
     ].each do |values, expected|
       context "on #{values.inspect}" do
@@ -17,14 +17,14 @@ describe Immutable::SortedSet do
     end
   end
 
-  describe ".empty" do
-    it "returns the canonical empty set" do
+  describe '.empty' do
+    it 'returns the canonical empty set' do
       SS.empty.size.should be(0)
       SS.empty.object_id.should be(SS.empty.object_id)
     end
 
-    context "from a subclass" do
-      it "returns an empty instance of the subclass" do
+    context 'from a subclass' do
+      it 'returns an empty instance of the subclass' do
         subclass = Class.new(Immutable::SortedSet)
         subclass.empty.class.should be(subclass)
         subclass.empty.should be_empty

@@ -1,10 +1,10 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Vector do
-  describe "#shift" do
+  describe '#shift' do
     [
       [[], []],
-      [["A"], []],
+      [['A'], []],
       [%w[A B C], %w[B C]],
       [1..31, 2..31],
       [1..32, 2..32],
@@ -13,7 +13,7 @@ describe Immutable::Vector do
       context "on #{values.inspect}" do
         let(:vector) { V[*values] }
 
-        it "preserves the original" do
+        it 'preserves the original' do
           vector.shift
           vector.should eql(V[*values])
         end

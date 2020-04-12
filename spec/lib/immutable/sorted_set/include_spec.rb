@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::SortedSet do
   [:include?, :member?].each do |method|
@@ -11,11 +11,11 @@ describe Immutable::SortedSet do
         end
       end
 
-      it "returns false for a non-existing value" do
+      it 'returns false for a non-existing value' do
         sorted_set.send(method, 5).should == false
       end
 
-      it "uses #<=> for equality" do
+      it 'uses #<=> for equality' do
         sorted_set.send(method, 4).should == true
       end
     end

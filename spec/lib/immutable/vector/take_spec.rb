@@ -1,10 +1,10 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Vector do
-  describe "#take" do
+  describe '#take' do
     [
       [[], 10, []],
-      [["A"], 10, ["A"]],
+      [['A'], 10, ['A']],
       [%w[A B C], 0, []],
       [%w[A B C], 2, %w[A B]],
       [(1..32), 1, [1]],
@@ -14,7 +14,7 @@ describe Immutable::Vector do
       describe "#{number} from #{values.inspect}" do
         let(:vector) { V[*values] }
 
-        it "preserves the original" do
+        it 'preserves the original' do
           vector.take(number)
           vector.should eql(V[*values])
         end
@@ -25,16 +25,16 @@ describe Immutable::Vector do
       end
     end
 
-    context "when number of elements specified is identical to size" do
+    context 'when number of elements specified is identical to size' do
       let(:vector) { V[1, 2, 3, 4, 5, 6] }
-      it "returns self" do
+      it 'returns self' do
         vector.take(vector.size).should be(vector)
       end
     end
 
-    context "when number of elements specified is bigger than size" do
+    context 'when number of elements specified is bigger than size' do
       let(:vector) { V[1, 2, 3, 4, 5, 6] }
-      it "returns self" do
+      it 'returns self' do
         vector.take(vector.size + 1).should be(vector)
       end
     end

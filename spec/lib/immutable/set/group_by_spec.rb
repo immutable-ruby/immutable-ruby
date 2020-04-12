@@ -1,9 +1,9 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Set do
   [:group_by, :group, :classify].each do |method|
     describe "##{method}" do
-      context "with a block" do
+      context 'with a block' do
         [
           [[], []],
           [[1], [true => S[1]]],
@@ -20,7 +20,7 @@ describe Immutable::Set do
         end
       end
 
-      context "without a block" do
+      context 'without a block' do
         [
           [[], []],
           [[1], [1 => S[1]]],
@@ -37,18 +37,18 @@ describe Immutable::Set do
         end
       end
 
-      context "on an empty set" do
-        it "returns an empty hash" do
+      context 'on an empty set' do
+        it 'returns an empty hash' do
           S.empty.group_by { |x| x }.should eql(H.empty)
         end
       end
 
-      it "returns a hash without default proc" do
+      it 'returns a hash without default proc' do
         S[1,2,3].group_by { |x| x }.default_proc.should be_nil
       end
 
-      context "from a subclass" do
-        it "returns an Hash whose values are instances of the subclass" do
+      context 'from a subclass' do
+        it 'returns an Hash whose values are instances of the subclass' do
           subclass = Class.new(Immutable::Set)
           instance = subclass.new([1, 'string', :symbol])
           instance.group_by { |x| x.class }.values.each { |v| v.class.should be(subclass) }

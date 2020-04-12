@@ -1,26 +1,26 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::List do
-  describe "#compact" do
-    it "is lazy" do
+  describe '#compact' do
+    it 'is lazy' do
       -> { Immutable.stream { fail }.compact }.should_not raise_error
     end
 
     [
       [[], []],
-      [["A"], ["A"]],
+      [['A'], ['A']],
       [%w[A B C], %w[A B C]],
       [[nil], []],
-      [[nil, "B"], ["B"]],
-      [["A", nil], ["A"]],
+      [[nil, 'B'], ['B']],
+      [['A', nil], ['A']],
       [[nil, nil], []],
-      [["A", nil, "C"], %w[A C]],
-      [[nil, "B", nil], ["B"]],
+      [['A', nil, 'C'], %w[A C]],
+      [[nil, 'B', nil], ['B']],
     ].each do |values, expected|
       context "on #{values.inspect}" do
         let(:list) { L[*values] }
 
-        it "preserves the original" do
+        it 'preserves the original' do
           list.compact
           list.should eql(L[*values])
         end

@@ -1,29 +1,29 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::SortedSet do
-  describe "#clear" do
+  describe '#clear' do
     [
       [],
-      ["A"],
+      ['A'],
       %w[A B C],
     ].each do |values|
       context "on #{values}" do
         let(:sorted_set) { SS[*values] }
 
-        it "preserves the original" do
+        it 'preserves the original' do
           sorted_set.clear
           sorted_set.should eql(SS[*values])
         end
 
-        it "returns an empty set" do
+        it 'returns an empty set' do
           sorted_set.clear.should equal(Immutable::EmptySortedSet)
           sorted_set.clear.should be_empty
         end
       end
     end
 
-    context "from a subclass" do
-      it "returns an empty instance of the subclass" do
+    context 'from a subclass' do
+      it 'returns an empty instance of the subclass' do
         subclass = Class.new(Immutable::SortedSet)
         instance = subclass.new([:a, :b, :c, :d])
         instance.clear.class.should be(subclass)
@@ -31,9 +31,9 @@ describe Immutable::SortedSet do
       end
     end
 
-    context "with a comparator" do
+    context 'with a comparator' do
       let(:sorted_set) { SS.new([1, 2, 3]) { |x| -x } }
-      it "returns an empty instance with same comparator" do
+      it 'returns an empty instance with same comparator' do
         e = sorted_set.clear
         e.should be_empty
         e.add(4).add(5).add(6).to_a.should == [6, 5, 4]

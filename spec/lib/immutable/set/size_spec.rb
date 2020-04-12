@@ -1,11 +1,11 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Set do
   [:size, :length].each do |method|
     describe "##{method}" do
       [
         [[], 0],
-        [["A"], 1],
+        [['A'], 1],
         [%w[A B C], 3],
       ].each do |values, result|
         it "returns #{result} for #{values.inspect}" do

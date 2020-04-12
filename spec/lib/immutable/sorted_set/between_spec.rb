@@ -1,9 +1,9 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::SortedSet do
-  describe "#between" do
-    context "when called without a block" do
-      it "returns a sorted set of all items from the first argument to the second" do
+  describe '#between' do
+    context 'when called without a block' do
+      it 'returns a sorted set of all items from the first argument to the second' do
         100.times do
           items   = rand(100).times.collect { rand(1000) }.uniq
           set     = SS.new(items)
@@ -17,8 +17,8 @@ describe Immutable::SortedSet do
       end
     end
 
-    context "when called with a block" do
-      it "yields all the items lower than the argument" do
+    context 'when called with a block' do
+      it 'yields all the items lower than the argument' do
         100.times do
           items   = rand(100).times.collect { rand(1000) }.uniq
           set     = SS.new(items)
@@ -32,8 +32,8 @@ describe Immutable::SortedSet do
       end
     end
 
-    context "on an empty set" do
-      it "returns an empty set" do
+    context 'on an empty set' do
+      it 'returns an empty set' do
         SS.empty.between(1, 2).should be_empty
         SS.empty.between('abc', 'def').should be_empty
         SS.empty.between(:symbol, :another).should be_empty
@@ -41,7 +41,7 @@ describe Immutable::SortedSet do
     end
 
     context "with a 'to' argument lower than the 'from' argument" do
-      it "returns an empty set" do
+      it 'returns an empty set' do
         result = SS.new(1..100).between(6, 5)
         result.class.should be(Immutable::SortedSet)
         result.should be_empty

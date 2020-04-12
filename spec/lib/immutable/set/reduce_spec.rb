@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Set do
   [:reduce, :inject].each do |method|
@@ -12,7 +12,7 @@ describe Immutable::Set do
           let(:set) { S[*values] }
 
           context "with an initial value of #{initial}" do
-            context "and a block" do
+            context 'and a block' do
               it "returns #{expected.inspect}" do
                 set.send(method, initial) { |memo, item| memo - item }.should == expected
               end
@@ -29,8 +29,8 @@ describe Immutable::Set do
         describe "on #{values.inspect}" do
           let(:set) { S[*values] }
 
-          context "with no initial value" do
-            context "and a block" do
+          context 'with no initial value' do
+            context 'and a block' do
               it "returns #{expected.inspect}" do
                 set.send(method) { |memo, item| memo + item }.should == expected
               end
@@ -39,14 +39,14 @@ describe Immutable::Set do
         end
       end
 
-      describe "with no block and a symbol argument" do
-        it "uses the symbol as the name of a method to reduce with" do
+      describe 'with no block and a symbol argument' do
+        it 'uses the symbol as the name of a method to reduce with' do
           S[1, 2, 3].reduce(:+).should == 6
         end
       end
 
-      describe "with no block and a string argument" do
-        it "uses the string as the name of a method to reduce with" do
+      describe 'with no block and a string argument' do
+        it 'uses the string as the name of a method to reduce with' do
           S[1, 2, 3].reduce('+').should == 6
         end
       end

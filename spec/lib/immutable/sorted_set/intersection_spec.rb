@@ -1,13 +1,13 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::SortedSet do
   [:intersection, :&].each do |method|
     describe "##{method}" do
       [
         [[], [], []],
-        [["A"], [], []],
-        [["A"], ["A"], ["A"]],
-        [%w[A B C], ["B"], ["B"]],
+        [['A'], [], []],
+        [['A'], ['A'], ['A']],
+        [%w[A B C], ['B'], ['B']],
         [%w[A B C], %w[A C], %w[A C]],
         [%w[A M T X], %w[B C D E F G H I M P Q T U], %w[M T]]
       ].each do |a, b, expected|

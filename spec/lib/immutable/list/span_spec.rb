@@ -1,7 +1,7 @@
-require "spec_helper"
+require 'spec_helper'
 
-describe "List#span" do
-  it "is lazy" do
+describe 'List#span' do
+  it 'is lazy' do
     -> { Immutable.stream { |item| fail }.span { true } }.should_not raise_error
   end
 
@@ -26,12 +26,12 @@ DESC
       context "given the list #{values.inspect}" do
         let(:list) { L[*values] }
 
-        context "and a predicate that returns true for values <= 2" do
+        context 'and a predicate that returns true for values <= 2' do
           let(:result) { list.span { |item| item <= 2 }}
           let(:prefix) { result.first }
           let(:remainder) { result.last }
 
-          it "preserves the original" do
+          it 'preserves the original' do
             result
             list.should eql(L[*values])
           end
@@ -44,7 +44,7 @@ DESC
             remainder.should eql(L[*expected_remainder])
           end
 
-          it "calls the block only once for each element" do
+          it 'calls the block only once for each element' do
             count = 0
             result = list.span { |item| count += 1; item <= 2 }
             # force realization of lazy lists
@@ -56,17 +56,17 @@ DESC
           end
         end
 
-        context "without a predicate" do
-          it "returns a frozen array" do
+        context 'without a predicate' do
+          it 'returns a frozen array' do
             list.span.class.should be(Array)
             list.span.should be_frozen
           end
 
-          it "returns self as the prefix" do
+          it 'returns self as the prefix' do
             list.span.first.should equal(list)
           end
 
-          it "returns an empty list as the remainder" do
+          it 'returns an empty list as the remainder' do
             list.span.last.should be_empty
           end
         end

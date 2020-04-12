@@ -1,10 +1,10 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Deque do
-  describe "#to_list" do
+  describe '#to_list' do
     [
       [],
-      ["A"],
+      ['A'],
       %w[A B C],
     ].each do |values|
       context "on #{values.inspect}" do
@@ -16,8 +16,8 @@ describe Immutable::Deque do
 
     context "after dedequeing an item from #{%w[A B C].inspect}" do
       it "returns a list containing #{%w[B C].inspect}" do
-        list = D["A", "B", "C"].dequeue.to_list
-        list.should eql(L["B", "C"])
+        list = D['A', 'B', 'C'].dequeue.to_list
+        list.should eql(L['B', 'C'])
       end
     end
   end

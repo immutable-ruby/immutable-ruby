@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::SortedSet do
   let(:sorted_set) { SS[1,2,3,4] }
@@ -6,8 +6,8 @@ describe Immutable::SortedSet do
 
   [:slice, :[]].each do |method|
     describe "##{method}" do
-      context "when passed a positive integral index" do
-        it "returns the element at that index" do
+      context 'when passed a positive integral index' do
+        it 'returns the element at that index' do
           sorted_set.send(method, 0).should be(1)
           sorted_set.send(method, 1).should be(2)
           sorted_set.send(method, 2).should be(3)
@@ -19,13 +19,13 @@ describe Immutable::SortedSet do
           big.send(method, 9999).should be(10000)
         end
 
-        it "leaves the original unchanged" do
+        it 'leaves the original unchanged' do
           sorted_set.should eql(SS[1,2,3,4])
         end
       end
 
-      context "when passed a negative integral index" do
-        it "returns the element which is number (index.abs) counting from the end of the sorted_set" do
+      context 'when passed a negative integral index' do
+        it 'returns the element which is number (index.abs) counting from the end of the sorted_set' do
           sorted_set.send(method, -1).should be(4)
           sorted_set.send(method, -2).should be(3)
           sorted_set.send(method, -3).should be(2)
@@ -38,7 +38,7 @@ describe Immutable::SortedSet do
         end
       end
 
-      context "when passed a positive integral index and count" do
+      context 'when passed a positive integral index and count' do
         it "returns 'count' elements starting from 'index'" do
           sorted_set.send(method, 0, 0).should  eql(SS.empty)
           sorted_set.send(method, 0, 1).should  eql(SS[1])
@@ -68,12 +68,12 @@ describe Immutable::SortedSet do
           big.send(method, 1024, 4).should eql(SS[1025,1026,1027,1028])
         end
 
-        it "leaves the original unchanged" do
+        it 'leaves the original unchanged' do
           sorted_set.should eql(SS[1,2,3,4])
         end
       end
 
-      context "when passed a negative integral index and count" do
+      context 'when passed a negative integral index and count' do
         it "returns 'count' elements, starting from index which is number 'index.abs' counting from the end of the array" do
           sorted_set.send(method, -1, 0).should  eql(SS.empty)
           sorted_set.send(method, -1, 1).should  eql(SS[4])
@@ -101,8 +101,8 @@ describe Immutable::SortedSet do
         end
       end
 
-      context "when passed a Range" do
-        it "returns the elements whose indexes are within the given Range" do
+      context 'when passed a Range' do
+        it 'returns the elements whose indexes are within the given Range' do
           sorted_set.send(method, 0..-1).should  eql(SS[1,2,3,4])
           sorted_set.send(method, 0..-10).should eql(SS.empty)
           sorted_set.send(method, 0..0).should   eql(SS[1])
@@ -212,38 +212,38 @@ describe Immutable::SortedSet do
           big.send(method, -10001..-1).should be_nil
         end
 
-        it "leaves the original unchanged" do
+        it 'leaves the original unchanged' do
           sorted_set.should eql(SS[1,2,3,4])
         end
       end
     end
 
-    context "when passed an empty Range" do
-      it "does not lose custom sort order" do
-        ss = SS.new(["yogurt", "cake", "pistachios"]) { |word| word.length }
-        ss = ss.send(method, 1...1).add("tea").add("fruitcake").add("toast")
-        ss.to_a.should == ["tea", "toast", "fruitcake"]
+    context 'when passed an empty Range' do
+      it 'does not lose custom sort order' do
+        ss = SS.new(['yogurt', 'cake', 'pistachios']) { |word| word.length }
+        ss = ss.send(method, 1...1).add('tea').add('fruitcake').add('toast')
+        ss.to_a.should == ['tea', 'toast', 'fruitcake']
       end
     end
 
-    context "when passed a length of zero" do
-      it "does not lose custom sort order" do
-        ss = SS.new(["yogurt", "cake", "pistachios"]) { |word| word.length }
-        ss = ss.send(method, 0, 0).add("tea").add("fruitcake").add("toast")
-        ss.to_a.should == ["tea", "toast", "fruitcake"]
+    context 'when passed a length of zero' do
+      it 'does not lose custom sort order' do
+        ss = SS.new(['yogurt', 'cake', 'pistachios']) { |word| word.length }
+        ss = ss.send(method, 0, 0).add('tea').add('fruitcake').add('toast')
+        ss.to_a.should == ['tea', 'toast', 'fruitcake']
       end
     end
 
-    context "when passed a subclass of Range" do
-      it "works the same as with a Range" do
+    context 'when passed a subclass of Range' do
+      it 'works the same as with a Range' do
         subclass = Class.new(Range)
         sorted_set.send(method, subclass.new(1,2)).should eql(SS[2,3])
         sorted_set.send(method, subclass.new(-3,-1,true)).should eql(SS[2,3])
       end
     end
 
-    context "on a subclass of SortedSet" do
-      it "with index and count or a range, returns an instance of the subclass" do
+    context 'on a subclass of SortedSet' do
+      it 'with index and count or a range, returns an instance of the subclass' do
         subclass = Class.new(Immutable::SortedSet)
         instance = subclass.new([1,2,3])
         instance.send(method, 0, 0).class.should be(subclass)

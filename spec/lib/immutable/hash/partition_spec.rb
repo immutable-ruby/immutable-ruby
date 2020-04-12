@@ -1,32 +1,32 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Hash do
-  let(:hash) { H["a" => 1, "b" => 2, "c" => 3, "d" => 4] }
+  let(:hash) { H['a' => 1, 'b' => 2, 'c' => 3, 'd' => 4] }
   let(:partition) { hash.partition { |k,v| v % 2 == 0 }}
 
-  describe "#partition" do
-    it "returns a pair of Immutable::Hashes" do
+  describe '#partition' do
+    it 'returns a pair of Immutable::Hashes' do
       partition.each { |h| h.class.should be(Immutable::Hash) }
       partition.should be_frozen
     end
 
-    it "returns key/val pairs for which predicate is true in first Hash" do
-      partition[0].should == {"b" => 2, "d" => 4}
+    it 'returns key/val pairs for which predicate is true in first Hash' do
+      partition[0].should == {'b' => 2, 'd' => 4}
     end
 
-    it "returns key/val pairs for which predicate is false in second Hash" do
-      partition[1].should == {"a" => 1, "c" => 3}
+    it 'returns key/val pairs for which predicate is false in second Hash' do
+      partition[1].should == {'a' => 1, 'c' => 3}
     end
 
     it "doesn't modify the original Hash" do
       partition
-      hash.should eql(H["a" => 1, "b" => 2, "c" => 3, "d" => 4])
+      hash.should eql(H['a' => 1, 'b' => 2, 'c' => 3, 'd' => 4])
     end
 
-    context "from a subclass" do
-      it "should return instances of the subclass" do
+    context 'from a subclass' do
+      it 'should return instances of the subclass' do
         subclass  = Class.new(Immutable::Hash)
-        instance  = subclass.new("a" => 1, "b" => 2, "c" => 3, "d" => 4)
+        instance  = subclass.new('a' => 1, 'b' => 2, 'c' => 3, 'd' => 4)
         partition = instance.partition { |k,v| v % 2 == 0 }
         partition.each { |h| h.class.should be(subclass) }
       end

@@ -1,7 +1,7 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Set do
-  describe "#count" do
+  describe '#count' do
     [
       [[], 0],
       [[1], 1],
@@ -13,21 +13,21 @@ describe Immutable::Set do
       describe "on #{values.inspect}" do
         let(:set) { S[*values] }
 
-        context "with a block" do
+        context 'with a block' do
           it "returns #{expected.inspect}" do
             set.count(&:odd?).should == expected
           end
         end
 
-        context "without a block" do
-          it "returns length" do
+        context 'without a block' do
+          it 'returns length' do
             set.count.should == set.length
           end
         end
       end
     end
 
-    it "works on large sets" do
+    it 'works on large sets' do
       set = Immutable::Set.new(1..2000)
       set.count.should == 2000
       set.count(&:odd?).should == 1000

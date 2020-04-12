@@ -1,17 +1,17 @@
-require "spec_helper"
-require "immutable/hash"
+require 'spec_helper'
+require 'immutable/hash'
 
 describe Immutable::Hash do
-  describe "#>=" do
+  describe '#>=' do
     [
       [{}, {}, true],
-      [{"A" => 1}, {}, true],
-      [{}, {"A" => 1}, false],
-      [{"A" => 1}, {"A" => 1}, true],
-      [{"A" => 1}, {"A" => 2}, false],
-      [{"A" => 1, "B" => 2, "C" => 3}, {"B" => 2}, true],
-      [{"B" => 2}, {"A" => 1, "B" => 2, "C" => 3}, false],
-      [{"A" => 1, "B" => 2, "C" => 3}, {"B" => 0}, false],
+      [{'A' => 1}, {}, true],
+      [{}, {'A' => 1}, false],
+      [{'A' => 1}, {'A' => 1}, true],
+      [{'A' => 1}, {'A' => 2}, false],
+      [{'A' => 1, 'B' => 2, 'C' => 3}, {'B' => 2}, true],
+      [{'B' => 2}, {'A' => 1, 'B' => 2, 'C' => 3}, false],
+      [{'A' => 1, 'B' => 2, 'C' => 3}, {'B' => 0}, false],
     ].each do |a, b, expected|
       describe "for #{a.inspect} and #{b.inspect}" do
         it "returns #{expected}"  do
@@ -21,16 +21,16 @@ describe Immutable::Hash do
     end
   end
 
-  describe "#>" do
+  describe '#>' do
     [
       [{}, {}, false],
-      [{"A" => 1}, {}, true],
-      [{}, {"A" => 1}, false],
-      [{"A" => 1}, {"A" => 1}, false],
-      [{"A" => 1}, {"A" => 2}, false],
-      [{"A" => 1, "B" => 2, "C" => 3}, {"B" => 2}, true],
-      [{"B" => 2}, {"A" => 1, "B" => 2, "C" => 3}, false],
-      [{"A" => 1, "B" => 2, "C" => 3}, {"B" => 0}, false],
+      [{'A' => 1}, {}, true],
+      [{}, {'A' => 1}, false],
+      [{'A' => 1}, {'A' => 1}, false],
+      [{'A' => 1}, {'A' => 2}, false],
+      [{'A' => 1, 'B' => 2, 'C' => 3}, {'B' => 2}, true],
+      [{'B' => 2}, {'A' => 1, 'B' => 2, 'C' => 3}, false],
+      [{'A' => 1, 'B' => 2, 'C' => 3}, {'B' => 0}, false],
     ].each do |a, b, expected|
       describe "for #{a.inspect} and #{b.inspect}" do
         it "returns #{expected}"  do

@@ -1,11 +1,11 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Deque do
-  describe "#last" do
+  describe '#last' do
     [
       [[], nil],
-      [["A"], "A"],
-      [%w[A B C], "C"],
+      [['A'], 'A'],
+      [%w[A B C], 'C'],
     ].each do |values, expected|
       context "on #{values.inspect}" do
         it "returns #{expected.inspect}" do

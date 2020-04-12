@@ -1,16 +1,16 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::List do
   [:append, :concat, :+].each do |method|
     describe "##{method}" do
-      it "is lazy" do
+      it 'is lazy' do
         -> { Immutable.stream { fail }.append(Immutable.stream { fail }) }.should_not raise_error
       end
 
       [
         [[], [], []],
-        [["A"], [], ["A"]],
-        [[], ["A"], ["A"]],
+        [['A'], [], ['A']],
+        [[], ['A'], ['A']],
         [%w[A B], %w[C D], %w[A B C D]],
       ].each do |left_values, right_values, expected|
         context "on #{left_values.inspect} and #{right_values.inspect}" do
@@ -18,12 +18,12 @@ describe Immutable::List do
           let(:right) { L[*right_values] }
           let(:result) { left.append(right) }
 
-          it "preserves the left" do
+          it 'preserves the left' do
             result
             left.should eql(L[*left_values])
           end
 
-          it "preserves the right" do
+          it 'preserves the right' do
             result
             right.should eql(L[*right_values])
           end

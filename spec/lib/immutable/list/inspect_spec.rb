@@ -1,8 +1,8 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::List do
-  describe "#inspect" do
-    context "on a really big list" do
+  describe '#inspect' do
+    context 'on a really big list' do
       it "doesn't run out of stack" do
         -> { BigList.inspect }.should_not raise_error
       end
@@ -10,7 +10,7 @@ describe Immutable::List do
 
     [
       [[], 'Immutable::List[]'],
-      [["A"], 'Immutable::List["A"]'],
+      [['A'], 'Immutable::List["A"]'],
       [%w[A B C], 'Immutable::List["A", "B", "C"]']
     ].each do |values, expected|
       context "on #{values.inspect}" do

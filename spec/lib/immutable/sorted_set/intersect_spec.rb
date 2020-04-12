@@ -1,14 +1,14 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::SortedSet do
-  describe "#intersect?" do
+  describe '#intersect?' do
     [
       [[], [], false],
-      [["A"], [], false],
-      [[], ["A"], false],
-      [["A"], ["A"], true],
-      [%w[A B C], ["B"], true],
-      [["B"], %w[A B C], true],
+      [['A'], [], false],
+      [[], ['A'], false],
+      [['A'], ['A'], true],
+      [%w[A B C], ['B'], true],
+      [['B'], %w[A B C], true],
       [%w[A B C], %w[D E], false],
       [%w[F G H I], %w[A B C], false],
       [%w[A B C], %w[A B C], true],

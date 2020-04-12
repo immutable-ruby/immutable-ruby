@@ -1,4 +1,4 @@
-require "immutable/list"
+require 'immutable/list'
 
 # Monkey-patches to Ruby's built-in `Enumerable` module.
 # @see http://www.ruby-doc.org/core/Enumerable.html

@@ -1,8 +1,8 @@
-require "spec_helper"
-require "concurrent/atomics"
+require 'spec_helper'
+require 'concurrent/atomics'
 
 describe Immutable::List do
-  it "ensures each node of a lazy list will only be realized on ONE thread, even when accessed by multiple threads" do
+  it 'ensures each node of a lazy list will only be realized on ONE thread, even when accessed by multiple threads' do
     counter = Concurrent::Atom.new(0)
     list = (1..10000).to_list.map { |x| counter.swap { |count| count + 1 }; x * 2 }
 
@@ -19,7 +19,7 @@ describe Immutable::List do
   end
 
   it "doesn't go into an infinite loop if lazy list block raises an exception" do
-    list = (1..10).to_list.map { raise "Oops!" }
+    list = (1..10).to_list.map { raise 'Oops!' }
 
     threads = 10.times.collect do
       Thread.new do

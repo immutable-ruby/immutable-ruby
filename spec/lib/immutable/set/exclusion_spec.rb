@@ -1,13 +1,13 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Set do
   [:exclusion, :^].each do |method|
     describe "##{method}" do
       [
         [[], [], []],
-        [["A"], [], ["A"]],
-        [["A"], ["A"], []],
-        [%w[A B C], ["B"], %w[A C]],
+        [['A'], [], ['A']],
+        [['A'], ['A'], []],
+        [%w[A B C], ['B'], %w[A C]],
         [%w[A B C], %w[B C D], %w[A D]],
         [%w[A B C], %w[D E F], %w[A B C D E F]],
       ].each do |a, b, expected|
@@ -27,14 +27,14 @@ describe Immutable::Set do
           end
         end
 
-        context "when passed a Ruby Array" do
-          it "returns the expected Set" do
+        context 'when passed a Ruby Array' do
+          it 'returns the expected Set' do
             S[*a].exclusion(b.freeze).should eql(S[*expected])
           end
         end
       end
 
-      it "works for a wide variety of inputs" do
+      it 'works for a wide variety of inputs' do
         50.times do
           array1 = (1..400).to_a.sample(100)
           array2 = (1..400).to_a.sample(100)

@@ -1,41 +1,41 @@
-require "spec_helper"
-require "bigdecimal"
+require 'spec_helper'
+require 'bigdecimal'
 
 describe Immutable::Hash do
-  let(:hash) { H["A" => "aye", "B" => "bee", "C" => "see"] }
+  let(:hash) { H['A' => 'aye', 'B' => 'bee', 'C' => 'see'] }
 
-  describe "#eql?" do
-    it "returns false when comparing with a standard hash" do
-      hash.eql?("A" => "aye", "B" => "bee", "C" => "see").should == false
+  describe '#eql?' do
+    it 'returns false when comparing with a standard hash' do
+      hash.eql?('A' => 'aye', 'B' => 'bee', 'C' => 'see').should == false
     end
 
-    it "returns false when comparing with an arbitrary object" do
+    it 'returns false when comparing with an arbitrary object' do
       hash.eql?(Object.new).should == false
     end
 
-    it "returns false when comparing with a subclass of Immutable::Hash" do
+    it 'returns false when comparing with a subclass of Immutable::Hash' do
       subclass = Class.new(Immutable::Hash)
-      instance = subclass.new("A" => "aye", "B" => "bee", "C" => "see")
+      instance = subclass.new('A' => 'aye', 'B' => 'bee', 'C' => 'see')
       hash.eql?(instance).should == false
     end
   end
 
-  describe "#==" do
-    it "returns true when comparing with a standard hash" do
-      (hash == {"A" => "aye", "B" => "bee", "C" => "see"}).should == true
+  describe '#==' do
+    it 'returns true when comparing with a standard hash' do
+      (hash == {'A' => 'aye', 'B' => 'bee', 'C' => 'see'}).should == true
     end
 
-    it "returns false when comparing with an arbitrary object" do
+    it 'returns false when comparing with an arbitrary object' do
       (hash == Object.new).should == false
     end
 
-    it "returns true when comparing with a subclass of Immutable::Hash" do
+    it 'returns true when comparing with a subclass of Immutable::Hash' do
       subclass = Class.new(Immutable::Hash)
-      instance = subclass.new("A" => "aye", "B" => "bee", "C" => "see")
+      instance = subclass.new('A' => 'aye', 'B' => 'bee', 'C' => 'see')
       (hash == instance).should == true
     end
 
-    it "performs numeric conversions between floats and BigDecimals" do
+    it 'performs numeric conversions between floats and BigDecimals' do
       expect(H[a: 0.0] == H[a: BigDecimal('0.0')]).to be true
       expect(H[a: BigDecimal('0.0')] == H[a: 0.0]).to be true
     end
@@ -45,14 +45,14 @@ describe Immutable::Hash do
     describe "##{method}" do
       [
         [{}, {}, true],
-        [{ "A" => "aye" }, {}, false],
-        [{}, { "A" => "aye" }, false],
-        [{ "A" => "aye" }, { "A" => "aye" }, true],
-        [{ "A" => "aye" }, { "B" => "bee" }, false],
-        [{ "A" => "aye", "B" => "bee" }, { "A" => "aye" }, false],
-        [{ "A" => "aye" }, { "A" => "aye", "B" => "bee" }, false],
-        [{ "A" => "aye", "B" => "bee", "C" => "see" }, { "A" => "aye", "B" => "bee", "C" => "see" }, true],
-        [{ "C" => "see", "A" => "aye", "B" => "bee" }, { "A" => "aye", "B" => "bee", "C" => "see" }, true],
+        [{ 'A' => 'aye' }, {}, false],
+        [{}, { 'A' => 'aye' }, false],
+        [{ 'A' => 'aye' }, { 'A' => 'aye' }, true],
+        [{ 'A' => 'aye' }, { 'B' => 'bee' }, false],
+        [{ 'A' => 'aye', 'B' => 'bee' }, { 'A' => 'aye' }, false],
+        [{ 'A' => 'aye' }, { 'A' => 'aye', 'B' => 'bee' }, false],
+        [{ 'A' => 'aye', 'B' => 'bee', 'C' => 'see' }, { 'A' => 'aye', 'B' => 'bee', 'C' => 'see' }, true],
+        [{ 'C' => 'see', 'A' => 'aye', 'B' => 'bee' }, { 'A' => 'aye', 'B' => 'bee', 'C' => 'see' }, true],
       ].each do |a, b, expected|
         describe "returns #{expected.inspect}" do
           it "for #{a.inspect} and #{b.inspect}" do
@@ -67,7 +67,7 @@ describe Immutable::Hash do
     end
   end
 
-  it "returns true on a large hash which is modified and then modified back again" do
+  it 'returns true on a large hash which is modified and then modified back again' do
     hash = H.new((1..1000).zip(2..1001))
     hash.put('a', 1).delete('a').should == hash
     hash.put('b', 2).delete('b').should eql(hash)

@@ -1,5 +1,5 @@
-require "immutable/enumerable"
-require "immutable/hash"
+require 'immutable/enumerable'
+require 'immutable/hash'
 
 module Immutable
 
@@ -197,7 +197,7 @@ module Immutable
     # @return [Vector]
     def update_in(*key_path, &block)
       if key_path.empty?
-        raise ArgumentError, "must have at least one key in path"
+        raise ArgumentError, 'must have at least one key in path'
       end
       key = key_path[0]
       if key_path.size == 1
@@ -721,7 +721,7 @@ module Immutable
     def drop(n)
       return self if n == 0
       return self.class.empty if n >= @size
-      raise ArgumentError, "attempt to drop negative size" if n < 0
+      raise ArgumentError, 'attempt to drop negative size' if n < 0
       self.class.new(flatten_suffix(@root, @levels * BITS_PER_LEVEL, n, []))
     end
 

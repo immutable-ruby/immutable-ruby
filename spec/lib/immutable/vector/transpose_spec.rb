@@ -1,10 +1,10 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Vector do
-  describe "#transpose" do
-    it "takes a vector of vectors and transposes rows and columns" do
-      V[V[1, 'a'], V[2, 'b'], V[3, 'c']].transpose.should eql(V[V[1, 2, 3], V["a", "b", "c"]])
-      V[V[1, 2, 3], V["a", "b", "c"]].transpose.should eql(V[V[1, 'a'], V[2, 'b'], V[3, 'c']])
+  describe '#transpose' do
+    it 'takes a vector of vectors and transposes rows and columns' do
+      V[V[1, 'a'], V[2, 'b'], V[3, 'c']].transpose.should eql(V[V[1, 2, 3], V['a', 'b', 'c']])
+      V[V[1, 2, 3], V['a', 'b', 'c']].transpose.should eql(V[V[1, 'a'], V[2, 'b'], V[3, 'c']])
       V[].transpose.should eql(V[])
       V[V[]].transpose.should eql(V[])
       V[V[], V[]].transpose.should eql(V[])
@@ -12,17 +12,17 @@ describe Immutable::Vector do
       V[V[0], V[1]].transpose.should eql(V[V[0, 1]])
     end
 
-    it "raises an IndexError if the vectors are not of the same length" do
+    it 'raises an IndexError if the vectors are not of the same length' do
       -> { V[V[1,2], V[:a]].transpose }.should raise_error(IndexError)
     end
 
-    it "also works on Vectors of Arrays" do
+    it 'also works on Vectors of Arrays' do
       V[[1,2,3], [4,5,6]].transpose.should eql(V[V[1,4], V[2,5], V[3,6]])
     end
 
     [10, 31, 32, 33, 1000, 1023, 1024, 1025, 2000].each do |size|
       context "on #{size}-item vectors" do
-        it "behaves like Array#transpose" do
+        it 'behaves like Array#transpose' do
           array = rand(10).times.map { size.times.map { rand(10000) }}
           vector = V.new(array)
           result = vector.transpose
@@ -36,8 +36,8 @@ describe Immutable::Vector do
       end
     end
 
-    context "on a subclass of Vector" do
-      it "returns instances of the subclass" do
+    context 'on a subclass of Vector' do
+      it 'returns instances of the subclass' do
         subclass = Class.new(V)
         instance = subclass.new([[1,2,3], [4,5,6]])
         instance.transpose.class.should be(subclass)
@@ -45,8 +45,8 @@ describe Immutable::Vector do
       end
     end
 
-    context "if an item does not respond to #size and #[]" do
-      it "raises TypeError" do
+    context 'if an item does not respond to #size and #[]' do
+      it 'raises TypeError' do
         expect {
           V[[1, 2], [2, 3], nil].transpose
         }.to raise_error(TypeError)

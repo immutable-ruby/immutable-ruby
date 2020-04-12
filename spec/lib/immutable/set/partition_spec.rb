@@ -1,7 +1,7 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Set do
-  describe "#partition" do
+  describe '#partition' do
     [
       [[], [], []],
       [[1], [1], []],
@@ -15,33 +15,33 @@ describe Immutable::Set do
       context "on #{values.inspect}" do
         let(:set) { S[*values] }
 
-        context "with a block" do
+        context 'with a block' do
           let(:result)  { set.partition(&:odd?) }
           let(:matches) { result.first }
           let(:remainder) { result.last }
 
-          it "preserves the original" do
+          it 'preserves the original' do
             result
             set.should eql(S[*values])
           end
 
-          it "returns a frozen array with two items" do
+          it 'returns a frozen array with two items' do
             result.class.should be(Array)
             result.should be_frozen
             result.size.should be(2)
           end
 
-          it "correctly identifies the matches" do
+          it 'correctly identifies the matches' do
             matches.should eql(S[*expected_matches])
           end
 
-          it "correctly identifies the remainder" do
+          it 'correctly identifies the remainder' do
             remainder.should eql(S[*expected_remainder])
           end
         end
 
-        describe "without a block" do
-          it "returns an Enumerator" do
+        describe 'without a block' do
+          it 'returns an Enumerator' do
             set.partition.class.should be(Enumerator)
             set.partition.each(&:odd?).should eql([S.new(expected_matches), S.new(expected_remainder)])
           end

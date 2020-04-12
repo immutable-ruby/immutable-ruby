@@ -1,17 +1,17 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::SortedSet do
-  describe "#at" do
+  describe '#at' do
     [
       [[], 10, nil],
-      [["A"], 10, nil],
-      [%w[A B C], 0, "A"],
-      [%w[A B C], 1, "B"],
-      [%w[A B C], 2, "C"],
+      [['A'], 10, nil],
+      [%w[A B C], 0, 'A'],
+      [%w[A B C], 1, 'B'],
+      [%w[A B C], 2, 'C'],
       [%w[A B C], 3, nil],
-      [%w[A B C], -1, "C"],
-      [%w[A B C], -2, "B"],
-      [%w[A B C], -3, "A"],
+      [%w[A B C], -1, 'C'],
+      [%w[A B C], -2, 'B'],
+      [%w[A B C], -3, 'A'],
       [%w[A B C], -4, nil]
     ].each do |values, number, expected|
       describe "#{values.inspect} with #{number}" do

@@ -1,17 +1,17 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::List do
-  describe "#grep" do
-    it "is lazy" do
+  describe '#grep' do
+    it 'is lazy' do
       -> { Immutable.stream { fail }.grep(Object) { |item| item } }.should_not raise_error
     end
 
-    context "without a block" do
+    context 'without a block' do
       [
         [[], []],
-        [["A"], ["A"]],
+        [['A'], ['A']],
         [[1], []],
-        [["A", 2, "C"], %w[A C]],
+        [['A', 2, 'C'], %w[A C]],
       ].each do |values, expected|
         context "on #{values.inspect}" do
           it "returns #{expected.inspect}" do
@@ -21,17 +21,17 @@ describe Immutable::List do
       end
     end
 
-    context "with a block" do
+    context 'with a block' do
       [
         [[], []],
-        [["A"], ["a"]],
+        [['A'], ['a']],
         [[1], []],
-        [["A", 2, "C"], %w[a c]],
+        [['A', 2, 'C'], %w[a c]],
       ].each do |values, expected|
         context "on #{values.inspect}" do
           let(:list) { L[*values] }
 
-          it "preserves the original" do
+          it 'preserves the original' do
             list.grep(String, &:downcase)
             list.should eql(L[*values])
           end

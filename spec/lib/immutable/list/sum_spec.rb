@@ -1,8 +1,8 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::List do
-  describe "#sum" do
-    context "on a really big list" do
+  describe '#sum' do
+    context 'on a really big list' do
       it "doesn't run out of stack" do
         -> { BigList.sum }.should_not raise_error
       end

@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Vector do
   [:reduce, :inject].each do |method|
@@ -12,7 +12,7 @@ describe Immutable::Vector do
           let(:vector) { V[*values] }
 
           describe "with an initial value of #{initial}" do
-            describe "and a block" do
+            describe 'and a block' do
               it "returns #{expected.inspect}" do
                 vector.send(method, initial) { |memo, item| memo - item }.should == expected
               end
@@ -29,8 +29,8 @@ describe Immutable::Vector do
         describe "on #{values.inspect}" do
           let(:vector) { V[*values] }
 
-          describe "with no initial value" do
-            describe "and a block" do
+          describe 'with no initial value' do
+            describe 'and a block' do
               it "returns #{expected.inspect}" do
                 vector.send(method) { |memo, item| memo - item }.should == expected
               end
@@ -39,14 +39,14 @@ describe Immutable::Vector do
         end
       end
 
-      describe "with no block and a symbol argument" do
-        it "uses the symbol as the name of a method to reduce with" do
+      describe 'with no block and a symbol argument' do
+        it 'uses the symbol as the name of a method to reduce with' do
           V[1, 2, 3].send(method, :+).should == 6
         end
       end
 
-      describe "with no block and a string argument" do
-        it "uses the string as the name of a method to reduce with" do
+      describe 'with no block and a string argument' do
+        it 'uses the string as the name of a method to reduce with' do
           V[1, 2, 3].send(method, '+').should == 6
         end
       end

@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::List do
   let(:list) { L[1,2,3,4] }
@@ -6,8 +6,8 @@ describe Immutable::List do
 
   [:slice, :[]].each do |method|
     describe "##{method}" do
-      context "when passed a positive integral index" do
-        it "returns the element at that index" do
+      context 'when passed a positive integral index' do
+        it 'returns the element at that index' do
           list.send(method, 0).should be(1)
           list.send(method, 1).should be(2)
           list.send(method, 2).should be(3)
@@ -19,13 +19,13 @@ describe Immutable::List do
           big.send(method, 9999).should be(10000)
         end
 
-        it "leaves the original unchanged" do
+        it 'leaves the original unchanged' do
           list.should eql(L[1,2,3,4])
         end
       end
 
-      context "when passed a negative integral index" do
-        it "returns the element which is number (index.abs) counting from the end of the list" do
+      context 'when passed a negative integral index' do
+        it 'returns the element which is number (index.abs) counting from the end of the list' do
           list.send(method, -1).should be(4)
           list.send(method, -2).should be(3)
           list.send(method, -3).should be(2)
@@ -38,7 +38,7 @@ describe Immutable::List do
         end
       end
 
-      context "when passed a positive integral index and count" do
+      context 'when passed a positive integral index and count' do
         it "returns 'count' elements starting from 'index'" do
           list.send(method, 0, 0).should eql(L.empty)
           list.send(method, 0, 1).should eql(L[1])
@@ -68,12 +68,12 @@ describe Immutable::List do
           big.send(method, 1024, 4).should eql(L[1025,1026,1027,1028])
         end
 
-        it "leaves the original unchanged" do
+        it 'leaves the original unchanged' do
           list.should eql(L[1,2,3,4])
         end
       end
 
-      context "when passed a negative integral index and count" do
+      context 'when passed a negative integral index and count' do
         it "returns 'count' elements, starting from index which is number 'index.abs' counting from the end of the array" do
           list.send(method, -1, 0).should eql(L.empty)
           list.send(method, -1, 1).should eql(L[4])
@@ -101,8 +101,8 @@ describe Immutable::List do
         end
       end
 
-      context "when passed a Range" do
-        it "returns the elements whose indexes are within the given Range" do
+      context 'when passed a Range' do
+        it 'returns the elements whose indexes are within the given Range' do
           list.send(method, 0..-1).should eql(L[1,2,3,4])
           list.send(method, 0..-10).should eql(L.empty)
           list.send(method, 0..0).should eql(L[1])
@@ -212,14 +212,14 @@ describe Immutable::List do
           big.send(method, -10001..-1).should be_nil
         end
 
-        it "leaves the original unchanged" do
+        it 'leaves the original unchanged' do
           list.should eql(L[1,2,3,4])
         end
       end
     end
 
-    context "when passed a subclass of Range" do
-      it "works the same as with a Range" do
+    context 'when passed a subclass of Range' do
+      it 'works the same as with a Range' do
         subclass = Class.new(Range)
         list.send(method, subclass.new(1,2)).should eql(L[2,3])
         list.send(method, subclass.new(-3,-1,true)).should eql(L[2,3])

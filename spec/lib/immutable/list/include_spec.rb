@@ -1,24 +1,24 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::List do
   [:include?, :member?].each do |method|
     describe "##{method}" do
-      context "on a really big list" do
+      context 'on a really big list' do
         it "doesn't run out of stack" do
           -> { BigList.send(method, nil) }.should_not raise_error
         end
       end
 
       [
-        [[], "A", false],
+        [[], 'A', false],
         [[], nil, false],
-        [["A"], "A", true],
-        [["A"], "B", false],
-        [["A"], nil, false],
-        [["A", "B", nil], "A", true],
-        [["A", "B", nil], "B", true],
-        [["A", "B", nil], nil, true],
-        [["A", "B", nil], "C", false],
+        [['A'], 'A', true],
+        [['A'], 'B', false],
+        [['A'], nil, false],
+        [['A', 'B', nil], 'A', true],
+        [['A', 'B', nil], 'B', true],
+        [['A', 'B', nil], nil, true],
+        [['A', 'B', nil], 'C', false],
         [[2], 2, true],
         [[2], 2.0, true],
         [[2.0], 2.0, true],

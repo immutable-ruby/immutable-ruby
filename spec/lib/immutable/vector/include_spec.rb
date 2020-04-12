@@ -1,19 +1,19 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Vector do
   [:include?, :member?].each do |method|
     describe "##{method}" do
       [
-        [[], "A", false],
+        [[], 'A', false],
         [[], nil, false],
-        [["A"], "A", true],
-        [["A"], "B", false],
-        [["A"], nil, false],
-        [["A", "B", nil], "A", true],
-        [["A", "B", nil], "B", true],
-        [["A", "B", nil], nil, true],
-        [["A", "B", nil], "C", false],
-        [["A", "B", false], false, true],
+        [['A'], 'A', true],
+        [['A'], 'B', false],
+        [['A'], nil, false],
+        [['A', 'B', nil], 'A', true],
+        [['A', 'B', nil], 'B', true],
+        [['A', 'B', nil], nil, true],
+        [['A', 'B', nil], 'C', false],
+        [['A', 'B', false], false, true],
         [[2], 2, true],
         [[2], 2.0, true],
         [[2.0], 2.0, true],

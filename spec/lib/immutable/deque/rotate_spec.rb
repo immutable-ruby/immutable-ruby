@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Deque do
 
@@ -10,7 +10,7 @@ describe Immutable::Deque do
   big_front = D.alloc(L.from_enum([1, 2, 3]), L.from_enum([5, 4]))
   big_rear  = D.alloc(L.from_enum([1, 2]), L.from_enum([5, 4, 3]))
 
-  describe "#rotate" do
+  describe '#rotate' do
     [
       [[], 9999, []],
       [['A'], -1, ['A']],
@@ -21,7 +21,7 @@ describe Immutable::Deque do
       context "on #{values.inspect}" do
         let(:deque) { D[*values] }
 
-        it "preserves the original" do
+        it 'preserves the original' do
           deque.rotate(rotation)
           deque.should eql(D[*values])
         end
@@ -30,36 +30,36 @@ describe Immutable::Deque do
           deque.rotate(rotation).should eql(D[*expected])
         end
 
-        it "returns a frozen instance" do
+        it 'returns a frozen instance' do
           deque.rotate(rotation).should be_frozen
         end
       end
     end
 
     context "on a Deque with most items on 'front' list" do
-      it "works with a small rotation" do
+      it 'works with a small rotation' do
         big_front.rotate(2).should eql(D[4, 5, 1, 2, 3])
       end
 
-      it "works with a larger rotation" do
+      it 'works with a larger rotation' do
         big_front.rotate(4).should eql(D[2, 3, 4, 5, 1])
       end
     end
 
     context "on a Deque with most items on 'rear' list" do
-      it "works with a small rotation" do
+      it 'works with a small rotation' do
         big_rear.rotate(2).should eql(D[4, 5, 1, 2, 3])
       end
 
-      it "works with a larger rotation" do
+      it 'works with a larger rotation' do
         big_rear.rotate(4).should eql(D[2, 3, 4, 5, 1])
       end
     end
 
-    context "on empty subclass" do
+    context 'on empty subclass' do
       let(:subclass) { Class.new(Immutable::Deque) }
       let(:empty_instance) { subclass.new }
-      it "returns an empty object of the same class" do
+      it 'returns an empty object of the same class' do
         empty_instance.rotate(1).class.should be subclass
         empty_instance.rotate(-1).class.should be subclass
       end

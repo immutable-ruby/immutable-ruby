@@ -1,9 +1,9 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::SortedSet do
-  describe "#above" do
-    context "when called without a block" do
-      it "returns a sorted set of all items higher than the argument" do
+  describe '#above' do
+    context 'when called without a block' do
+      it 'returns a sorted set of all items higher than the argument' do
         100.times do
           items     = rand(100).times.collect { rand(1000) }.uniq
           set       = SS.new(items)
@@ -17,8 +17,8 @@ describe Immutable::SortedSet do
       end
     end
 
-    context "when called with a block" do
-      it "yields all the items higher than the argument" do
+    context 'when called with a block' do
+      it 'yields all the items higher than the argument' do
         100.times do
           items     = rand(100).times.collect { rand(1000) }.uniq
           set       = SS.new(items)
@@ -32,16 +32,16 @@ describe Immutable::SortedSet do
       end
     end
 
-    context "on an empty set" do
-      it "returns an empty set" do
+    context 'on an empty set' do
+      it 'returns an empty set' do
         SS.empty.above(1).should be_empty
         SS.empty.above('abc').should be_empty
         SS.empty.above(:symbol).should be_empty
       end
     end
 
-    context "with an argument higher than all the values in the set" do
-      it "returns an empty set" do
+    context 'with an argument higher than all the values in the set' do
+      it 'returns an empty set' do
         result = SS.new(1..100).above(100)
         result.class.should be(Immutable::SortedSet)
         result.should be_empty

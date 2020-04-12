@@ -1,9 +1,9 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::List do
   [:to_a, :entries].each do |method|
     describe "##{method}" do
-      context "on a really big list" do
+      context 'on a really big list' do
         it "doesn't run out of stack" do
           -> { BigList.to_a }.should_not raise_error
         end
@@ -11,7 +11,7 @@ describe Immutable::List do
 
       [
         [],
-        ["A"],
+        ['A'],
         %w[A B C],
       ].each do |values|
         context "on #{values.inspect}" do
@@ -21,16 +21,16 @@ describe Immutable::List do
             list.send(method).should == values
           end
 
-          it "leaves the original unchanged" do
+          it 'leaves the original unchanged' do
             list.send(method)
             list.should eql(L[*values])
           end
 
-          it "returns a mutable array" do
+          it 'returns a mutable array' do
             result = list.send(method)
-            expect(result.last).to_not eq("The End")
-            result << "The End"
-            result.last.should == "The End"
+            expect(result.last).to_not eq('The End')
+            result << 'The End'
+            result.last.should == 'The End'
           end
         end
       end

@@ -1,10 +1,10 @@
-require "set"
-require "immutable/hash"
-require "immutable/set"
-require "immutable/vector"
-require "immutable/sorted_set"
-require "immutable/list"
-require "immutable/deque"
+require 'set'
+require 'immutable/hash'
+require 'immutable/set'
+require 'immutable/vector'
+require 'immutable/sorted_set'
+require 'immutable/list'
+require 'immutable/deque'
 
 module Immutable
   class << self

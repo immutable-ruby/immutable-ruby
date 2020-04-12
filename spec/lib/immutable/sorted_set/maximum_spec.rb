@@ -1,12 +1,12 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::SortedSet do
-  describe "#max" do
-    context "with a block" do
+  describe '#max' do
+    context 'with a block' do
       [
         [[], nil],
-        [["A"], "A"],
-        [%w[Ichi Ni San], "Ichi"],
+        [['A'], 'A'],
+        [%w[Ichi Ni San], 'Ichi'],
       ].each do |values, expected|
         describe "on #{values.inspect}" do
           let(:set) { SS[*values] }
@@ -19,11 +19,11 @@ describe Immutable::SortedSet do
       end
     end
 
-    context "without a block" do
+    context 'without a block' do
       [
         [[], nil],
-        [["A"], "A"],
-        [%w[Ichi Ni San], "San"],
+        [['A'], 'A'],
+        [%w[Ichi Ni San], 'San'],
       ].each do |values, expected|
         describe "on #{values.inspect}" do
           it "returns #{expected.inspect}" do

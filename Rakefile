@@ -1,19 +1,19 @@
 #!/usr/bin/env rake
-require "bundler/gem_tasks"
-require "rspec/core/rake_task"
-require "yard"
-require "pathname"
+require 'bundler/gem_tasks'
+require 'rspec/core/rake_task'
+require 'yard'
+require 'pathname'
 
 IMMUTABLE_ROOT = Pathname.new(__FILE__).dirname
 
-desc "Run all the tests in spec/"
+desc 'Run all the tests in spec/'
 RSpec::Core::RakeTask.new(:spec) do |config|
   config.verbose = false
 end
 
-desc "Generate all of the docs"
+desc 'Generate all of the docs'
 YARD::Rake::YardocTask.new do |config|
-  config.files = Dir["lib/**/*.rb"]
+  config.files = Dir['lib/**/*.rb']
 end
 
 def bench_suites
@@ -39,7 +39,7 @@ bench_suites.each do |suite|
         load bench_file
       rescue LoadError => e
         if e.message == /benchmark\/ips/
-          $stderr.puts "Please install the benchmark-ips gem"
+          $stderr.puts 'Please install the benchmark-ips gem'
         else
           $stderr.puts e
         end
@@ -52,19 +52,19 @@ bench_suites.each do |suite|
   task bench_task_name(suite) => bench_files(suite).map(&method(:bench_task_name))
 end
 
-desc "Run all benchmarks"
+desc 'Run all benchmarks'
 task bench: bench_suites.map(&method(:bench_task_name))
 
-desc "Generate file dependency graph"
+desc 'Generate file dependency graph'
 task :dependency_graph do
   if `which dot`.empty?
-    raise "dot is not installed or not on your system path"
+    raise 'dot is not installed or not on your system path'
   end
 
   dependencies = Hash.new { |h,k| h[k] = Set.new }
   trim_fn = ->(fn) { fn.sub(/^lib\//, '').sub(/\.rb$/, '') }
 
-  Dir["lib/**/*.rb"].each do |path|
+  Dir['lib/**/*.rb'].each do |path|
     File.readlines(path).each do |line|
       if line =~ /^\s*require\s+('|")([^'"]*)('|")/
          dependency = $2
@@ -97,16 +97,16 @@ task :dependency_graph do
   end
   dot << "\n}"
 
-  require "tempfile"
-  Tempfile.open("immutable-depgraph") do |f|
+  require 'tempfile'
+  Tempfile.open('immutable-depgraph') do |f|
     f.write(dot)
     f.flush
     message = `dot -Tgif #{f.path} -o depgraph.gif`
     f.unlink
     puts message unless message.empty?
-    puts "Dependency graph is in depgraph.gif"
+    puts 'Dependency graph is in depgraph.gif'
   end
 end
 
-desc "Default: run tests and generate docs"
+desc 'Default: run tests and generate docs'
 task default: [ :spec, :yard ]

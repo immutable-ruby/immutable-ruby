@@ -1,6 +1,6 @@
-require "benchmark/ips"
+require 'benchmark/ips'
 
-require "immutable/hash"
+require 'immutable/hash'
 
 Benchmark.ips do |b|
   sml_hash = Immutable::Hash[1 => 1]
@@ -9,7 +9,7 @@ Benchmark.ips do |b|
   lrg_hash = Immutable::Hash.empty
   1_000_000.times { |i| lrg_hash = lrg_hash.put(i, i) }
 
-  b.report "get existing small" do |n|
+  b.report 'get existing small' do |n|
     a = 0
     x = 0
     while a < n
@@ -18,7 +18,7 @@ Benchmark.ips do |b|
     end
   end
 
-  b.report "get existing medium" do |n|
+  b.report 'get existing medium' do |n|
     a = 0
     x = nil
     while a < n
@@ -27,7 +27,7 @@ Benchmark.ips do |b|
     end
   end
 
-  b.report "get existing large" do |n|
+  b.report 'get existing large' do |n|
     a = 0
     x = nil
     while a < n
@@ -36,7 +36,7 @@ Benchmark.ips do |b|
     end
   end
 
-  b.report "get missing small" do |n|
+  b.report 'get missing small' do |n|
     a = 0
     x = 0
     while a < n
@@ -45,7 +45,7 @@ Benchmark.ips do |b|
     end
   end
 
-  b.report "get missing medium" do |n|
+  b.report 'get missing medium' do |n|
     a = 0
     x = nil
     while a < n
@@ -54,7 +54,7 @@ Benchmark.ips do |b|
     end
   end
 
-  b.report "get missing large" do |n|
+  b.report 'get missing large' do |n|
     a = 0
     x = nil
     while a < n

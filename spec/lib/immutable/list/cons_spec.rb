@@ -1,17 +1,17 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::List do
-  describe "#cons" do
+  describe '#cons' do
     [
-      [[], "A", ["A"]],
-      [["A"], "B", %w[B A]],
-      [["A"], "A", %w[A A]],
-      [%w[A B C], "D", %w[D A B C]],
+      [[], 'A', ['A']],
+      [['A'], 'B', %w[B A]],
+      [['A'], 'A', %w[A A]],
+      [%w[A B C], 'D', %w[D A B C]],
     ].each do |values, new_value, expected|
       context "on #{values.inspect} with #{new_value.inspect}" do
         let(:list) { L[*values] }
 
-        it "preserves the original" do
+        it 'preserves the original' do
           list.cons(new_value)
           list.should eql(L[*values])
         end

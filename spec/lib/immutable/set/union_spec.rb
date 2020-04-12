@@ -1,13 +1,13 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Set do
   [:union, :|, :+, :merge].each do |method|
     describe "##{method}" do
       [
         [[], [], []],
-        [["A"], [], ["A"]],
-        [["A"], ["A"], ["A"]],
-        [[], ["A"], ["A"]],
+        [['A'], [], ['A']],
+        [['A'], ['A'], ['A']],
+        [[], ['A'], ['A']],
         [%w[A B C], [], %w[A B C]],
         [%w[A B C], %w[A B C], %w[A B C]],
         [%w[A B C], %w[X Y Z], %w[A B C X Y Z]]
@@ -34,15 +34,15 @@ describe Immutable::Set do
           end
         end
 
-        context "when passed a Ruby Array" do
-          it "returns the expected Set" do
+        context 'when passed a Ruby Array' do
+          it 'returns the expected Set' do
             S[*a].send(method, b.freeze).should eql(S[*expected])
             S[*b].send(method, a.freeze).should eql(S[*expected])
           end
         end
 
-        context "from a subclass" do
-          it "returns an instance of the subclass" do
+        context 'from a subclass' do
+          it 'returns an instance of the subclass' do
             subclass = Class.new(Immutable::Set)
             subclass.new(a).send(method, S.new(b)).class.should be(subclass)
             subclass.new(b).send(method, S.new(a)).class.should be(subclass)
@@ -50,11 +50,11 @@ describe Immutable::Set do
         end
       end
 
-      context "when receiving a subset" do
+      context 'when receiving a subset' do
         let(:set_a) { S.new(1..300) }
         let(:set_b) { S.new(1..200) }
 
-        it "returns self" do
+        it 'returns self' do
           set_a.send(method, set_b).should be(set_a)
         end
       end

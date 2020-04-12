@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::List do
   [
@@ -6,20 +6,20 @@ describe Immutable::List do
     [:sort_by, ->(item) { item.length }],
   ].each do |method, comparator|
     describe "##{method}" do
-      it "is lazy" do
+      it 'is lazy' do
         -> { Immutable.stream { fail }.send(method, &comparator) }.should_not raise_error
       end
 
       [
         [[], []],
-        [["A"], ["A"]],
+        [['A'], ['A']],
         [%w[Ichi Ni San], %w[Ni San Ichi]],
       ].each do |values, expected|
         context "on #{values.inspect}" do
           let(:list) { L[*values] }
 
-          context "with a block" do
-            it "preserves the original" do
+          context 'with a block' do
+            it 'preserves the original' do
               list.send(method, &comparator)
               list.should == L[*values]
             end
@@ -29,8 +29,8 @@ describe Immutable::List do
             end
           end
 
-          context "without a block" do
-            it "preserves the original" do
+          context 'without a block' do
+            it 'preserves the original' do
               list.send(method)
               list.should eql(L[*values])
             end

@@ -1,15 +1,15 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::List do
   [:reject, :delete_if].each do |method|
     describe "##{method}" do
-      it "is lazy" do
+      it 'is lazy' do
         -> { Immutable.stream { fail }.send(method) { |item| false } }.should_not raise_error
       end
 
       [
         [[], []],
-        [["A"], ["A"]],
+        [['A'], ['A']],
         [%w[A B C], %w[A B C]],
         [%w[A b C], %w[A C]],
         [%w[a b c], []],
@@ -17,12 +17,12 @@ describe Immutable::List do
         context "on #{values.inspect}" do
           let(:list) { L[*values] }
 
-          context "with a block" do
+          context 'with a block' do
             it "returns #{expected.inspect}" do
               list.send(method) { |item| item == item.downcase }.should eql(L[*expected])
             end
 
-            it "is lazy" do
+            it 'is lazy' do
               count = 0
               list.send(method) do |item|
                 count += 1
@@ -32,8 +32,8 @@ describe Immutable::List do
             end
           end
 
-          context "without a block" do
-            it "returns an Enumerator" do
+          context 'without a block' do
+            it 'returns an Enumerator' do
               list.send(method).class.should be(Enumerator)
               list.send(method).each { |item| item == item.downcase }.should eql(L[*expected])
             end

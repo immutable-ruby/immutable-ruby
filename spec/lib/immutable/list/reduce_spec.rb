@@ -1,9 +1,9 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::List do
   [:reduce, :inject].each do |method|
     describe "##{method}" do
-      context "on a really big list" do
+      context 'on a really big list' do
         it "doesn't run out of stack" do
           -> { BigList.send(method, &:+) }.should_not raise_error
         end
@@ -29,7 +29,7 @@ describe Immutable::List do
         [[1, 2, 3], -4],
       ].each do |values, expected|
         context "on #{values.inspect}" do
-          context "with no initial value and a block" do
+          context 'with no initial value and a block' do
             it "returns #{expected.inspect}" do
               L[*values].send(method) { |memo, item| memo - item }.should == expected
             end
@@ -37,14 +37,14 @@ describe Immutable::List do
         end
       end
 
-      context "with no block and a symbol argument" do
-        it "uses the symbol as the name of a method to reduce with" do
+      context 'with no block and a symbol argument' do
+        it 'uses the symbol as the name of a method to reduce with' do
           L[1, 2, 3].send(method, :+).should == 6
         end
       end
 
-      context "with no block and a string argument" do
-        it "uses the string as the name of a method to reduce with" do
+      context 'with no block and a string argument' do
+        it 'uses the string as the name of a method to reduce with' do
           L[1, 2, 3].send(method, '+').should == 6
         end
       end

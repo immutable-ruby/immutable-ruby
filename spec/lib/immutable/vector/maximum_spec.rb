@@ -1,12 +1,12 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Vector do
-  describe "#max" do
-    context "with a block" do
+  describe '#max' do
+    context 'with a block' do
       [
         [[], nil],
-        [["A"], "A"],
-        [%w[Ichi Ni San], "Ichi"],
+        [['A'], 'A'],
+        [%w[Ichi Ni San], 'Ichi'],
       ].each do |values, expected|
         describe "on #{values.inspect}" do
           it "returns #{expected.inspect}" do
@@ -16,11 +16,11 @@ describe Immutable::Vector do
       end
     end
 
-    context "without a block" do
+    context 'without a block' do
       [
         [[], nil],
-        [["A"], "A"],
-        [%w[Ichi Ni San], "San"],
+        [['A'], 'A'],
+        [%w[Ichi Ni San], 'San'],
       ].each do |values, expected|
         describe "on #{values.inspect}" do
           it "returns #{expected.inspect}" do

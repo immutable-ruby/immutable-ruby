@@ -1,4 +1,4 @@
-require "immutable/enumerable"
+require 'immutable/enumerable'
 
 module Immutable
 

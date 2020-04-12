@@ -1,8 +1,8 @@
-require "immutable/undefined"
-require "immutable/enumerable"
-require "immutable/trie"
-require "immutable/set"
-require "immutable/vector"
+require 'immutable/undefined'
+require 'immutable/enumerable'
+require 'immutable/trie'
+require 'immutable/set'
+require 'immutable/vector'
 
 module Immutable
 
@@ -293,7 +293,7 @@ module Immutable
     # @return [Hash]
     def update_in(*key_path, &block)
       if key_path.empty?
-        raise ArgumentError, "must have at least one key in path"
+        raise ArgumentError, 'must have at least one key in path'
       end
       key = key_path[0]
       if key_path.size == 1
@@ -840,7 +840,7 @@ module Immutable
         result << key.inspect << ' => ' << val.inspect
         i += 1
       end
-      result << "]"
+      result << ']'
     end
 
     # Return `self`. Since this is an immutable object duplicates are
@@ -858,7 +858,7 @@ module Immutable
     #
     # @private
     def pretty_print(pp)
-      pp.group(1, "#{self.class}[", "]") do
+      pp.group(1, "#{self.class}[", ']') do
         pp.breakable ''
         pp.seplist(self, nil) do |key, val|
           pp.group do

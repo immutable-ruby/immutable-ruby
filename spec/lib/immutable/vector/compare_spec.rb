@@ -1,7 +1,7 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Vector do
-  describe "#<=>" do
+  describe '#<=>' do
     [
       [[], [1]],
       [[1], [2]],
@@ -10,19 +10,19 @@ describe Immutable::Vector do
       [[[0]], [[1]]]
     ].each do |items1, items2|
       describe "with #{items1} and #{items2}" do
-        it "returns -1" do
+        it 'returns -1' do
           (V.new(items1) <=> V.new(items2)).should be(-1)
         end
       end
 
       describe "with #{items2} and #{items1}" do
-        it "returns 1" do
+        it 'returns 1' do
           (V.new(items2) <=> V.new(items1)).should be(1)
         end
       end
 
       describe "with #{items1} and #{items1}" do
-        it "returns 0" do
+        it 'returns 0' do
           (V.new(items1) <=> V.new(items1)).should be(0)
         end
       end

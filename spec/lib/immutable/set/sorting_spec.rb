@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Set do
   [
@@ -8,13 +8,13 @@ describe Immutable::Set do
     describe "##{method}" do
       [
         [[], []],
-        [["A"], ["A"]],
+        [['A'], ['A']],
         [%w[Ichi Ni San], %w[Ni San Ichi]],
       ].each do |values, expected|
         describe "on #{values.inspect}" do
           let(:set) { S[*values] }
 
-          describe "with a block" do
+          describe 'with a block' do
             let(:result) { set.send(method, &comparator) }
 
             it "returns #{expected.inspect}" do
@@ -28,7 +28,7 @@ describe Immutable::Set do
             end
           end
 
-          describe "without a block" do
+          describe 'without a block' do
             let(:result) { set.send(method) }
 
             it "returns #{expected.sort.inspect}" do
@@ -46,14 +46,14 @@ describe Immutable::Set do
     end
   end
 
-  describe "#sort_by" do
+  describe '#sort_by' do
     # originally this test checked that #sort_by only called the block once
     #   for each item
     # however, when initializing a SortedSet, we need to make sure that it
     #   does not include any duplicates, and we use the block when checking that
     # the real point here is that the block should not be called an excessive
     #   number of times, degrading performance
-    it "calls the passed block no more than twice for each item" do
+    it 'calls the passed block no more than twice for each item' do
       count = 0
       fn    = lambda { |x| count += 1; -x }
       items = 100.times.collect { rand(10000) }.uniq

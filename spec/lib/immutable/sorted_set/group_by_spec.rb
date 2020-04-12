@@ -1,9 +1,9 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::SortedSet do
   [:group_by, :group, :classify].each do |method|
     describe "##{method}" do
-      context "with a block" do
+      context 'with a block' do
         [
           [[], []],
           [[1], [true => SS[1]]],
@@ -12,7 +12,7 @@ describe Immutable::SortedSet do
           context "on #{values.inspect}" do
             let(:sorted_set) { SS[*values] }
 
-            it "preserves the original" do
+            it 'preserves the original' do
               sorted_set.send(method, &:odd?)
               sorted_set.should eql(SS[*values])
             end
@@ -24,7 +24,7 @@ describe Immutable::SortedSet do
         end
       end
 
-      context "without a block" do
+      context 'without a block' do
         [
           [[], []],
           [[1], [1 => SS[1]]],
@@ -33,7 +33,7 @@ describe Immutable::SortedSet do
           context "on #{values.inspect}" do
             let(:sorted_set) { SS[*values] }
 
-            it "preserves the original" do
+            it 'preserves the original' do
               sorted_set.group_by
               sorted_set.should eql(SS[*values])
             end
@@ -45,8 +45,8 @@ describe Immutable::SortedSet do
         end
       end
 
-      context "from a subclass" do
-        it "returns an Hash whose values are instances of the subclass" do
+      context 'from a subclass' do
+        it 'returns an Hash whose values are instances of the subclass' do
           subclass = Class.new(Immutable::SortedSet)
           instance = subclass.new(['some', 'strings', 'here'])
           instance.group_by { |x| x }.values.each { |v| v.class.should be(subclass) }

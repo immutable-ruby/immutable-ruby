@@ -1,10 +1,10 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Set do
-  describe "#inspect" do
+  describe '#inspect' do
     [
-      [[], "Immutable::Set[]"],
-      [["A"], 'Immutable::Set["A"]'],
+      [[], 'Immutable::Set[]'],
+      [['A'], 'Immutable::Set["A"]'],
     ].each do |values, expected|
       describe "on #{values.inspect}" do
         let(:set) { S[*values] }
@@ -20,9 +20,9 @@ describe Immutable::Set do
     end
 
     describe 'on ["A", "B", "C"]' do
-      let(:set) { S["A", "B", "C"] }
+      let(:set) { S['A', 'B', 'C'] }
 
-      it "returns a programmer-readable representation of the set contents" do
+      it 'returns a programmer-readable representation of the set contents' do
         set.inspect.should match(/^Immutable::Set\["[A-C]", "[A-C]", "[A-C]"\]$/)
       end
 
@@ -31,11 +31,11 @@ describe Immutable::Set do
       end
     end
 
-    context "from a subclass" do
+    context 'from a subclass' do
       MySet = Class.new(Immutable::Set)
       let(:set) { MySet[1, 2] }
 
-      it "returns a programmer-readable representation of the set contents" do
+      it 'returns a programmer-readable representation of the set contents' do
         set.inspect.should match(/^MySet\[[1-2], [1-2]\]$/)
       end
 

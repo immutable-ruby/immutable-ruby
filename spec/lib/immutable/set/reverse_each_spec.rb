@@ -1,36 +1,36 @@
-require "spec_helper"
-require "set"
+require 'spec_helper'
+require 'set'
 
 describe Immutable::Set do
-  let(:set) { S["A", "B", "C"] }
+  let(:set) { S['A', 'B', 'C'] }
 
-  describe "#reverse_each" do
+  describe '#reverse_each' do
     let(:reverse_each) { set.reverse_each(&block) }
 
-    context "without a block" do
+    context 'without a block' do
       let(:block) { nil }
 
-      it "returns an Enumerator" do
+      it 'returns an Enumerator' do
         expect(reverse_each.class).to be(Enumerator)
         expect(reverse_each.to_a).to eq(set.to_a.reverse)
       end
     end
 
-    context "with an empty block" do
+    context 'with an empty block' do
       let(:block) { ->(item) {} }
 
-      it "returns self" do
+      it 'returns self' do
         expect(reverse_each).to be(set)
       end
     end
 
-    context "with a block" do
+    context 'with a block' do
       let(:items) { ::Set.new }
       let(:values) { ::Set.new(%w[A B C]) }
       let(:block) { ->(item) { items << item } }
       before(:each) { reverse_each }
 
-      it "yields all values" do
+      it 'yields all values' do
         expect(items).to eq(values)
       end
     end

@@ -1,4 +1,4 @@
-require "immutable/list"
+require 'immutable/list'
 
 module Immutable
 
@@ -249,7 +249,7 @@ module Immutable
       i = 0
       @front.each { |obj| result << ', ' if i > 0; result << obj.inspect; i += 1 }
       @rear.to_a.tap { |a| a.reverse! }.each { |obj| result << ', ' if i > 0; result << obj.inspect; i += 1 }
-      result << "]"
+      result << ']'
     end
 
     # Return `self`. Since this is an immutable object duplicates are
@@ -262,7 +262,7 @@ module Immutable
 
     # @private
     def pretty_print(pp)
-      pp.group(1, "#{self.class}[", "]") do
+      pp.group(1, "#{self.class}[", ']') do
         pp.breakable ''
         pp.seplist(self.to_a) { |obj| obj.pretty_print(pp) }
       end

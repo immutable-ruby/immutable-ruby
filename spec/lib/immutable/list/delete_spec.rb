@@ -1,8 +1,8 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::List do
-  describe "#delete" do
-    it "removes elements that are #== to the argument" do
+  describe '#delete' do
+    it 'removes elements that are #== to the argument' do
       L[1,2,3].delete(1).should eql(L[2,3])
       L[1,2,3].delete(2).should eql(L[1,3])
       L[1,2,3].delete(3).should eql(L[1,2])

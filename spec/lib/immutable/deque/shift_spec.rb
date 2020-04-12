@@ -1,16 +1,16 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Deque do
-  describe "#shift" do
+  describe '#shift' do
     [
       [[], []],
-      [["A"], []],
+      [['A'], []],
       [%w[A B C], %w[B C]],
     ].each do |values, expected|
       context "on #{values.inspect}" do
         let(:deque) { D.new(values) }
 
-        it "preserves the original" do
+        it 'preserves the original' do
           deque.shift
           deque.should eql(D.new(values))
         end
@@ -20,7 +20,7 @@ describe Immutable::Deque do
         end
 
 
-        it "returns a frozen instance" do
+        it 'returns a frozen instance' do
           deque.shift.should be_frozen
         end
       end

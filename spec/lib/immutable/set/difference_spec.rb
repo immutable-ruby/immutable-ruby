@@ -1,14 +1,14 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Set do
   [:difference, :subtract, :-].each do |method|
     describe "##{method}" do
       [
         [[], [], []],
-        [["A"], [], ["A"]],
-        [["A"], ["A"], []],
-        [%w[A B C], ["B"], %w[A C]],
-        [%w[A B C], %w[A C], ["B"]],
+        [['A'], [], ['A']],
+        [['A'], ['A'], []],
+        [%w[A B C], ['B'], %w[A C]],
+        [%w[A B C], %w[A C], ['B']],
         [%w[A B C D E F G H], [], %w[A B C D E F G H]],
         [%w[A B C M X Y Z], %w[B C D E F G H I J X], %w[A M Y Z]]
       ].each do |a, b, expected|
@@ -28,14 +28,14 @@ describe Immutable::Set do
           end
         end
 
-        context "when passed a Ruby Array" do
-          it "returns the expected Set" do
+        context 'when passed a Ruby Array' do
+          it 'returns the expected Set' do
             S[*a].difference(b.freeze).should eql(S[*expected])
           end
         end
       end
 
-      it "works on a wide variety of inputs" do
+      it 'works on a wide variety of inputs' do
         items = ('aa'..'zz').to_a
         50.times do
           array1 = items.sample(200)

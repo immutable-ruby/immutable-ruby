@@ -1,48 +1,48 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::SortedSet do
-  let(:sorted_set) { SS["A", "B", "C"] }
+  let(:sorted_set) { SS['A', 'B', 'C'] }
 
-  describe "#delete" do
-    context "on an empty set" do
-      it "returns an empty set" do
+  describe '#delete' do
+    context 'on an empty set' do
+      it 'returns an empty set' do
         SS.empty.delete(0).should be(SS.empty)
       end
     end
 
-    context "with an existing value" do
-      it "preserves the original" do
-        sorted_set.delete("B")
-        sorted_set.should eql(SS["A", "B", "C"])
+    context 'with an existing value' do
+      it 'preserves the original' do
+        sorted_set.delete('B')
+        sorted_set.should eql(SS['A', 'B', 'C'])
       end
 
-      it "returns a copy with the remaining of values" do
-        sorted_set.delete("B").should eql(SS["A", "C"])
-      end
-    end
-
-    context "with a non-existing value" do
-      it "preserves the original values" do
-        sorted_set.delete("D")
-        sorted_set.should eql(SS["A", "B", "C"])
-      end
-
-      it "returns self" do
-        sorted_set.delete("D").should equal(sorted_set)
+      it 'returns a copy with the remaining of values' do
+        sorted_set.delete('B').should eql(SS['A', 'C'])
       end
     end
 
-    context "when removing the last value in a sorted set" do
-      it "maintains the set order" do
-        ss = SS.new(["peanuts", "jam", "milk"]) { |word| word.length }
-        ss = ss.delete("jam").delete("peanuts").delete("milk")
-        ss = ss.add("banana").add("sugar").add("spam")
+    context 'with a non-existing value' do
+      it 'preserves the original values' do
+        sorted_set.delete('D')
+        sorted_set.should eql(SS['A', 'B', 'C'])
+      end
+
+      it 'returns self' do
+        sorted_set.delete('D').should equal(sorted_set)
+      end
+    end
+
+    context 'when removing the last value in a sorted set' do
+      it 'maintains the set order' do
+        ss = SS.new(['peanuts', 'jam', 'milk']) { |word| word.length }
+        ss = ss.delete('jam').delete('peanuts').delete('milk')
+        ss = ss.add('banana').add('sugar').add('spam')
         ss.to_a.should == ['spam', 'sugar', 'banana']
       end
 
-      context "when the set is in natural order" do
-        it "returns the canonical empty set" do
-          sorted_set.delete("B").delete("C").delete("A").should be(Immutable::EmptySortedSet)
+      context 'when the set is in natural order' do
+        it 'returns the canonical empty set' do
+          sorted_set.delete('B').delete('C').delete('A').should be(Immutable::EmptySortedSet)
         end
       end
     end
@@ -63,26 +63,26 @@ describe Immutable::SortedSet do
     end
   end
 
-  describe "#delete?" do
-    context "with an existing value" do
-      it "preserves the original" do
-        sorted_set.delete?("B")
-        sorted_set.should eql(SS["A", "B", "C"])
+  describe '#delete?' do
+    context 'with an existing value' do
+      it 'preserves the original' do
+        sorted_set.delete?('B')
+        sorted_set.should eql(SS['A', 'B', 'C'])
       end
 
-      it "returns a copy with the remaining values" do
-        sorted_set.delete?("B").should eql(SS["A", "C"])
+      it 'returns a copy with the remaining values' do
+        sorted_set.delete?('B').should eql(SS['A', 'C'])
       end
     end
 
-    context "with a non-existing value" do
-      it "preserves the original values" do
-        sorted_set.delete?("D")
-        sorted_set.should eql(SS["A", "B", "C"])
+    context 'with a non-existing value' do
+      it 'preserves the original values' do
+        sorted_set.delete?('D')
+        sorted_set.should eql(SS['A', 'B', 'C'])
       end
 
-      it "returns false" do
-        sorted_set.delete?("D").should be(false)
+      it 'returns false' do
+        sorted_set.delete?('D').should be(false)
       end
     end
   end

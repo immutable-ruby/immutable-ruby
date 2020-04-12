@@ -1,8 +1,8 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Vector do
-  describe "#group_by" do
-    context "with a block" do
+  describe '#group_by' do
+    context 'with a block' do
       [
         [[], []],
         [[1], [true => V[1]]],
@@ -19,7 +19,7 @@ describe Immutable::Vector do
       end
     end
 
-    context "without a block" do
+    context 'without a block' do
       [
         [[], []],
         [[1], [1 => V[1]]],
@@ -36,18 +36,18 @@ describe Immutable::Vector do
       end
     end
 
-    context "on an empty vector" do
-      it "returns an empty hash" do
+    context 'on an empty vector' do
+      it 'returns an empty hash' do
         V.empty.group_by { |x| x }.should eql(H.empty)
       end
     end
 
-    it "returns a hash without default proc" do
+    it 'returns a hash without default proc' do
       V[1,2,3].group_by { |x| x }.default_proc.should be_nil
     end
 
-    context "from a subclass" do
-      it "returns an Hash whose values are instances of the subclass" do
+    context 'from a subclass' do
+      it 'returns an Hash whose values are instances of the subclass' do
         subclass = Class.new(Immutable::Vector)
         instance = subclass.new([1, 'string', :symbol])
         instance.group_by { |x| x.class }.values.each { |v| v.class.should be(subclass) }

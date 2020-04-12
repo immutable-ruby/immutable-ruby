@@ -1,8 +1,8 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::List do
-  describe "#empty?" do
-    context "on a really big list" do
+  describe '#empty?' do
+    context 'on a really big list' do
       it "doesn't run out of stack" do
         -> { BigList.select(&:nil?).empty? }.should_not raise_error
       end
@@ -10,7 +10,7 @@ describe Immutable::List do
 
     [
       [[], true],
-      [["A"], false],
+      [['A'], false],
       [%w[A B C], false],
     ].each do |values, expected|
       context "on #{values.inspect}" do

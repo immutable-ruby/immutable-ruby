@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Set do
   [:to_a, :entries].each do |method|
@@ -9,7 +9,7 @@ describe Immutable::Set do
         let(:result) { set.send(method) }
 
         context "on 'a'..'#{letter}'" do
-          it "returns an equivalent array" do
+          it 'returns an equivalent array' do
             result.sort.should == values.sort
           end
 
@@ -18,10 +18,10 @@ describe Immutable::Set do
             set.should eql(S[*values])
           end
 
-          it "returns a mutable array" do
-            expect(result.last).to_not eq("The End")
-            result << "The End"
-            result.last.should == "The End"
+          it 'returns a mutable array' do
+            expect(result.last).to_not eq('The End')
+            result << 'The End'
+            result.last.should == 'The End'
           end
         end
       end

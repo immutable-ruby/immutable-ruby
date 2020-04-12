@@ -1,15 +1,15 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Set do
   [:subset?, :<=].each do |method|
     describe "##{method}" do
       [
         [[], [], true],
-        [["A"], [], false],
-        [[], ["A"], true],
-        [["A"], ["A"], true],
-        [%w[A B C], ["B"], false],
-        [["B"], %w[A B C], true],
+        [['A'], [], false],
+        [[], ['A'], true],
+        [['A'], ['A'], true],
+        [%w[A B C], ['B'], false],
+        [['B'], %w[A B C], true],
         [%w[A B C], %w[A C], false],
         [%w[A C], %w[A B C], true],
         [%w[A B C], %w[A B C], true],
@@ -29,11 +29,11 @@ describe Immutable::Set do
     describe "##{method}" do
       [
         [[], [], false],
-        [["A"], [], false],
-        [[], ["A"], true],
-        [["A"], ["A"], false],
-        [%w[A B C], ["B"], false],
-        [["B"], %w[A B C], true],
+        [['A'], [], false],
+        [[], ['A'], true],
+        [['A'], ['A'], false],
+        [%w[A B C], ['B'], false],
+        [['B'], %w[A B C], true],
         [%w[A B C], %w[A C], false],
         [%w[A C], %w[A B C], true],
         [%w[A B C], %w[A B C], false],

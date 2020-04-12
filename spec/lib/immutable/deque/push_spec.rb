@@ -1,16 +1,16 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Deque do
-  describe "#push" do
+  describe '#push' do
     [
-      [[], "A", ["A"]],
-      [["A"], "B", %w[A B]],
-      [%w[A B C], "D", %w[A B C D]],
+      [[], 'A', ['A']],
+      [['A'], 'B', %w[A B]],
+      [%w[A B C], 'D', %w[A B C D]],
     ].each do |original, item, expected|
       context "pushing #{item.inspect} into #{original.inspect}" do
         let(:deque) { D.new(original) }
 
-        it "preserves the original" do
+        it 'preserves the original' do
           deque.push(item)
           deque.should eql(D.new(original))
         end
@@ -19,16 +19,16 @@ describe Immutable::Deque do
           deque.push(item).should eql(D.new(expected))
         end
 
-        it "returns a frozen instance" do
+        it 'returns a frozen instance' do
           deque.push(item).should be_frozen
         end
       end
     end
 
-    context "on a subclass" do
+    context 'on a subclass' do
       let(:subclass) { Class.new(Immutable::Deque) }
       let(:empty_instance) { subclass.new }
-      it "returns an object of same class" do
+      it 'returns an object of same class' do
         empty_instance.push(1).class.should be subclass
       end
     end

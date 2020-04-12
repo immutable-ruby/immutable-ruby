@@ -1,7 +1,7 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Set do
-  describe "#product" do
+  describe '#product' do
     [
       [[], 1],
       [[2], 2],

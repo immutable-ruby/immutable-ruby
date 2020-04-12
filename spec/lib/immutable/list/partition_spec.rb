@@ -1,13 +1,13 @@
-require "spec_helper"
-require "thread"
+require 'spec_helper'
+require 'thread'
 
 describe Immutable::List do
-  describe "#partition" do
-    it "is lazy" do
+  describe '#partition' do
+    it 'is lazy' do
       -> { Immutable.stream { fail }.partition }.should_not raise_error
     end
 
-    it "calls the passed block only once for each item" do
+    it 'calls the passed block only once for each item' do
       count = 0
       a,b = L[1, 2, 3].partition { |item| count += 1; item.odd? }
       (a.size + b.size).should be(3) # force realization of lazy lists
@@ -17,7 +17,7 @@ describe Immutable::List do
     # note: Lists are not as lazy as they could be!
     # they always realize elements a bit ahead of the current one
 
-    it "returns a lazy list of items for which predicate is true" do
+    it 'returns a lazy list of items for which predicate is true' do
       count = 0
       a,b = L[1, 2, 3, 4].partition { |item| count += 1; item.odd? }
       a.take(1).should == [1]
@@ -26,7 +26,7 @@ describe Immutable::List do
       count.should be(4) # would be 3 if lists were lazier
     end
 
-    it "returns a lazy list of items for which predicate is false" do
+    it 'returns a lazy list of items for which predicate is false' do
       count = 0
       a,b = L[1, 2, 3, 4].partition { |item| count += 1; item.odd? }
       b.take(1).should == [2]
@@ -35,7 +35,7 @@ describe Immutable::List do
       count.should be(4)
     end
 
-    it "calls the passed block only once for each item, even with multiple threads" do
+    it 'calls the passed block only once for each item, even with multiple threads' do
       mutex = Mutex.new
       yielded = [] # record all the numbers yielded to the block, to make sure each is yielded only once
       list = Immutable.iterate(0) do |n|
@@ -79,32 +79,32 @@ describe Immutable::List do
       context "on #{values.inspect}" do
         let(:list) { L[*values] }
 
-        context "with a block" do
+        context 'with a block' do
           let(:result)  { list.partition(&:odd?) }
           let(:matches) { result.first }
           let(:remainder) { result.last }
 
-          it "preserves the original" do
+          it 'preserves the original' do
             list.should eql(L[*values])
           end
 
-          it "returns a frozen array with two items" do
+          it 'returns a frozen array with two items' do
             result.class.should be(Array)
             result.should be_frozen
             result.size.should be(2)
           end
 
-          it "correctly identifies the matches" do
+          it 'correctly identifies the matches' do
             matches.should eql(L[*expected_matches])
           end
 
-          it "correctly identifies the remainder" do
+          it 'correctly identifies the remainder' do
             remainder.should eql(L[*expected_remainder])
           end
         end
 
-        context "without a block" do
-          it "returns an Enumerator" do
+        context 'without a block' do
+          it 'returns an Enumerator' do
             list.partition.class.should be(Enumerator)
             list.partition.each(&:odd?).should eql([L[*expected_matches], L[*expected_remainder]])
           end

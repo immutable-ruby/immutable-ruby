@@ -1,5 +1,5 @@
-require "benchmark/ips"
-require "immutable/list"
+require 'benchmark/ips'
+require 'immutable/list'
 
 Benchmark.ips do |b|
   sml_list = Immutable::List[1]
@@ -8,7 +8,7 @@ Benchmark.ips do |b|
   lrg_list = Immutable::List.empty
   10000.times { |i| lrg_list = lrg_list.cons(i) }
 
-  b.report "cons small" do |n|
+  b.report 'cons small' do |n|
     a = 0
     sml = sml_list
     while a < n
@@ -17,7 +17,7 @@ Benchmark.ips do |b|
     end
   end
 
-  b.report "cons medium" do |n|
+  b.report 'cons medium' do |n|
     a = 0
     med = med_list
     while a < n
@@ -26,7 +26,7 @@ Benchmark.ips do |b|
     end
   end
 
-  b.report "cons large" do |n|
+  b.report 'cons large' do |n|
     a = 0
     lrg = lrg_list
     while a < n

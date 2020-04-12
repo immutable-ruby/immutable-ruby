@@ -1,8 +1,8 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Hash do
-  describe ".new" do
-    it "is amenable to overriding of #initialize" do
+  describe '.new' do
+    it 'is amenable to overriding of #initialize' do
       class SnazzyHash < Immutable::Hash
         def initialize
           super({'snazzy?' => 'oh yeah'})
@@ -12,16 +12,16 @@ describe Immutable::Hash do
       SnazzyHash.new['snazzy?'].should == 'oh yeah'
     end
 
-    context "from a subclass" do
-      it "returns a frozen instance of the subclass" do
+    context 'from a subclass' do
+      it 'returns a frozen instance of the subclass' do
         subclass = Class.new(Immutable::Hash)
-        instance = subclass.new("some" => "values")
+        instance = subclass.new('some' => 'values')
         instance.class.should be(subclass)
         instance.frozen?.should be true
       end
     end
 
-    it "accepts an array as initializer" do
+    it 'accepts an array as initializer' do
       H.new([['a', 'b'], ['c', 'd']]).should eql(H['a' => 'b', 'c' => 'd'])
     end
 
@@ -33,8 +33,8 @@ describe Immutable::Hash do
     end
   end
 
-  describe ".[]" do
-    it "accepts a Ruby Hash as initializer" do
+  describe '.[]' do
+    it 'accepts a Ruby Hash as initializer' do
       hash = H[a: 1, b: 2]
       hash.class.should be(Immutable::Hash)
       hash.size.should == 2
@@ -42,7 +42,7 @@ describe Immutable::Hash do
       hash.key?(:b).should == true
     end
 
-    it "accepts a Immutable::Hash as initializer" do
+    it 'accepts a Immutable::Hash as initializer' do
       hash = H[H.new(a: 1, b: 2)]
       hash.class.should be(Immutable::Hash)
       hash.size.should == 2
@@ -50,7 +50,7 @@ describe Immutable::Hash do
       hash.key?(:b).should == true
     end
 
-    it "accepts an array as initializer" do
+    it 'accepts an array as initializer' do
       hash = H[[[:a, 1], [:b, 2]]]
       hash.class.should be(Immutable::Hash)
       hash.size.should == 2
@@ -58,7 +58,7 @@ describe Immutable::Hash do
       hash.key?(:b).should == true
     end
 
-    it "can be used with a subclass of Immutable::Hash" do
+    it 'can be used with a subclass of Immutable::Hash' do
       subclass = Class.new(Immutable::Hash)
       instance = subclass[a: 1, b: 2]
       instance.class.should be(subclass)

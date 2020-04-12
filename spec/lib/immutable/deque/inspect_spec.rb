@@ -1,10 +1,10 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Deque do
-  describe "#inspect" do
+  describe '#inspect' do
     [
       [[], 'Immutable::Deque[]'],
-      [["A"], 'Immutable::Deque["A"]'],
+      [['A'], 'Immutable::Deque["A"]'],
       [%w[A B C], 'Immutable::Deque["A", "B", "C"]']
     ].each do |values, expected|
       context "on #{values.inspect}" do

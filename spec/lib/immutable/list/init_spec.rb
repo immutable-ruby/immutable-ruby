@@ -1,20 +1,20 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::List do
-  describe "#init" do
-    it "is lazy" do
+  describe '#init' do
+    it 'is lazy' do
       -> { Immutable.stream { false }.init }.should_not raise_error
     end
 
     [
       [[], []],
-      [["A"], []],
+      [['A'], []],
       [%w[A B C], %w[A B]],
     ].each do |values, expected|
       context "on #{values.inspect}" do
         let(:list) { L[*values] }
 
-        it "preserves the original" do
+        it 'preserves the original' do
           list.init
           list.should eql(L[*values])
         end

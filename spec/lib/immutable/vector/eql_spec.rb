@@ -1,46 +1,46 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Vector do
-  describe "#eql" do
-    let(:vector) { V["A", "B", "C"] }
+  describe '#eql' do
+    let(:vector) { V['A', 'B', 'C'] }
 
-    it "returns false when comparing with an array with the same contents" do
+    it 'returns false when comparing with an array with the same contents' do
       vector.eql?(%w[A B C]).should == false
     end
 
-    it "returns false when comparing with an arbitrary object" do
+    it 'returns false when comparing with an arbitrary object' do
       vector.eql?(Object.new).should == false
     end
 
-    it "returns false when comparing an empty vector with an empty array" do
+    it 'returns false when comparing an empty vector with an empty array' do
       V.empty.eql?([]).should == false
     end
 
-    it "returns false when comparing with a subclass of Immutable::Vector" do
+    it 'returns false when comparing with a subclass of Immutable::Vector' do
       vector.eql?(Class.new(Immutable::Vector).new(%w[A B C])).should == false
     end
   end
 
-  describe "#==" do
-    let(:vector) { V["A", "B", "C"] }
+  describe '#==' do
+    let(:vector) { V['A', 'B', 'C'] }
 
-    it "returns true when comparing with an array with the same contents" do
+    it 'returns true when comparing with an array with the same contents' do
       (vector == %w[A B C]).should == true
     end
 
-    it "returns false when comparing with an arbitrary object" do
+    it 'returns false when comparing with an arbitrary object' do
       (vector == Object.new).should == false
     end
 
-    it "returns true when comparing an empty vector with an empty array" do
+    it 'returns true when comparing an empty vector with an empty array' do
       (V.empty == []).should == true
     end
 
-    it "returns true when comparing with a subclass of Immutable::Vector" do
+    it 'returns true when comparing with a subclass of Immutable::Vector' do
       (vector == Class.new(Immutable::Vector).new(%w[A B C])).should == true
     end
 
-    it "works on larger vectors" do
+    it 'works on larger vectors' do
       array = 2000.times.map { rand(10000) }
       (V.new(array.dup) == array).should == true
     end
@@ -51,10 +51,10 @@ describe Immutable::Vector do
       [
         [[], [], true],
         [[], [nil], false],
-        [["A"], [], false],
-        [["A"], ["A"], true],
-        [["A"], ["B"], false],
-        [%w[A B], ["A"], false],
+        [['A'], [], false],
+        [['A'], ['A'], true],
+        [['A'], ['B'], false],
+        [%w[A B], ['A'], false],
         [%w[A B C], %w[A B C], true],
         [%w[C A B], %w[A B C], false],
       ].each do |a, b, expected|

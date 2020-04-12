@@ -1,12 +1,12 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Hash do
   [:size, :length].each do |method|
     describe "##{method}" do
       [
         [[], 0],
-        [["A" => "aye"], 1],
-        [["A" => "bee", "B" => "bee", "C" => "see"], 3],
+        [['A' => 'aye'], 1],
+        [['A' => 'bee', 'B' => 'bee', 'C' => 'see'], 3],
       ].each do |values, result|
 
         it "returns #{result} for #{values.inspect}" do
@@ -18,7 +18,7 @@ describe Immutable::Hash do
       srand 89_533_474
       random_things = (lots + lots).sort_by { |x|rand }
 
-      it "has the correct size after adding lots of things with colliding keys and such" do
+      it 'has the correct size after adding lots of things with colliding keys and such' do
         h = H.empty
         random_things.each do |thing|
           h = h.put(thing, thing * 2)
@@ -35,7 +35,7 @@ describe Immutable::Hash do
         end
         h
       end.size
-      it "has the correct size after lots of addings and removings" do
+      it 'has the correct size after lots of addings and removings' do
         h = H.empty
         random_actions.each do |(act, ob)|
           if act == :add

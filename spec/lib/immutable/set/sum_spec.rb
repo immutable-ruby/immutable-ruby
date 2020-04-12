@@ -1,7 +1,7 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Set do
-  describe "#sum" do
+  describe '#sum' do
     [
       [[], 0],
       [[2], 2],

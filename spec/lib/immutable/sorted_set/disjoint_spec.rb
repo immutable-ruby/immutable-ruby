@@ -1,14 +1,14 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::SortedSet do
-  describe "#disjoint?" do
+  describe '#disjoint?' do
     [
       [[], [], true],
-      [["A"], [], true],
-      [[], ["A"], true],
-      [["A"], ["A"], false],
-      [%w[A B C], ["B"], false],
-      [["B"], %w[A B C], false],
+      [['A'], [], true],
+      [[], ['A'], true],
+      [['A'], ['A'], false],
+      [%w[A B C], ['B'], false],
+      [['B'], %w[A B C], false],
       [%w[A B C], %w[D E], true],
       [%w[F G H I], %w[A B C], true],
       [%w[A B C], %w[A B C], false],

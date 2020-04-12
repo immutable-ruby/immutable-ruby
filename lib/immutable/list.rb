@@ -1,11 +1,11 @@
-require "thread"
-require "set"
-require "concurrent"
+require 'thread'
+require 'set'
+require 'concurrent'
 
-require "immutable/undefined"
-require "immutable/enumerable"
-require "immutable/hash"
-require "immutable/set"
+require 'immutable/undefined'
+require 'immutable/enumerable'
+require 'immutable/hash'
+require 'immutable/set'
 
 module Immutable
   class << self
@@ -477,7 +477,7 @@ module Immutable
     # @return [Vector]
     # @raise [TypeError] if count is not an integer.
     def rotate(count = 1)
-      raise TypeError, "expected Integer" if not count.is_a?(Integer)
+      raise TypeError, 'expected Integer' if not count.is_a?(Integer)
       return self if empty? || (count % size) == 0
       count = (count >= 0) ? count % size : (size - (~count % size) - 1)
       drop(count).append(take(count))
@@ -1201,9 +1201,9 @@ module Immutable
     #
     # @return [String]
     def inspect
-      result = "Immutable::List["
+      result = 'Immutable::List['
       each_with_index { |obj, i| result << ', ' if i > 0; result << obj.inspect }
-      result << "]"
+      result << ']'
     end
 
     # Allows this `List` to be printed at the `pry` console, or using `pp` (from the
@@ -1213,7 +1213,7 @@ module Immutable
     #
     # @private
     def pretty_print(pp)
-      pp.group(1, "Immutable::List[", "]") do
+      pp.group(1, 'Immutable::List[', ']') do
         pp.breakable ''
         pp.seplist(self) { |obj| obj.pretty_print(pp) }
       end

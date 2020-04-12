@@ -1,8 +1,8 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Hash do
-  describe "#to_a" do
-    it "returns an Array of [key, value] pairs in same order as #each" do
+  describe '#to_a' do
+    it 'returns an Array of [key, value] pairs in same order as #each' do
       hash = H[:a => 1, 1 => :a, 3 => :b, :b => 5]
       pairs = []
       hash.each_pair { |k,v| pairs << [k,v] }

@@ -1,17 +1,17 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::List do
   [:union, :|].each do |method|
     describe "##{method}" do
-      it "is lazy" do
+      it 'is lazy' do
         -> { Immutable.stream { fail }.union(Immutable.stream { fail }) }.should_not raise_error
       end
 
       [
         [[], [], []],
-        [["A"], [], ["A"]],
+        [['A'], [], ['A']],
         [%w[A B C], [], %w[A B C]],
-        [%w[A A], ["A"], ["A"]],
+        [%w[A A], ['A'], ['A']],
       ].each do |a, b, expected|
         context "returns #{expected.inspect}" do
           let(:list_a) { L[*a] }

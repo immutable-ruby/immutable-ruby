@@ -1,7 +1,7 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Vector do
-  describe "#reverse" do
+  describe '#reverse' do
     [
       [[], []],
       [[1], [1]],

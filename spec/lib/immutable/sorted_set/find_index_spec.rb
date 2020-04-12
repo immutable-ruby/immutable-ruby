@@ -1,18 +1,18 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::SortedSet do
   [:find_index, :index].each do |method|
     describe "##{method}" do
       [
-        [[], "A", nil],
+        [[], 'A', nil],
         [[], nil, nil],
-        [["A"], "A", 0],
-        [["A"], "B", nil],
-        [["A"], nil, nil],
-        [["A", "B", "C"], "A", 0],
-        [["A", "B", "C"], "B", 1],
-        [["A", "B", "C"], "C", 2],
-        [["A", "B", "C"], "D", nil],
+        [['A'], 'A', 0],
+        [['A'], 'B', nil],
+        [['A'], nil, nil],
+        [['A', 'B', 'C'], 'A', 0],
+        [['A', 'B', 'C'], 'B', 1],
+        [['A', 'B', 'C'], 'C', 2],
+        [['A', 'B', 'C'], 'D', nil],
         [0..1, 1, 1],
         [0..10, 5, 5],
         [0..10, 10, 10],

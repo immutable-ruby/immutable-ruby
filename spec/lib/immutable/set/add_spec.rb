@@ -1,41 +1,41 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Set do
-  let(:original) { S["A", "B", "C"] }
+  let(:original) { S['A', 'B', 'C'] }
 
   [:add, :<<].each do |method|
     describe "##{method}" do
-      context "with a unique value" do
-        let(:result) { original.send(method, "D") }
+      context 'with a unique value' do
+        let(:result) { original.send(method, 'D') }
 
-        it "preserves the original" do
+        it 'preserves the original' do
           result
-          original.should eql(S["A", "B", "C"])
+          original.should eql(S['A', 'B', 'C'])
         end
 
-        it "returns a copy with the superset of values" do
-          result.should eql(S["A", "B", "C", "D"])
+        it 'returns a copy with the superset of values' do
+          result.should eql(S['A', 'B', 'C', 'D'])
         end
       end
 
-      context "with a duplicate value" do
-        let(:result) { original.send(method, "C") }
+      context 'with a duplicate value' do
+        let(:result) { original.send(method, 'C') }
 
-        it "preserves the original values" do
+        it 'preserves the original values' do
           result
-          original.should eql(S["A", "B", "C"])
+          original.should eql(S['A', 'B', 'C'])
         end
 
-        it "returns self" do
+        it 'returns self' do
           result.should equal(original)
         end
       end
 
-      it "can add nil to a set" do
-        original.add(nil).should eql(S["A", "B", "C", nil])
+      it 'can add nil to a set' do
+        original.add(nil).should eql(S['A', 'B', 'C', nil])
       end
 
-      it "works on large sets, with many combinations of input" do
+      it 'works on large sets, with many combinations of input' do
         50.times do
           # Array#sample is buggy on RBX 2.5.8; that's why #uniq is needed here
           # See https://github.com/rubinius/rubinius/issues/3506
@@ -49,27 +49,27 @@ describe Immutable::Set do
     end
   end
 
-  describe "#add?" do
-    context "with a unique value" do
-      let(:result) { original.add?("D") }
+  describe '#add?' do
+    context 'with a unique value' do
+      let(:result) { original.add?('D') }
 
-      it "preserves the original" do
-        original.should eql(S["A", "B", "C"])
+      it 'preserves the original' do
+        original.should eql(S['A', 'B', 'C'])
       end
 
-      it "returns a copy with the superset of values" do
-        result.should eql(S["A", "B", "C", "D"])
+      it 'returns a copy with the superset of values' do
+        result.should eql(S['A', 'B', 'C', 'D'])
       end
     end
 
-    context "with a duplicate value" do
-      let(:result) { original.add?("C") }
+    context 'with a duplicate value' do
+      let(:result) { original.add?('C') }
 
-      it "preserves the original values" do
-        original.should eql(S["A", "B", "C"])
+      it 'preserves the original values' do
+        original.should eql(S['A', 'B', 'C'])
       end
 
-      it "returns false" do
+      it 'returns false' do
         result.should equal(false)
       end
     end

@@ -1,8 +1,8 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::List do
-  describe "#break" do
-    it "is lazy" do
+  describe '#break' do
+    it 'is lazy' do
       -> { Immutable.stream { fail }.break { |item| false } }.should_not raise_error
     end
 
@@ -19,47 +19,47 @@ describe Immutable::List do
       context "on #{values.inspect}" do
         let(:list) { L[*values] }
 
-        context "with a block" do
+        context 'with a block' do
           let(:result) { list.break { |item| item > 2 }}
           let(:prefix) { result.first }
           let(:remainder) { result.last }
 
-          it "preserves the original" do
+          it 'preserves the original' do
             result
             list.should eql(L[*values])
           end
 
-          it "returns a frozen array with two items" do
+          it 'returns a frozen array with two items' do
             result.class.should be(Array)
             result.should be_frozen
             result.size.should be(2)
           end
 
-          it "correctly identifies the prefix" do
+          it 'correctly identifies the prefix' do
             prefix.should eql(L[*expected_prefix])
           end
 
-          it "correctly identifies the remainder" do
+          it 'correctly identifies the remainder' do
             remainder.should eql(L[*expected_remainder])
           end
         end
 
-        context "without a block" do
+        context 'without a block' do
           let(:result) { list.break }
           let(:prefix) { result.first }
           let(:remainder) { result.last }
 
-          it "returns a frozen array with two items" do
+          it 'returns a frozen array with two items' do
             result.class.should be(Array)
             result.should be_frozen
             result.size.should be(2)
           end
 
-          it "returns self as the prefix" do
+          it 'returns self as the prefix' do
             prefix.should equal(list)
           end
 
-          it "leaves the remainder empty" do
+          it 'leaves the remainder empty' do
             remainder.should be_empty
           end
         end

@@ -1,38 +1,38 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Vector do
-  describe "#join" do
-    context "with a separator" do
+  describe '#join' do
+    context 'with a separator' do
       [
-        [[], ""],
-        [["A"], "A"],
-        [[DeterministicHash.new("A", 1), DeterministicHash.new("B", 2), DeterministicHash.new("C", 3)], "A|B|C"]
+        [[], ''],
+        [['A'], 'A'],
+        [[DeterministicHash.new('A', 1), DeterministicHash.new('B', 2), DeterministicHash.new('C', 3)], 'A|B|C']
       ].each do |values, expected|
         describe "on #{values.inspect}" do
           let(:vector) { V[*values] }
 
-          it "preserves the original" do
-            vector.join("|")
+          it 'preserves the original' do
+            vector.join('|')
             vector.should eql(V[*values])
           end
 
           it "returns #{expected.inspect}" do
-            vector.join("|").should == expected
+            vector.join('|').should == expected
           end
         end
       end
     end
 
-    context "without a separator" do
+    context 'without a separator' do
       [
-        [[], ""],
-        [["A"], "A"],
-        [[DeterministicHash.new("A", 1), DeterministicHash.new("B", 2), DeterministicHash.new("C", 3)], "ABC"]
+        [[], ''],
+        [['A'], 'A'],
+        [[DeterministicHash.new('A', 1), DeterministicHash.new('B', 2), DeterministicHash.new('C', 3)], 'ABC']
       ].each do |values, expected|
         describe "on #{values.inspect}" do
           let(:vector) { V[*values] }
 
-          it "preserves the original" do
+          it 'preserves the original' do
             vector.join
             vector.should eql(V[*values])
           end
@@ -44,13 +44,13 @@ describe Immutable::Vector do
       end
     end
 
-    context "without a separator (with global default separator set)" do
+    context 'without a separator (with global default separator set)' do
       before { $, = '**' }
       after  { $, = nil }
 
       describe 'on ["A", "B", "C"]' do
         it 'returns "A**B**C"' do
-          V["A", "B", "C"].join.should == "A**B**C"
+          V['A', 'B', 'C'].join.should == 'A**B**C'
         end
       end
     end

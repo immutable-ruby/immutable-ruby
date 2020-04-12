@@ -1,8 +1,8 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::List do
-  describe "#split_at" do
-    it "is lazy" do
+  describe '#split_at' do
+    it 'is lazy' do
       -> { Immutable.stream { fail }.split_at(1) }.should_not raise_error
     end
 
@@ -19,22 +19,22 @@ describe Immutable::List do
         let(:prefix) { result.first }
         let(:remainder) { result.last }
 
-        it "preserves the original" do
+        it 'preserves the original' do
           result
           list.should eql(L[*values])
         end
 
-        it "returns a frozen array with two items" do
+        it 'returns a frozen array with two items' do
           result.class.should be(Array)
           result.should be_frozen
           result.size.should be(2)
         end
 
-        it "correctly identifies the matches" do
+        it 'correctly identifies the matches' do
           prefix.should eql(L[*expected_prefix])
         end
 
-        it "correctly identifies the remainder" do
+        it 'correctly identifies the remainder' do
           remainder.should eql(L[*expected_remainder])
         end
       end

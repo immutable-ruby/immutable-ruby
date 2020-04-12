@@ -1,10 +1,10 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Deque do
-  describe "#empty?" do
+  describe '#empty?' do
     [
       [[], true],
-      [["A"], false],
+      [['A'], false],
       [%w[A B C], false],
     ].each do |values, expected|
       context "on #{values.inspect}" do
@@ -15,21 +15,21 @@ describe Immutable::Deque do
     end
 
     context "after dedequeing an item from #{%w[A B C].inspect}" do
-      it "returns false" do
-        D["A", "B", "C"].dequeue.should_not be_empty
+      it 'returns false' do
+        D['A', 'B', 'C'].dequeue.should_not be_empty
       end
     end
   end
 
-  describe ".empty" do
-    it "returns the canonical empty deque" do
+  describe '.empty' do
+    it 'returns the canonical empty deque' do
       D.empty.size.should be(0)
       D.empty.class.should be(Immutable::Deque)
       D.empty.object_id.should be(Immutable::EmptyDeque.object_id)
     end
 
-    context "from a subclass" do
-      it "returns an empty instance of the subclass" do
+    context 'from a subclass' do
+      it 'returns an empty instance of the subclass' do
         subclass = Class.new(Immutable::Deque)
         subclass.empty.class.should be(subclass)
         subclass.empty.should be_empty

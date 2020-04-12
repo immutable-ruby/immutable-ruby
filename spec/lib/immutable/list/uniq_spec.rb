@@ -1,27 +1,27 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::List do
-  describe "#uniq" do
-    it "is lazy" do
+  describe '#uniq' do
+    it 'is lazy' do
       -> { Immutable.stream { fail }.uniq }.should_not raise_error
     end
 
-    context "when passed a block" do
-      it "uses the block to identify duplicates" do
-        L["a", "A", "b"].uniq(&:upcase).should eql(Immutable::List["a", "b"])
+    context 'when passed a block' do
+      it 'uses the block to identify duplicates' do
+        L['a', 'A', 'b'].uniq(&:upcase).should eql(Immutable::List['a', 'b'])
       end
     end
 
     [
       [[], []],
-      [["A"], ["A"]],
+      [['A'], ['A']],
       [%w[A B C], %w[A B C]],
       [%w[A B A C C], %w[A B C]],
     ].each do |values, expected|
       context "on #{values.inspect}" do
         let(:list) { L[*values] }
 
-        it "preserves the original" do
+        it 'preserves the original' do
           list.uniq
           list.should eql(L[*values])
         end

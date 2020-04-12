@@ -1,8 +1,8 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::List do
-  describe "#at" do
-    context "on a really big list" do
+  describe '#at' do
+    context 'on a really big list' do
       let(:list) { BigList }
 
       it "doesn't run out of stack" do
@@ -12,11 +12,11 @@ describe Immutable::List do
 
     [
       [[], 10, nil],
-      [["A"], 10, nil],
-      [%w[A B C], 0, "A"],
-      [%w[A B C], 2, "C"],
-      [%w[A B C], -1, "C"],
-      [%w[A B C], -2, "B"],
+      [['A'], 10, nil],
+      [%w[A B C], 0, 'A'],
+      [%w[A B C], 2, 'C'],
+      [%w[A B C], -1, 'C'],
+      [%w[A B C], -2, 'B'],
       [%w[A B C], -4, nil]
     ].each do |values, number, expected|
       describe "#{values.inspect} with #{number}" do

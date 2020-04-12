@@ -1,12 +1,12 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Set do
-  describe "#min" do
-    context "with a block" do
+  describe '#min' do
+    context 'with a block' do
       [
         [[], nil],
-        [["A"], "A"],
-        [%w[Ichi Ni San], "Ni"],
+        [['A'], 'A'],
+        [%w[Ichi Ni San], 'Ni'],
       ].each do |values, expected|
         describe "on #{values.inspect}" do
           let(:set) { S[*values] }
@@ -19,11 +19,11 @@ describe Immutable::Set do
       end
     end
 
-    context "without a block" do
+    context 'without a block' do
       [
         [[], nil],
-        [["A"], "A"],
-        [%w[Ichi Ni San], "Ichi"],
+        [['A'], 'A'],
+        [%w[Ichi Ni San], 'Ichi'],
       ].each do |values, expected|
         describe "on #{values.inspect}" do
           it "returns #{expected.inspect}" do

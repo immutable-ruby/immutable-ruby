@@ -1,11 +1,11 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Vector do
-  describe "#first" do
+  describe '#first' do
     [
       [[], nil],
-      [["A"], "A"],
-      [%w[A B C], "A"],
+      [['A'], 'A'],
+      [%w[A B C], 'A'],
       [(1..32), 1],
     ].each do |values, expected|
       describe "on #{values.inspect}" do

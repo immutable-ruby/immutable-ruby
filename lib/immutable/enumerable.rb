@@ -114,7 +114,7 @@ module Immutable
     # `separator`. By default, the `separator` is `$,`, the global default string
     # separator, which is normally `nil`.
     def join(separator = $,)
-      result = ""
+      result = ''
       if separator
         each_with_index { |obj, i| result << separator if i > 0; result << obj.to_s }
       else
@@ -132,12 +132,12 @@ module Immutable
     def inspect
       result = "#{self.class}["
       each_with_index { |obj, i| result << ', ' if i > 0; result << obj.inspect }
-      result << "]"
+      result << ']'
     end
 
     # @private
     def pretty_print(pp)
-      pp.group(1, "#{self.class}[", "]") do
+      pp.group(1, "#{self.class}[", ']') do
         pp.breakable ''
         pp.seplist(self) { |obj| obj.pretty_print(pp) }
       end

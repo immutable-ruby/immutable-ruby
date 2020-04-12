@@ -1,13 +1,13 @@
-require "pry"
-require "rspec"
-require "immutable/hash"
-require "immutable/set"
-require "immutable/vector"
-require "immutable/sorted_set"
-require "immutable/list"
-require "immutable/deque"
-require "immutable/core_ext"
-require "immutable/nested"
+require 'pry'
+require 'rspec'
+require 'immutable/hash'
+require 'immutable/set'
+require 'immutable/vector'
+require 'immutable/sorted_set'
+require 'immutable/list'
+require 'immutable/deque'
+require 'immutable/core_ext'
+require 'immutable/nested'
 
 # Suppress warnings from use of old RSpec expectation and mock syntax
 # If all tests are eventually updated to use the new syntax, this can be removed
@@ -28,17 +28,17 @@ SS = Immutable::SortedSet
 D  = Immutable::Deque
 EmptyList = Immutable::EmptyList
 
-Struct.new("Customer", :name, :address)
+Struct.new('Customer', :name, :address)
 
 def fixture(name)
   File.read(fixture_path(name))
 end
 
 def fixture_path(name)
-  File.join("spec", "fixtures", name)
+  File.join('spec', 'fixtures', name)
 end
 
-if RUBY_ENGINE == "ruby"
+if RUBY_ENGINE == 'ruby'
   def calculate_stack_overflow_depth(n)
     calculate_stack_overflow_depth(n + 1)
   rescue SystemStackError

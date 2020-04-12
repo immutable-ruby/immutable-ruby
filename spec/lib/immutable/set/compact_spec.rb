@@ -1,22 +1,22 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Set do
-  describe "#compact" do
+  describe '#compact' do
     [
       [[], []],
-      [["A"], ["A"]],
+      [['A'], ['A']],
       [%w[A B C], %w[A B C]],
       [[nil], []],
-      [[nil, "B"], ["B"]],
-      [["A", nil], ["A"]],
+      [[nil, 'B'], ['B']],
+      [['A', nil], ['A']],
       [[nil, nil], []],
-      [["A", nil, "C"], %w[A C]],
-      [[nil, "B", nil], ["B"]],
+      [['A', nil, 'C'], %w[A C]],
+      [[nil, 'B', nil], ['B']],
     ].each do |values, expected|
       describe "on #{values.inspect}" do
         let(:set) { S[*values] }
 
-        it "preserves the original" do
+        it 'preserves the original' do
           set.compact
           set.should eql(S[*values])
         end

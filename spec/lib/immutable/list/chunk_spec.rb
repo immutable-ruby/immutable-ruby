@@ -1,20 +1,20 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::List do
-  describe "#chunk" do
-    it "is lazy" do
+  describe '#chunk' do
+    it 'is lazy' do
       -> { Immutable.stream { fail }.chunk(2) }.should_not raise_error
     end
 
     [
       [[], []],
-      [["A"], [L["A"]]],
-      [%w[A B C], [L["A", "B"], L["C"]]],
+      [['A'], [L['A']]],
+      [%w[A B C], [L['A', 'B'], L['C']]],
     ].each do |values, expected|
       context "on #{values.inspect}" do
         let(:list) { L[*values] }
 
-        it "preserves the original" do
+        it 'preserves the original' do
           list.chunk(2)
           list.should eql(L[*values])
         end

@@ -1,8 +1,8 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::List do
-  describe "#any?" do
-    context "on a really big list" do
+  describe '#any?' do
+    context 'on a really big list' do
       let(:list) { BigList }
 
       it "doesn't run out of stack" do
@@ -10,37 +10,37 @@ describe Immutable::List do
       end
     end
 
-    context "when empty" do
-      it "with a block returns false" do
+    context 'when empty' do
+      it 'with a block returns false' do
        L.empty.any? {}.should == false
       end
 
-      it "with no block returns false" do
+      it 'with no block returns false' do
         L.empty.any?.should == false
       end
     end
 
-    context "when not empty" do
-      context "with a block" do
-        let(:list) { L["A", "B", "C", nil] }
+    context 'when not empty' do
+      context 'with a block' do
+        let(:list) { L['A', 'B', 'C', nil] }
 
-        ["A", "B", "C", nil].each do |value|
+        ['A', 'B', 'C', nil].each do |value|
           it "returns true if the block ever returns true (#{value.inspect})" do
             list.any? { |item| item == value }.should == true
           end
         end
 
-        it "returns false if the block always returns false" do
-          list.any? { |item| item == "D" }.should == false
+        it 'returns false if the block always returns false' do
+          list.any? { |item| item == 'D' }.should == false
         end
       end
 
-      context "with no block" do
-        it "returns true if any value is truthy" do
-          L[nil, false, "A", true].any?.should == true
+      context 'with no block' do
+        it 'returns true if any value is truthy' do
+          L[nil, false, 'A', true].any?.should == true
         end
 
-        it "returns false if all values are falsey" do
+        it 'returns false if all values are falsey' do
           L[nil, false].any?.should == false
         end
       end

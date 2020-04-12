@@ -1,8 +1,8 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Deque do
-  describe "modification (using #push, #pop, #shift, and #unshift)" do
-    it "works when applied in many random combinations" do
+  describe 'modification (using #push, #pop, #shift, and #unshift)' do
+    it 'works when applied in many random combinations' do
       array = [1,2,3]
       deque = Immutable::Deque.new(array)
       1000.times do

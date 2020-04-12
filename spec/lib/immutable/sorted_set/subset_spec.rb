@@ -1,14 +1,14 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::SortedSet do
-  describe "#subset?" do
+  describe '#subset?' do
     [
       [[], [], true],
-      [["A"], [], false],
-      [[], ["A"], true],
-      [["A"], ["A"], true],
-      [%w[A B C], ["B"], false],
-      [["B"], %w[A B C], true],
+      [['A'], [], false],
+      [[], ['A'], true],
+      [['A'], ['A'], true],
+      [%w[A B C], ['B'], false],
+      [['B'], %w[A B C], true],
       [%w[A B C], %w[A C], false],
       [%w[A C], %w[A B C], true],
       [%w[A B C], %w[A B C], true],
@@ -23,14 +23,14 @@ describe Immutable::SortedSet do
     end
   end
 
-  describe "#proper_subset?" do
+  describe '#proper_subset?' do
     [
       [[], [], false],
-      [["A"], [], false],
-      [[], ["A"], true],
-      [["A"], ["A"], false],
-      [%w[A B C], ["B"], false],
-      [["B"], %w[A B C], true],
+      [['A'], [], false],
+      [[], ['A'], true],
+      [['A'], ['A'], false],
+      [%w[A B C], ['B'], false],
+      [['B'], %w[A B C], true],
       [%w[A B C], %w[A C], false],
       [%w[A C], %w[A B C], true],
       [%w[A B C], %w[A B C], false],

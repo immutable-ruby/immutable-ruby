@@ -1,46 +1,46 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Vector do
   [:get, :at].each do |method|
     describe "##{method}" do
-      context "when empty" do
-        it "always returns nil" do
+      context 'when empty' do
+        it 'always returns nil' do
           (-1..1).each do |i|
             V.empty.send(method, i).should be_nil
           end
         end
       end
 
-      context "when not empty" do
+      context 'when not empty' do
         let(:vector) { V[*(1..1025)] }
 
-        context "with a positive index" do
-          context "within the absolute bounds of the vector" do
-            it "returns the value at the specified index from the head" do
+        context 'with a positive index' do
+          context 'within the absolute bounds of the vector' do
+            it 'returns the value at the specified index from the head' do
               (0..(vector.size - 1)).each do |i|
                 vector.send(method, i).should == i + 1
               end
             end
           end
 
-          context "outside the absolute bounds of the vector" do
-            it "returns nil" do
+          context 'outside the absolute bounds of the vector' do
+            it 'returns nil' do
               vector.send(method, vector.size).should be_nil
             end
           end
         end
 
-        context "with a negative index" do
-          context "within the absolute bounds of the vector" do
-            it "returns the value at the specified index from the tail" do
+        context 'with a negative index' do
+          context 'within the absolute bounds of the vector' do
+            it 'returns the value at the specified index from the tail' do
               (-vector.size..-1).each do |i|
                 vector.send(method, i).should == vector.size + i + 1
               end
             end
           end
 
-          context "outside the absolute bounds of the vector" do
-            it "returns nil" do
+          context 'outside the absolute bounds of the vector' do
+            it 'returns nil' do
               vector.send(method, -vector.size.next).should be_nil
             end
           end
@@ -49,7 +49,7 @@ describe Immutable::Vector do
 
       [1, 10, 31, 32, 33, 1024, 1025, 2000].each do |size|
         context "on a #{size}-item vector" do
-          it "works correctly, even after various addings and removings" do
+          it 'works correctly, even after various addings and removings' do
             array = size.times.map { rand(10000) }
             vector = V.new(array)
             100.times do

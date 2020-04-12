@@ -1,36 +1,36 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Hash do
-  describe "#empty?" do
+  describe '#empty?' do
     [
       [[], true],
-      [["A" => "aye"], false],
-      [["A" => "aye", "B" => "bee", "C" => "see"], false],
+      [['A' => 'aye'], false],
+      [['A' => 'aye', 'B' => 'bee', 'C' => 'see'], false],
     ].each do |pairs, result|
       it "returns #{result} for #{pairs.inspect}" do
         H[*pairs].empty?.should == result
       end
     end
 
-    it "returns true for empty hashes which have a default block" do
+    it 'returns true for empty hashes which have a default block' do
       H.new { 'default' }.empty?.should == true
     end
   end
 
-  describe ".empty" do
-    it "returns the canonical empty Hash" do
+  describe '.empty' do
+    it 'returns the canonical empty Hash' do
       H.empty.should be_empty
       H.empty.should be(Immutable::EmptyHash)
     end
 
-    context "from a subclass" do
-      it "returns an empty instance of the subclass" do
+    context 'from a subclass' do
+      it 'returns an empty instance of the subclass' do
         subclass = Class.new(Immutable::Hash)
         subclass.empty.class.should be subclass
         subclass.empty.should be_empty
       end
 
-      it "calls overridden #initialize when creating empty Hash" do
+      it 'calls overridden #initialize when creating empty Hash' do
         subclass = Class.new(Immutable::Hash) do
           def initialize
             @variable = 'value'

@@ -1,15 +1,15 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::List do
   [:group_by, :group].each do |method|
     describe "##{method}" do
-      context "on a really big list" do
+      context 'on a really big list' do
         it "doesn't run out of stack" do
           -> { BigList.send(method) }.should_not raise_error
         end
       end
 
-      context "with a block" do
+      context 'with a block' do
         [
           [[], []],
           [[1], [true => L[1]]],
@@ -23,7 +23,7 @@ describe Immutable::List do
         end
       end
 
-      context "without a block" do
+      context 'without a block' do
         [
           [[], []],
           [[1], [1 => L[1]]],

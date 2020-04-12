@@ -1,17 +1,17 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::SortedSet do
   [:dup, :clone].each do |method|
     [
       [],
-      ["A"],
+      ['A'],
       %w[A B C],
       (1..32),
     ].each do |values|
       describe "on #{values.inspect}" do
         let(:sorted_set) { SS[*values] }
 
-        it "returns self" do
+        it 'returns self' do
           sorted_set.send(method).should equal(sorted_set)
         end
       end

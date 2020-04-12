@@ -1,13 +1,13 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Set do
   [:intersection, :&].each do |method|
     describe "##{method}" do
       [
         [[], [], []],
-        [["A"], [], []],
-        [["A"], ["A"], ["A"]],
-        [%w[A B C], ["B"], ["B"]],
+        [['A'], [], []],
+        [['A'], ['A'], ['A']],
+        [%w[A B C], ['B'], ['B']],
         [%w[A B C], %w[A C], %w[A C]],
       ].each do |a, b, expected|
         context "for #{a.inspect} and #{b.inspect}"  do
@@ -32,14 +32,14 @@ describe Immutable::Set do
           end
         end
 
-        context "when passed a Ruby Array" do
-          it "returns the expected Set" do
+        context 'when passed a Ruby Array' do
+          it 'returns the expected Set' do
             S[*a].send(method, b.freeze).should eql(S[*expected])
           end
         end
       end
 
-      it "returns results consistent with Array#&" do
+      it 'returns results consistent with Array#&' do
         50.times do
           array1 = rand(100).times.map { rand(1000000).to_s(16) }
           array2 = rand(100).times.map { rand(1000000).to_s(16) }

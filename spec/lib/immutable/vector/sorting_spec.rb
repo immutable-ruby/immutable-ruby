@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::Vector do
   [
@@ -8,14 +8,14 @@ describe Immutable::Vector do
     describe "##{method}" do
       [
         [[], []],
-        [["A"], ["A"]],
+        [['A'], ['A']],
         [%w[Ichi Ni San], %w[Ni San Ichi]],
       ].each do |values, expected|
         describe "on #{values.inspect}" do
           let(:vector) { V[*values] }
 
-          context "with a block" do
-            it "preserves the original" do
+          context 'with a block' do
+            it 'preserves the original' do
               vector.send(method, &comparator)
               vector.should eql(V[*values])
             end
@@ -25,8 +25,8 @@ describe Immutable::Vector do
             end
           end
 
-          context "without a block" do
-            it "preserves the original" do
+          context 'without a block' do
+            it 'preserves the original' do
               vector.send(method)
               vector.should eql(V[*values])
             end

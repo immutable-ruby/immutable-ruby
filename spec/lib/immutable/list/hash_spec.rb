@@ -1,20 +1,20 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::List do
-  describe "#hash" do
-    context "on a really big list" do
+  describe '#hash' do
+    context 'on a really big list' do
       it "doesn't run out of stack" do
         -> { BigList.hash }.should_not raise_error
       end
     end
 
-    context "on an empty list" do
-      it "returns 0" do
+    context 'on an empty list' do
+      it 'returns 0' do
         expect(L.empty.hash).to eq(0)
       end
     end
 
-    it "values are sufficiently distributed" do
+    it 'values are sufficiently distributed' do
       (1..4000).each_slice(4).map { |a, b, c, d| L[a, b, c, d].hash }.uniq.size.should == 1000
     end
   end

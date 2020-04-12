@@ -1,8 +1,8 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::List do
-  describe "#product" do
-    context "on a really big list" do
+  describe '#product' do
+    context 'on a really big list' do
       it "doesn't run out of stack" do
         -> { BigList.product }.should_not raise_error
       end

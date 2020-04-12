@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::SortedSet do
   [
@@ -8,14 +8,14 @@ describe Immutable::SortedSet do
     describe "##{method}" do
       [
         [[], []],
-        [["A"], ["A"]],
+        [['A'], ['A']],
         [%w[Ichi Ni San], %w[Ni San Ichi]],
       ].each do |values, expected|
         describe "on #{values.inspect}" do
           let(:sorted_set) { SS.new(values) { |item| item.reverse }}
 
-          context "with a block" do
-            it "preserves the original" do
+          context 'with a block' do
+            it 'preserves the original' do
               sorted_set.send(method, &comparator)
               sorted_set.to_a.should == SS.new(values) { |item| item.reverse }
             end
@@ -26,8 +26,8 @@ describe Immutable::SortedSet do
             end
           end
 
-          context "without a block" do
-            it "preserves the original" do
+          context 'without a block' do
+            it 'preserves the original' do
               sorted_set.send(method)
               sorted_set.to_a.should == SS.new(values) { |item| item.reverse }
             end
@@ -43,10 +43,10 @@ describe Immutable::SortedSet do
   end
 
   describe :sort do
-    context "on a SortedSet with custom sort order" do
+    context 'on a SortedSet with custom sort order' do
       let(:sorted_set) { SS.new([1,2,3,4]) { |x,y| y <=> x }}
 
-      it "returns a SortedSet with the natural sort order" do
+      it 'returns a SortedSet with the natural sort order' do
         result = sorted_set.sort
         expect(sorted_set.to_a).to eq([4,3,2,1])
         expect(result.to_a).to eq([1,2,3,4])

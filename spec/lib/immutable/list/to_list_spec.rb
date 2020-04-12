@@ -1,16 +1,16 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Immutable::List do
-  describe "#to_list" do
+  describe '#to_list' do
     [
       [],
-      ["A"],
+      ['A'],
       %w[A B C],
     ].each do |values|
       context "on #{values.inspect}" do
         let(:list) { L[*values] }
 
-        it "returns self" do
+        it 'returns self' do
           list.to_list.should equal(list)
         end
       end
