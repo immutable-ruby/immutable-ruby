@@ -48,7 +48,7 @@ module Immutable
     # Return the number of items in this `Vector`
     # @return [Integer]
     attr_reader :size
-    alias :length :size
+    alias length size
 
     class << self
       # Create a new `Vector` populated with the given items.
@@ -132,8 +132,8 @@ module Immutable
     def add(item)
       update_root(@size, item)
     end
-    alias :<< :add
-    alias :push :add
+    alias << add
+    alias push add
 
     # Return a new `Vector` with a new value at the given `index`. If `index`
     # is greater than the length of the vector, the returned vector will be
@@ -226,7 +226,7 @@ module Immutable
       return nil if index >= @size || index < 0
       leaf_node_for(@root, @levels * BITS_PER_LEVEL, index)[index & INDEX_MASK]
     end
-    alias :at :get
+    alias at get
 
     # Retrieve the value at `index` with optional default.
     #
@@ -355,7 +355,7 @@ module Immutable
         subsequence(arg, length)
       end
     end
-    alias :[] :slice
+    alias [] slice
 
     # Return a new `Vector` with the given values inserted before the element
     # at `index`. If `index` is greater than the current length, `nil` values
@@ -490,8 +490,8 @@ module Immutable
       return enum_for(:select) unless block_given?
       reduce(self.class.empty) { |vector, item| yield(item) ? vector.add(item) : vector }
     end
-    alias :find_all :select
-    alias :keep_if  :select
+    alias find_all select
+    alias keep_if  select
 
     # Return a new `Vector` with all items which are equal to `obj` removed.
     # `#==` is used for checking equality.
@@ -518,7 +518,7 @@ module Immutable
       return self if empty?
       self.class.new(super)
     end
-    alias :collect :map
+    alias collect map
 
     # Return a new `Vector` with the concatenated results of running the block once
     # for every element in this `Vector`.
@@ -633,7 +633,7 @@ module Immutable
       other = other.dup if other.frozen?
       replace_suffix(@size, other)
     end
-    alias :concat :+
+    alias concat +
 
     # Combine two vectors by "zipping" them together. `others` should be arrays
     # and/or vectors. The corresponding elements from this `Vector` and each of
@@ -1308,7 +1308,7 @@ module Immutable
         flatten_node(@root, @levels * BITS_PER_LEVEL, [])
       end
     end
-    alias :to_ary :to_a
+    alias to_ary to_a
 
     # Return true if `other` has the same type and contents as this `Vector`.
     #
@@ -1332,7 +1332,7 @@ module Immutable
     def dup
       self
     end
-    alias :clone :dup
+    alias clone dup
 
     # @return [::Array]
     # @private

@@ -15,7 +15,7 @@ module Immutable
       return enum_for(:reject) if not block_given?
       select { |item| !yield(item) }
     end
-    alias :delete_if :reject
+    alias delete_if reject
 
     # Return a new collection with all `nil` elements removed.
     def compact
@@ -143,8 +143,8 @@ module Immutable
       end
     end
 
-    alias :to_ary :to_a
-    alias :index :find_index
+    alias to_ary to_a
+    alias index find_index
 
     ## Compatibility fixes
 

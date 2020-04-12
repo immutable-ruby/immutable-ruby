@@ -119,7 +119,7 @@ module Immutable
     def size
       @trie.size
     end
-    alias :length :size
+    alias length size
 
     # Return `true` if this `Hash` contains no key/value pairs.
     #
@@ -140,9 +140,9 @@ module Immutable
     def key?(key)
       @trie.key?(key)
     end
-    alias :has_key? :key?
-    alias :include? :key?
-    alias :member?  :key?
+    alias has_key? key?
+    alias include? key?
+    alias member?  key?
 
     # Return `true` if this `Hash` has one or more keys which map to the provided value.
     #
@@ -155,7 +155,7 @@ module Immutable
       each { |k,v| return true if value == v }
       false
     end
-    alias :has_value? :value?
+    alias has_value? value?
 
     # Retrieve the value corresponding to the provided key object. If not found, and
     # this `Hash` has a default block, the default block is called to provide the
@@ -182,7 +182,7 @@ module Immutable
         @default.call(key)
       end
     end
-    alias :[] :get
+    alias [] get
 
     # Retrieve the value corresponding to the given key object, or use the provided
     # default value or block, or otherwise raise a `KeyError`.
@@ -348,7 +348,7 @@ module Immutable
       @trie.each(&block)
       self
     end
-    alias :each_pair :each
+    alias each_pair each
 
     # Call the block once for each key/value pair in this `Hash`, passing the key/value
     # pair as parameters. Iteration order will be the opposite of {#each}.
@@ -423,7 +423,7 @@ module Immutable
       return self if empty?
       self.class.new(super, &@default)
     end
-    alias :collect :map
+    alias collect map
 
     # Return a new `Hash` with all the key/value pairs for which the block returns true.
     #
@@ -439,8 +439,8 @@ module Immutable
       return enum_for(:select) unless block_given?
       derive_new_hash(@trie.select(&block))
     end
-    alias :find_all :select
-    alias :keep_if  :select
+    alias find_all select
+    alias keep_if  select
 
     # Yield `[key, value]` pairs until one is found for which the block returns true.
     # Return that `[key, value]` pair. If the block never returns true, return `nil`.
@@ -458,7 +458,7 @@ module Immutable
       each { |entry| return entry if yield entry }
       nil
     end
-    alias :detect :find
+    alias detect find
 
     # Return a new `Hash` containing all the key/value pairs from this `Hash` and
     # `other`. If no block is provided, the value for entries with colliding keys
@@ -849,7 +849,7 @@ module Immutable
     def dup
       self
     end
-    alias :clone :dup
+    alias clone dup
 
     # Allows this `Hash` to be printed at the `pry` console, or using `pp` (from the
     # Ruby standard library), in a way which takes the amount of horizontal space on
@@ -883,7 +883,7 @@ module Immutable
       end
       output
     end
-    alias :to_h :to_hash
+    alias to_h to_hash
 
     # Return a `Proc` which accepts a key as an argument and returns the value.
     # The `Proc` behaves like {#get} (when the key is missing, it returns nil or

@@ -133,7 +133,7 @@ module Immutable
     def size
       @node.size
     end
-    alias :length :size
+    alias length size
 
     # Return a new `SortedSet` with `item` added. If `item` is already in the set,
     # return `self`.
@@ -151,7 +151,7 @@ module Immutable
       end
       self
     end
-    alias :<< :add
+    alias << add
 
     # If `item` is not a member of this `SortedSet`, return a new `SortedSet` with
     # `item` added. Otherwise, return `false`.
@@ -343,7 +343,7 @@ module Immutable
         subsequence(arg, length)
       end
     end
-    alias :[] :slice
+    alias [] slice
 
     # Return a new `SortedSet` with only the elements at the given `indices`.
     # If any of the `indices` do not exist, they will be skipped.
@@ -451,8 +451,8 @@ module Immutable
       each { |item| items_to_delete << item unless yield(item) }
       derive_new_sorted_set(@node.bulk_delete(items_to_delete))
     end
-    alias :find_all :select
-    alias :keep_if  :select
+    alias find_all select
+    alias keep_if  select
 
     # Invoke the given block once for each item in the set, and return a new
     # `SortedSet` containing the values returned by the block. If no block is
@@ -469,7 +469,7 @@ module Immutable
       return self if empty?
       self.class.alloc(@node.from_items(super))
     end
-    alias :collect :map
+    alias collect map
 
     # Return `true` if the given item is present in this `SortedSet`. More precisely,
     # return `true` if an object which compares as "equal" using this set's
@@ -483,7 +483,7 @@ module Immutable
     def include?(item)
       @node.include?(item)
     end
-    alias :member? :include?
+    alias member? include?
 
     # Return a new `SortedSet` with the same items, but a sort order determined
     # by the given block.
@@ -504,7 +504,7 @@ module Immutable
         self.class.new(self)
       end
     end
-    alias :sort_by :sort
+    alias sort_by sort
 
     # Find the index of a given object or an element that satisfies the given
     # block.
@@ -550,7 +550,7 @@ module Immutable
         super(&block)
       end
     end
-    alias :index :find_index
+    alias index find_index
 
     # Drop the first `n` elements and return the rest in a new `SortedSet`.
     #
@@ -628,9 +628,9 @@ module Immutable
     def union(other)
       self.class.alloc(@node.bulk_insert(other))
     end
-    alias :| :union
-    alias :+ :union
-    alias :merge :union
+    alias | union
+    alias + union
+    alias merge union
 
     # Return a new `SortedSet` which contains all the items which are members of both
     # this set and `other`. `other` can be any `Enumerable` object.
@@ -644,7 +644,7 @@ module Immutable
     def intersection(other)
       self.class.alloc(@node.keep_only(other))
     end
-    alias :& :intersection
+    alias & intersection
 
     # Return a new `SortedSet` with all the items in `other` removed. `other` can be
     # any `Enumerable` object.
@@ -658,8 +658,8 @@ module Immutable
     def difference(other)
       self.class.alloc(@node.bulk_delete(other))
     end
-    alias :subtract :difference
-    alias :- :difference
+    alias subtract difference
+    alias - difference
 
     # Return a new `SortedSet` with all the items which are members of this
     # set or of `other`, but not both. `other` can be any `Enumerable` object.
@@ -673,7 +673,7 @@ module Immutable
     def exclusion(other)
       ((self | other) - (self & other))
     end
-    alias :^ :exclusion
+    alias ^ exclusion
 
     # Return `true` if all items in this set are also in `other`.
     #
@@ -752,8 +752,8 @@ module Immutable
       !disjoint?(other)
     end
 
-    alias :group :group_by
-    alias :classify :group_by
+    alias group group_by
+    alias classify group_by
 
     # Select elements greater than a value.
     #
@@ -967,7 +967,7 @@ module Immutable
     def dup
       self
     end
-    alias :clone :dup
+    alias clone dup
 
     # @return [::Array]
     # @private

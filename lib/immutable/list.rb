@@ -175,7 +175,7 @@ module Immutable
       end
       result
     end
-    alias :length :size
+    alias length size
 
     # Create a new `List` with `item` added at the front. This is a constant
     # time operation.
@@ -189,7 +189,7 @@ module Immutable
     def add(item)
       Cons.new(item, self)
     end
-    alias :cons :add
+    alias cons add
 
     # Create a new `List` with `item` added at the end. This is much less efficient
     # than adding items at the front.
@@ -235,7 +235,7 @@ module Immutable
         Cons.new(yield(head), tail.map(&block))
       end
     end
-    alias :collect :map
+    alias collect map
 
     # Return a `List` which is realized by transforming each item into a `List`,
     # and flattening the resulting lists.
@@ -275,8 +275,8 @@ module Immutable
         end
       end
     end
-    alias :find_all :select
-    alias :keep_if  :select
+    alias find_all select
+    alias keep_if  select
 
     # Return a `List` which contains all elements up to, but not including, the
     # first element for which the block returns `nil` or `false`.
@@ -380,8 +380,8 @@ module Immutable
         Cons.new(head, tail.append(other))
       end
     end
-    alias :concat :append
-    alias :+ :append
+    alias concat append
+    alias + append
 
     # Return a `List` with the same items, but in reverse order.
     #
@@ -640,7 +640,7 @@ module Immutable
         Cons.new(head, tail.union(other, items.add(head)))
       end
     end
-    alias :| :union
+    alias | union
 
     # Return a `List` with all elements except the last one.
     #
@@ -742,7 +742,7 @@ module Immutable
       chunk(number).each(&block)
       self
     end
-    alias :each_slice :each_chunk
+    alias each_slice each_chunk
 
     # Return a new `List` with all nested lists recursively "flattened out",
     # that is, their elements inserted into the new `List` in the place where
@@ -776,7 +776,7 @@ module Immutable
     def group_by(&block)
       group_by_with(EmptyList, &block)
     end
-    alias :group :group_by
+    alias group group_by
 
     # Retrieve the item at `index`. Negative indices count back from the end of
     # the list (-1 is the last item). If `index` is invalid (either too high or
@@ -868,7 +868,7 @@ module Immutable
         list.take(length)
       end
     end
-    alias :[] :slice
+    alias [] slice
 
     # Return a `List` of indices of matching objects.
     #
@@ -1187,7 +1187,7 @@ module Immutable
     def dup
       self
     end
-    alias :clone :dup
+    alias clone dup
 
     # Return `self`.
     # @return [List]
@@ -1290,7 +1290,7 @@ module Immutable
     def size
       @size ||= super
     end
-    alias :length :size
+    alias length size
 
     def cached_size?
       @size != nil
@@ -1319,7 +1319,7 @@ module Immutable
       realize if @atomic.value != 2
       @head
     end
-    alias :first :head
+    alias first head
 
     def tail
       realize if @atomic.value != 2
@@ -1334,7 +1334,7 @@ module Immutable
     def size
       @size ||= super
     end
-    alias :length :size
+    alias length size
 
     def cached_size?
       @size != nil
@@ -1392,7 +1392,7 @@ module Immutable
       realize if @head == Undefined
       @head
     end
-    alias :first :head
+    alias first head
 
     def tail
       realize if @tail == Undefined
@@ -1407,7 +1407,7 @@ module Immutable
     def size
       @size ||= super
     end
-    alias :length :size
+    alias length size
 
     def cached_size?
       @size != nil
@@ -1568,7 +1568,7 @@ module Immutable
       def head
         nil
       end
-      alias :first :head
+      alias first head
 
       # There are no subsequent elements, so return an empty list.
       # @return [self]
@@ -1585,7 +1585,7 @@ module Immutable
       def size
         0
       end
-      alias :length :size
+      alias length size
 
       def cached_size?
         true

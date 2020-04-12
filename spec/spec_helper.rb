@@ -70,7 +70,7 @@ class DeterministicHash
   def ==(other)
     other.is_a?(DeterministicHash) && self.value == other.value
   end
-  alias :eql? :==
+  alias eql? ==
 
   def <=>(other)
     self.value <=> other.value

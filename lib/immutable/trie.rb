@@ -269,7 +269,7 @@ module Immutable
       end
       true
     end
-    alias :== :eql?
+    alias == eql?
 
     protected
 

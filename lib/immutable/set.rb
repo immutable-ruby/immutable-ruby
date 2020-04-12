@@ -91,7 +91,7 @@ module Immutable
     def size
       @trie.size
     end
-    alias :length :size
+    alias length size
 
     # Return a new `Set` with `item` added. If `item` is already in the set,
     # return `self`.
@@ -105,7 +105,7 @@ module Immutable
     def add(item)
       include?(item) ? self : self.class.alloc(@trie.put(item, nil))
     end
-    alias :<< :add
+    alias << add
 
     # If `item` is not a member of this `Set`, return a new `Set` with `item` added.
     # Otherwise, return `false`.
@@ -197,8 +197,8 @@ module Immutable
       trie = @trie.select { |key, _| yield(key) }
       new_trie(trie)
     end
-    alias :find_all :select
-    alias :keep_if  :select
+    alias find_all select
+    alias keep_if  select
 
     # Call the block once for each item in this `Set`. All the values returned
     # from the block will be gathered into a new `Set`. If no block is given,
@@ -215,7 +215,7 @@ module Immutable
       return self if empty?
       self.class.new(super)
     end
-    alias :collect :map
+    alias collect map
 
     # Return `true` if the given item is present in this `Set`. More precisely,
     # return `true` if an object with the same `#hash` code, and which is also `#eql?`
@@ -230,7 +230,7 @@ module Immutable
     def include?(object)
       @trie.key?(object)
     end
-    alias :member? :include?
+    alias member? include?
 
     # Return a member of this `Set`. The member chosen will be the first one which
     # would be yielded by {#each}. If the set is empty, return `nil`.
@@ -308,9 +308,9 @@ module Immutable
       trie = large_set_trie.bulk_put(small_set_pairs)
       new_trie(trie)
     end
-    alias :| :union
-    alias :+ :union
-    alias :merge :union
+    alias | union
+    alias + union
+    alias merge union
 
     # Return a new `Set` which contains all the items which are members of both
     # this `Set` and `other`. `other` can be any `Enumerable` object.
@@ -333,7 +333,7 @@ module Immutable
       end
       new_trie(trie)
     end
-    alias :& :intersection
+    alias & intersection
 
     # Return a new `Set` with all the items in `other` removed. `other` can be
     # any `Enumerable` object.
@@ -351,8 +351,8 @@ module Immutable
       end
       new_trie(trie)
     end
-    alias :subtract :difference
-    alias :- :difference
+    alias subtract difference
+    alias - difference
 
     # Return a new `Set` which contains all the items which are members of this
     # `Set` or of `other`, but not both. `other` can be any `Enumerable` object.
@@ -365,7 +365,7 @@ module Immutable
     def exclusion(other)
       ((self | other) - (self & other))
     end
-    alias :^ :exclusion
+    alias ^ exclusion
 
     # Return `true` if all items in this `Set` are also in `other`.
     #
@@ -391,7 +391,7 @@ module Immutable
       end
       all? { |item| other.include?(item) }
     end
-    alias :<= :subset?
+    alias <= subset?
 
     # Return `true` if all items in `other` are also in this `Set`.
     #
@@ -403,7 +403,7 @@ module Immutable
     def superset?(other)
       other.subset?(self)
     end
-    alias :>= :superset?
+    alias >= superset?
 
     # Returns `true` if `other` contains all the items in this `Set`, plus at least
     # one item which is not in this set.
@@ -422,7 +422,7 @@ module Immutable
       end
       all? { |item| other.include?(item) }
     end
-    alias :< :proper_subset?
+    alias < proper_subset?
 
     # Returns `true` if this `Set` contains all the items in `other`, plus at least
     # one item which is not in `other`.
@@ -436,7 +436,7 @@ module Immutable
     def proper_superset?(other)
       other.proper_subset?(self)
     end
-    alias :> :proper_superset?
+    alias > proper_superset?
 
     # Return `true` if this `Set` and `other` do not share any items.
     #
@@ -484,8 +484,8 @@ module Immutable
       end
     end
 
-    alias :group :group_by
-    alias :classify :group_by
+    alias group group_by
+    alias classify group_by
 
     # Return a randomly chosen item from this `Set`. If the set is empty, return `nil`.
     #
@@ -519,7 +519,7 @@ module Immutable
       end
       true
     end
-    alias :== :eql?
+    alias == eql?
 
     # See `Object#hash`.
     # @return [Integer]
@@ -533,7 +533,7 @@ module Immutable
     def dup
       self
     end
-    alias :clone :dup
+    alias clone dup
 
     undef :"<=>" # Sets are not ordered, so Enumerable#<=> will give a meaningless result
     undef :each_index # Set members cannot be accessed by 'index', so #each_index is not meaningful

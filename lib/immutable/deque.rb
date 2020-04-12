@@ -86,7 +86,7 @@ module Immutable
     def size
       @front.size + @rear.size
     end
-    alias :length :size
+    alias length size
 
     # Return the first item in the `Deque`. If the deque is empty, return `nil`.
     #
@@ -149,7 +149,7 @@ module Immutable
     def push(item)
       self.class.alloc(@front, @rear.cons(item))
     end
-    alias :enqueue :push
+    alias enqueue push
 
     # Return a new `Deque` with the last item removed.
     #
@@ -198,7 +198,7 @@ module Immutable
 
       self.class.alloc(front.tail, rear)
     end
-    alias :dequeue :shift
+    alias dequeue shift
 
     # Return an empty `Deque` instance, of the same class as this one. Useful if you
     # have multiple subclasses of `Deque` and want to treat them polymorphically.
@@ -223,15 +223,15 @@ module Immutable
       return true if other.equal?(self)
       instance_of?(other.class) && to_ary.eql?(other.to_ary)
     end
-    alias :== :eql?
+    alias == eql?
 
     # Return an `Array` with the same elements, in the same order.
     # @return [Array]
     def to_a
       @front.to_a.concat(@rear.to_a.tap { |a| a.reverse! })
     end
-    alias :entries :to_a
-    alias :to_ary  :to_a
+    alias entries to_a
+    alias to_ary  to_a
 
     # Return a {List} with the same elements, in the same order.
     # @return [Immutable::List]
@@ -258,7 +258,7 @@ module Immutable
     def dup
       self
     end
-    alias :clone :dup
+    alias clone dup
 
     # @private
     def pretty_print(pp)
