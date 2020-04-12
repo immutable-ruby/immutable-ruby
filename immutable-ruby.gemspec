@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
   spec.date          = Time.now.strftime("%Y-%m-%d")
 
   spec.platform      = Gem::Platform::RUBY
-  spec.required_ruby_version = ">= 2.2.2" # as of Nov 2017, JRuby is compatible with 2.2.2
+  spec.required_ruby_version = ">= 2.4.0"
 
   spec.files         = Dir["lib/**/*"]
   spec.test_files    = Dir["spec/**/*"]

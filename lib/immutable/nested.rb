@@ -5,7 +5,6 @@ require "immutable/vector"
 require "immutable/sorted_set"
 require "immutable/list"
 require "immutable/deque"
-require "immutable/core_ext/struct"
 
 module Immutable
   class << self
