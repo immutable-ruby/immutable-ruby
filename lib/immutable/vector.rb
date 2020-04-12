@@ -1084,13 +1084,13 @@ module Immutable
       end
 
       if block_given?
-        while true
+        loop do
           yield build_array[]
           return self if bump_counters[]
         end
       else
         result = []
-        while true
+        loop do
           result << build_array[]
           return result if bump_counters[]
         end

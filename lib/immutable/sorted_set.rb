@@ -948,7 +948,7 @@ module Immutable
       return false if not instance_of?(other.class)
       return false if size != other.size
       a, b = self.to_enum, other.to_enum
-      while true
+      loop do
         return false if !a.next.eql?(b.next)
       end
     rescue StopIteration

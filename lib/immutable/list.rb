@@ -268,7 +268,7 @@ module Immutable
       return enum_for(:select) unless block_given?
       LazyList.new do
         list = self
-        while true
+        loop do
           break list if list.empty?
           break Cons.new(list.head, list.tail.select(&block)) if yield(list.head)
           list = list.tail
@@ -895,7 +895,7 @@ module Immutable
       return EmptyList if empty?
       LazyList.new do
         node = self
-        while true
+        loop do
           break Cons.new(i, node.tail.indices(Undefined, i + 1, &block)) if yield(node.head)
           node = node.tail
           break EmptyList if node.empty?
@@ -1346,7 +1346,7 @@ module Immutable
     MUTEX = Mutex.new
 
     def realize
-      while true
+      loop do
         # try to "claim" the right to run the block which realizes target
         if @atomic.compare_and_set(0,1) # full memory barrier here
           begin
@@ -1455,7 +1455,7 @@ module Immutable
       mutex = @mutex
       mutex && mutex.synchronize do
         return if @head != Undefined # another thread got ahead of us
-        while true
+        loop do
           if !@buffer.empty?
             @head = @buffer.shift
             @tail = Partitioned.new(@partitioner, @buffer, @mutex)
@@ -1516,7 +1516,7 @@ module Immutable
         mutex = @mutex
         mutex && mutex.synchronize do
           return if @head != Undefined # another thread got ahead of us
-          while true
+          loop do
             if !@buffer.empty?
               @head = @buffer.shift
               @tail = Left.new(@splitter, @buffer, @mutex)
