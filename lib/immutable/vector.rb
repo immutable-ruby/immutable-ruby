@@ -62,7 +62,7 @@ module Immutable
       #
       # @return [Vector]
       def empty
-        @empty ||= self.new
+        @empty ||= new
       end
 
       # "Raw" allocation of a new `Vector`. Used internally to create a new
@@ -553,7 +553,7 @@ module Immutable
     #
     # @return [Vector]
     def uniq(&block)
-      array = self.to_a
+      array = to_a
       if array.frozen?
         self.class.new(array.uniq(&block).freeze)
       elsif array.uniq!(&block) # returns nil if no changes were made
@@ -609,7 +609,7 @@ module Immutable
     # @return [Vector]
     def flatten(level = -1)
       return self if level == 0
-      array = self.to_a
+      array = to_a
       if array.frozen?
         self.class.new(array.flatten(level).freeze)
       elsif array.flatten!(level) # returns nil if no changes were made
@@ -862,7 +862,7 @@ module Immutable
       elsif n == 1
         each { |item| yield [item] }
       elsif n == @size
-        yield self.to_a
+        yield to_a
       else
         combos = lambda do |result,index,remaining|
           while @size - index > remaining

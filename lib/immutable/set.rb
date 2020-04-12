@@ -61,7 +61,7 @@ module Immutable
       #
       # @return [Set]
       def empty
-        @empty ||= self.new
+        @empty ||= new
       end
 
       # "Raw" allocation of a new `Set`. Used internally to create a new
@@ -258,7 +258,7 @@ module Immutable
     #                        equal.
     # @return [SortedSet]
     def sort(&comparator)
-      SortedSet.new(self.to_a, &comparator)
+      SortedSet.new(to_a, &comparator)
     end
 
     # Return a {SortedSet} which contains the same items as this `Set`, ordered
@@ -276,7 +276,7 @@ module Immutable
     # @yieldreturn [Object] sort key for the item
     # @return [SortedSet]
     def sort_by(&mapper)
-      SortedSet.new(self.to_a, &mapper)
+      SortedSet.new(to_a, &mapper)
     end
 
     # Return a new `Set` which contains all the members of both this `Set` and `other`.

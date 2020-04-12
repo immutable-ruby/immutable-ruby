@@ -65,7 +65,7 @@ module Immutable
       #
       # @return [SortedSet]
       def empty
-        @empty ||= self.alloc(PlainAVLNode::EmptyNode)
+        @empty ||= alloc(PlainAVLNode::EmptyNode)
       end
 
       # "Raw" allocation of a new `SortedSet`. Used internally to create a new
@@ -497,7 +497,7 @@ module Immutable
     # @return [SortedSet]
     def sort(&block)
       if block
-        self.class.new(self.to_a, &block)
+        self.class.new(to_a, &block)
       elsif @node.natural_order?
         self
       else
@@ -947,7 +947,7 @@ module Immutable
       return true if other.equal?(self)
       return false if not instance_of?(other.class)
       return false if size != other.size
-      a, b = self.to_enum, other.to_enum
+      a, b = to_enum, other.to_enum
       loop do
         return false if !a.next.eql?(b.next)
       end

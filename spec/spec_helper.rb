@@ -68,12 +68,12 @@ class DeterministicHash
   end
 
   def ==(other)
-    other.is_a?(DeterministicHash) && self.value == other.value
+    other.is_a?(DeterministicHash) && value == other.value
   end
   alias eql? ==
 
   def <=>(other)
-    self.value <=> other.value
+    value <=> other.value
   end
 end
 

@@ -2,7 +2,7 @@ module Immutable
   # @private
   class Trie
     def self.[](pairs)
-      result = self.new(0)
+      result = new(0)
       pairs.each { |key, val| result.put!(key, val) }
       result
     end

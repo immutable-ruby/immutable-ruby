@@ -91,15 +91,15 @@ module Immutable
     # Compare with `other`, and return 0, 1, or -1 if it is (respectively) equal to,
     # greater than, or less than this collection.
     def <=>(other)
-      return 0 if self.equal?(other)
-      enum1, enum2 = self.to_enum, other.to_enum
+      return 0 if equal?(other)
+      enum1, enum2 = to_enum, other.to_enum
       loop do
         item1 = enum1.next
         item2 = enum2.next
         comp  = (item1 <=> item2)
         return comp if comp != 0
       end
-      size1, size2 = self.size, other.size
+      size1, size2 = size, other.size
       return 0 if size1 == size2
       size1 > size2 ? 1 : -1
     end
@@ -107,7 +107,7 @@ module Immutable
     # Return true if `other` contains the same elements, in the same order.
     # @return [Boolean]
     def ==(other)
-      self.eql?(other) || (other.respond_to?(:to_ary) && to_ary == other.to_ary)
+      eql?(other) || (other.respond_to?(:to_ary) && to_ary == other.to_ary)
     end
 
     # Convert all the elements into strings and join them together, separated by

@@ -78,7 +78,7 @@ module Immutable
       #
       # @return [Hash]
       def empty
-        @empty ||= self.new
+        @empty ||= new
       end
 
       # "Raw" allocation of a new `Hash`. Used internally to create a new
@@ -771,7 +771,7 @@ module Immutable
     # @param other [Object] The object to compare with
     # @return [Boolean]
     def ==(other)
-      self.eql?(other) || (other.respond_to?(:to_hash) && to_hash == other.to_hash)
+      eql?(other) || (other.respond_to?(:to_hash) && to_hash == other.to_hash)
     end
 
     # Return true if this `Hash` is a proper superset of `other`, which means

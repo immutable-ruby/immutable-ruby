@@ -48,7 +48,7 @@ module Immutable
       #
       # @return [Deque]
       def empty
-        @empty ||= self.new
+        @empty ||= new
       end
 
       # "Raw" allocation of a new `Deque`. Used internally to create a new
@@ -122,9 +122,9 @@ module Immutable
     # @param n [Integer] number of positions to move elements by
     # @return [Deque]
     def rotate(n)
-      return self.class.empty if self.empty?
+      return self.class.empty if empty?
 
-      n %= self.size
+      n %= size
       return self if n == 0
 
       a, b = @front, @rear
@@ -132,7 +132,7 @@ module Immutable
       if b.size >= n
         n.times { a = a.cons(b.head); b = b.tail }
       else
-        (self.size - n).times { b = b.cons(a.head); a = a.tail }
+        (size - n).times { b = b.cons(a.head); a = a.tail }
       end
 
       self.class.alloc(a, b)
@@ -264,7 +264,7 @@ module Immutable
     def pretty_print(pp)
       pp.group(1, "#{self.class}[", ']') do
         pp.breakable ''
-        pp.seplist(self.to_a) { |obj| obj.pretty_print(pp) }
+        pp.seplist(to_a) { |obj| obj.pretty_print(pp) }
       end
     end
 
