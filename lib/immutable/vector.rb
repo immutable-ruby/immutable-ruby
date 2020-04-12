@@ -1114,7 +1114,7 @@ module Immutable
     #
     # @return [Vector]
     # @raise [IndexError] if elements are not of the same size.
-    # @raise [TypeError] if an element can not be implicitly converted to an array (using `#to_ary`)
+    # @raise [TypeError] if an element does not respond to #size and #[]
     def transpose
       return self.class.empty if empty?
       result = Array.new(first.size) { [] }
@@ -1132,6 +1132,13 @@ module Immutable
 
       result.map! { |a| self.class.new(a) }
       self.class.new(result)
+    rescue NoMethodError
+      if any? { |x| !x.respond_to?(:size) || !x.respond_to?(:[]) }
+        bad = find { |x| !x.respond_to?(:size) || !x.respond_to?(:[]) }
+        raise TypeError, "'#{bad.inspect}' must respond to #size and #[] to be transposed"
+      else
+        raise
+      end
     end
 
     # Finds a value from this `Vector` which meets the condition defined by the
