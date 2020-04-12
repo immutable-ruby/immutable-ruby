@@ -61,11 +61,10 @@ describe Immutable do
 
   describe '.to_ruby' do
     expectations.each do |expected_result, input, one_way|
-      unless one_way
-        context "with #{input.inspect} as input" do
-          it "should return #{expected_result.inspect}" do
-            Immutable.to_ruby(input).should eql(expected_result)
-          end
+      next if one_way
+      context "with #{input.inspect} as input" do
+        it "should return #{expected_result.inspect}" do
+          Immutable.to_ruby(input).should eql(expected_result)
         end
       end
     end

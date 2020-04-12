@@ -969,15 +969,14 @@ module Immutable
         used, result = [], []
         perms = lambda do |index|
           0.upto(@size-1) do |i|
-            if !used[i]
-              result[index] = get(i)
-              if index < n-1
-                used[i] = true
-                perms[index+1]
-                used[i] = false
-              else
-                yield result.dup
-              end
+            next if used[i]
+            result[index] = get(i)
+            if index < n-1
+              used[i] = true
+              perms[index+1]
+              used[i] = false
+            else
+              yield result.dup
             end
           end
         end
