@@ -485,7 +485,7 @@ module Immutable
     def merge(other)
       trie = if block_given?
         other.reduce(@trie) do |trie, (key, value)|
-          if entry = trie.get(key)
+          if (entry = trie.get(key))
             trie.put(key, yield(key, entry[1], value))
           else
             trie.put(key, value)

@@ -1461,7 +1461,7 @@ module Immutable
           from_slot.upto(node.size-1) do |i|
             flatten_node(node[i], bitshift - BITS_PER_LEVEL, result)
           end
-        elsif child = node[from_slot]
+        elsif (child = node[from_slot])
           flatten_suffix(child, bitshift - BITS_PER_LEVEL, from, result)
           (from_slot+1).upto(node.size-1) do |i|
             flatten_node(node[i], bitshift - BITS_PER_LEVEL, result)
@@ -1531,7 +1531,7 @@ module Immutable
             end
             result.concat(remainder)
           end
-        elsif child = node[from_slot]
+        elsif (child = node[from_slot])
           result = node.take(from_slot)
           result.push(replace_node_suffix(child, bitshift - BITS_PER_LEVEL, from, suffix))
           remainder = suffix.shift((31 - from_slot) * (1 << bitshift))
