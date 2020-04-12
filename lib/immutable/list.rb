@@ -440,7 +440,7 @@ module Immutable
     def transpose
       return EmptyList if empty?
       LazyList.new do
-        next EmptyList if any? { |list| list.empty? }
+        next EmptyList if any?(&:empty?)
         heads, tails = EmptyList, EmptyList
         reverse_each { |list| heads, tails = heads.cons(list.head), tails.cons(list.tail) }
         Cons.new(heads, tails.transpose)

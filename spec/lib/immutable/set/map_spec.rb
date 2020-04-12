@@ -35,7 +35,7 @@ describe Immutable::Set do
         it 'returns an instance of the subclass' do
           subclass = Class.new(Immutable::Set)
           instance = subclass['a', 'b']
-          instance.map { |item| item.upcase }.class.should be(subclass)
+          instance.map(&:upcase).class.should be(subclass)
         end
       end
 

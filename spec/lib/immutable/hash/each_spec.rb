@@ -25,7 +25,7 @@ describe Immutable::Hash do
           hash = H[DeterministicHash.new('a', 1) => 1, DeterministicHash.new('b', 1) => 1]
           hash.each { |k,v| yielded << k }
           yielded.size.should == 2
-          yielded.map { |x| x.value }.sort.should == ['a', 'b']
+          yielded.map(&:value).sort.should == ['a', 'b']
         end
 
         it 'yields only the key to a block expecting |key,|' do

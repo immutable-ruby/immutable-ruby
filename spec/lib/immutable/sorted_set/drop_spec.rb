@@ -33,7 +33,7 @@ describe Immutable::SortedSet do
     end
 
     context 'when the set has a custom order' do
-      let(:sorted_set) { SS.new([1, 2, 3]) { |x| -x }}
+      let(:sorted_set) { SS.new([1, 2, 3], &:-@)}
       it 'maintains the custom order' do
         sorted_set.drop(1).to_a.should == [2, 1]
         sorted_set.drop(2).to_a.should == [1]

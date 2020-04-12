@@ -50,7 +50,7 @@ describe Immutable::Vector do
       it 'returns an Hash whose values are instances of the subclass' do
         subclass = Class.new(Immutable::Vector)
         instance = subclass.new([1, 'string', :symbol])
-        instance.group_by { |x| x.class }.values.each { |v| v.class.should be(subclass) }
+        instance.group_by(&:class).values.each { |v| v.class.should be(subclass) }
       end
     end
   end

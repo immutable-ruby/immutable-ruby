@@ -29,7 +29,7 @@ describe Immutable::SortedSet do
 
       context 'on a set ordered by a comparator' do
         it 'inserts the new item in the correct place' do
-          s = SS.new(['tick', 'pig', 'hippopotamus']) { |str| str.length }
+          s = SS.new(['tick', 'pig', 'hippopotamus'], &:length)
           s.add('giraffe').to_a.should == ['pig', 'tick', 'giraffe', 'hippopotamus']
         end
       end

@@ -46,7 +46,7 @@ describe Immutable::Vector do
             if method == :sort
               vector.sort.should == array.sort
             else
-              vector.sort_by { |x| -x }.should == array.sort_by { |x| -x }
+              vector.sort_by(&:-@).should == array.sort_by(&:-@)
             end
           end
         end

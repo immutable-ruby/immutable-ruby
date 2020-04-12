@@ -44,7 +44,7 @@ describe Immutable::SortedSet do
     end
 
     it 'accepts a block with arity 1' do
-      sorted_set = SS.new(1..3) { |a| -a }
+      sorted_set = SS.new(1..3, &:-@)
       sorted_set[0].should be(3)
       sorted_set[1].should be(2)
       sorted_set[2].should be(1)

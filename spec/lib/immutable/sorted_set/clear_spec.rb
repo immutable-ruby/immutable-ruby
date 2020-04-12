@@ -32,7 +32,7 @@ describe Immutable::SortedSet do
     end
 
     context 'with a comparator' do
-      let(:sorted_set) { SS.new([1, 2, 3]) { |x| -x } }
+      let(:sorted_set) { SS.new([1, 2, 3], &:-@) }
       it 'returns an empty instance with same comparator' do
         e = sorted_set.clear
         e.should be_empty

@@ -21,12 +21,12 @@ describe Immutable::List do
         let(:list) { L[*values] }
 
         it 'preserves the original' do
-          list.reverse { |item| item.downcase }
+          list.reverse(&:downcase)
           list.should eql(L[*values])
         end
 
         it "returns #{expected.inspect}" do
-          list.reverse { |item| item.downcase }.should == L[*expected]
+          list.reverse(&:downcase).should == L[*expected]
         end
       end
     end

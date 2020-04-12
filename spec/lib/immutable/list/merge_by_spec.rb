@@ -36,7 +36,7 @@ describe Immutable::List do
       let(:list) { L[1, 2, 3] }
 
       it 'returns the list' do
-        L[list].merge_by { |item| -item }.should == L[1, 2, 3]
+        L[list].merge_by(&:-@).should == L[1, 2, 3]
       end
     end
 
@@ -44,7 +44,7 @@ describe Immutable::List do
       subject { L[L[8, 7, 6, 3], L[9, 5, 4, 2, 1]] }
 
       it 'merges the lists based on the specified transformer' do
-        subject.merge_by { |item| -item }.should == L[9, 8, 7, 6, 5, 4, 3, 2, 1]
+        subject.merge_by(&:-@).should == L[9, 8, 7, 6, 5, 4, 3, 2, 1]
       end
     end
   end

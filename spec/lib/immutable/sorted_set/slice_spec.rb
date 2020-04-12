@@ -220,7 +220,7 @@ describe Immutable::SortedSet do
 
     context 'when passed an empty Range' do
       it 'does not lose custom sort order' do
-        ss = SS.new(['yogurt', 'cake', 'pistachios']) { |word| word.length }
+        ss = SS.new(['yogurt', 'cake', 'pistachios'], &:length)
         ss = ss.send(method, 1...1).add('tea').add('fruitcake').add('toast')
         ss.to_a.should == ['tea', 'toast', 'fruitcake']
       end
@@ -228,7 +228,7 @@ describe Immutable::SortedSet do
 
     context 'when passed a length of zero' do
       it 'does not lose custom sort order' do
-        ss = SS.new(['yogurt', 'cake', 'pistachios']) { |word| word.length }
+        ss = SS.new(['yogurt', 'cake', 'pistachios'], &:length)
         ss = ss.send(method, 0, 0).add('tea').add('fruitcake').add('toast')
         ss.to_a.should == ['tea', 'toast', 'fruitcake']
       end

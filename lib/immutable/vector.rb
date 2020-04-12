@@ -402,7 +402,7 @@ module Immutable
       index += @size if index < 0
 
       suffix = flatten_suffix(@root, @levels * BITS_PER_LEVEL, index, [])
-      replace_suffix(index, suffix.tap { |a| a.shift })
+      replace_suffix(index, suffix.tap(&:shift))
     end
 
     # Return a new `Vector` with the last element removed. Return `self` if

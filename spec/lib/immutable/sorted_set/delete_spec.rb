@@ -34,7 +34,7 @@ describe Immutable::SortedSet do
 
     context 'when removing the last value in a sorted set' do
       it 'maintains the set order' do
-        ss = SS.new(['peanuts', 'jam', 'milk']) { |word| word.length }
+        ss = SS.new(['peanuts', 'jam', 'milk'], &:length)
         ss = ss.delete('jam').delete('peanuts').delete('milk')
         ss = ss.add('banana').add('sugar').add('spam')
         ss.to_a.should == ['spam', 'sugar', 'banana']

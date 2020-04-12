@@ -110,7 +110,7 @@ describe Immutable::SortedSet do
 
     context 'with the same values, but a different sort order' do
       let(:set) { SS[1, 2, 3] }
-      let(:comparison) { SS.new([1, 2, 3]) { |n| -n }}
+      let(:comparison) { SS.new([1, 2, 3], &:-@)}
 
       it 'returns false' do
         expect(eql?).to eq(false)

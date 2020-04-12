@@ -228,7 +228,7 @@ module Immutable
     # Return an `Array` with the same elements, in the same order.
     # @return [Array]
     def to_a
-      @front.to_a.concat(@rear.to_a.tap { |a| a.reverse! })
+      @front.to_a.concat(@rear.to_a.tap(&:reverse!))
     end
     alias entries to_a
     alias to_ary  to_a
@@ -248,7 +248,7 @@ module Immutable
       result = "#{self.class}["
       i = 0
       @front.each { |obj| result << ', ' if i > 0; result << obj.inspect; i += 1 }
-      @rear.to_a.tap { |a| a.reverse! }.each { |obj| result << ', ' if i > 0; result << obj.inspect; i += 1 }
+      @rear.to_a.tap(&:reverse!).each { |obj| result << ', ' if i > 0; result << obj.inspect; i += 1 }
       result << ']'
     end
 
