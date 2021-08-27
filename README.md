@@ -6,6 +6,8 @@ Immutable Ruby
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 [![Version](http://img.shields.io/gem/v/immutable-ruby.svg)](https://rubygems.org/gems/immutable-ruby)
 
+NB: This is a fork of [Hamster](https://github.com/hamstergem/hamster/), but which uses a different namespace. Structures in immutable-ruby are Immutable::Hash, Immutable::Set, and so on. Otherwise everything is the same.
+
 Efficient, immutable, and thread-safe collection classes for Ruby.
 
 The `immutable-ruby` gem provides 6 [Persistent Data Structures][PDS]: [`Hash`][HASH-DOC],
