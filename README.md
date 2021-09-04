@@ -29,6 +29,12 @@ And lastly, `Immutable` lists are lazy, making it possible to (among other thing
 [DEQUE-DOC]: http://rubydoc.info/github/immutable-ruby/immutable-ruby/master/Immutable/Deque
 
 
+History
+=======
+
+`Immutable` was forked from Simon Harris' `Hamster` library, which is no longer maintained. It features some bug fixes and performance optimizations which are not included in `Hamster`. Aside from the name of the top-level module, the public API is virtually identical.
+
+
 Using
 =====
 
