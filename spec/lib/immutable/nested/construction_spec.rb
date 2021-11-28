@@ -8,23 +8,19 @@ describe Immutable do
         'b' => [2, {'c' => 3}, 4],
         'd' => ::Set.new([5, 6, 7]),
         'e' => {'f' => 8, 'g' => 9},
-        'h' => Regexp.new('ijk'),
-        'l' => ::SortedSet.new([1, 2, 3]) },
+        'h' => Regexp.new('ijk') },
       Immutable::Hash[
         'a' => 1,
         'b' => Immutable::Vector[2, Immutable::Hash['c' => 3], 4],
         'd' => Immutable::Set[5, 6, 7],
         'e' => Immutable::Hash['f' => 8, 'g' => 9],
-        'h' => Regexp.new('ijk'),
-        'l' => Immutable::SortedSet.new([1, 2, 3])] ],
+        'h' => Regexp.new('ijk') ] ],
     [ {}, Immutable::Hash[] ],
     [ {'a' => 1, 'b' => 2, 'c' => 3}, Immutable::Hash['a' => 1, 'b' => 2, 'c' => 3] ],
     [ [], Immutable::Vector[] ],
     [ [1, 2, 3], Immutable::Vector[1, 2, 3] ],
     [ ::Set.new, Immutable::Set[] ],
     [ ::Set.new([1, 2, 3]), Immutable::Set[1, 2, 3] ],
-    [ ::SortedSet.new, Immutable::SortedSet[] ],
-    [ ::SortedSet.new([1, 2, 3]), Immutable::SortedSet[1, 2, 3] ],
     [ 42, 42 ],
     [ STDOUT, STDOUT ],
 
@@ -78,6 +74,18 @@ describe Immutable do
     context 'with Immutable::Deque[Immutable::Hash["a" => 1]] as input' do
       it 'should return [{"a" => 1}]' do
         Immutable.to_ruby(Immutable::Deque[Immutable::Hash['a' => 1]]).should eql([{'a' => 1}])
+      end
+    end
+
+    context 'with Immutable::SortedSet[] as input' do
+      it 'should return ::SortedSet.new' do
+        Immutable.to_ruby(Immutable::SortedSet[]).should == ::SortedSet.new
+      end
+    end
+
+    context 'with Immutable::SortedSet[1, 2, 3] as input' do
+      it 'should return ::SortedSet.new' do
+        Immutable.to_ruby(Immutable::SortedSet[1, 2, 3]).should == ::SortedSet.new([1, 2, 3])
       end
     end
 
