@@ -954,6 +954,7 @@ module Immutable
       loop do
         return false if !a.next.eql?(b.next)
       end
+      true
     rescue StopIteration
       true
     end
