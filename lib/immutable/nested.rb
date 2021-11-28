@@ -1,4 +1,5 @@
 require 'set'
+require 'sorted_set'
 require 'immutable/hash'
 require 'immutable/set'
 require 'immutable/vector'

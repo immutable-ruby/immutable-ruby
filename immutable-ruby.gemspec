@@ -21,6 +21,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_runtime_dependency     'concurrent-ruby', '~> 1.0.0'
+  spec.add_runtime_dependency     'sorted_set', '~> 1.0'
   spec.add_development_dependency 'bundler', '>= 2.2.10'
   spec.add_development_dependency 'rspec', '~> 3.9'
   spec.add_development_dependency 'rake', '~> 13.0'
