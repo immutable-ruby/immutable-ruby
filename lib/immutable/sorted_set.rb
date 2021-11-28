@@ -955,8 +955,6 @@ module Immutable
         return false if !a.next.eql?(b.next)
       end
       true
-    rescue StopIteration
-      true
     end
 
     # See `Object#hash`.
