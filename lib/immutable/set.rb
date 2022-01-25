@@ -1,6 +1,5 @@
 require 'immutable/undefined'
 require 'immutable/enumerable'
-require 'immutable/hash'
 require 'immutable/trie'
 require 'immutable/sorted_set'
 require 'set'

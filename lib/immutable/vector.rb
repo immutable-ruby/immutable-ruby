@@ -1,5 +1,4 @@
 require 'immutable/enumerable'
-require 'immutable/hash'
 
 module Immutable
 

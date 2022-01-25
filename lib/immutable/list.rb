@@ -4,7 +4,6 @@ require 'concurrent'
 
 require 'immutable/undefined'
 require 'immutable/enumerable'
-require 'immutable/hash'
 require 'immutable/set'
 
 module Immutable
