@@ -308,4 +308,4 @@ Other Reading
 - {file:LICENSE License}
 
 [HAMT]: http://lampwww.epfl.ch/papers/idealhashtrees.pdf
-[FO]: http://www.ccs.neu.edu/home/matthias/Presentations/ecoop2004.pdf
+[FO]: https://web.archive.org/web/20200113172704/http://www.ccs.neu.edu/home/matthias/Presentations/ecoop2004.pdf
